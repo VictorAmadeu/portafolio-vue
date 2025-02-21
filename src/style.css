@@ -1,0 +1,291 @@
+/* ========================= */
+/* Ajustes generales del layout */
+/* ========================= */
+
+/* Evita la barra de desplazamiento horizontal */
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+/* Ajuste del contenedor principal */
+.container {
+  max-width: 1200px;
+  padding: 20px;
+}
+
+/* Ajusta los espacios en las secciones */
+section {
+  padding: 60px 0;
+}
+
+/* Responsive para tablets (hasta 1024px de ancho) */
+@media (max-width: 1024px) {
+  section {
+    padding: 50px 15px;
+  }
+  .container {
+    max-width: 90%;
+  }
+}
+
+/* Responsive para móviles (hasta 768px de ancho) */
+@media (max-width: 768px) {
+  section {
+    padding: 40px 10px;
+  }
+  .container {
+    max-width: 95%;
+    padding: 15px;
+  }
+}
+
+/* ========================= */
+/* Paleta de colores actualizada */
+/* ========================= */
+
+:root {
+  --primary-color: #007bff; /* Azul principal */
+  --secondary-color: #ffffff; /* Blanco */
+  --dark-color: #000000; /* Negro */
+  --text-light: #f8f9fa; /* Texto claro */
+  --text-dark: #212529; /* Texto oscuro */
+}
+
+/* ========================= */
+/* Estilos generales del sitio */
+/* ========================= */
+
+/* Estilos generales para enlaces */
+a {
+  font-weight: 500;
+  color: #646cff;
+  text-decoration: inherit;
+}
+
+a:hover {
+  color: #535bf2;
+}
+
+/* Configuración del cuerpo de la página */
+body {
+  margin: 0;
+  display: flex;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+/* Estilos generales para los títulos */
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+}
+
+/* ========================= */
+/* Estilos generales de los botones */
+/* ========================= */
+
+.btn {
+  font-size: 1.1rem;
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-radius: 8px;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Efecto de animación en los botones al hacer hover */
+.btn::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 300%;
+  height: 300%;
+  background: rgba(255, 255, 255, 0.1);
+  transition: all 0.4s ease-in-out;
+  transform: translate(-50%, -50%) scale(0);
+  border-radius: 50%;
+}
+
+.btn:hover::after {
+  transform: translate(-50%, -50%) scale(1);
+}
+
+/* Efecto de desplazamiento al pasar el mouse sobre el botón */
+.btn:hover {
+  transform: translateY(-5px);
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* ========================= */
+/* Estilos específicos por color */
+/* ========================= */
+
+.btn-primary {
+  background-color: #007bff;
+  border-color: #007bff;
+}
+
+.btn-primary:hover {
+  background-color: #0056b3;
+}
+
+.btn-danger {
+  background-color: #dc3545;
+  border-color: #dc3545;
+}
+
+.btn-danger:hover {
+  background-color: #b02a37;
+}
+
+.btn-dark {
+  background-color: #343a40;
+  border-color: #343a40;
+}
+
+.btn-dark:hover {
+  background-color: #23272b;
+}
+
+.btn-secondary {
+  background-color: #6c757d;
+  border-color: #6c757d;
+}
+
+.btn-secondary:hover {
+  background-color: #5a6268;
+}
+
+/* ========================= */
+/* 📱 Ajustes Responsive */
+/* ========================= */
+
+/* Asegura que los botones ocupen el ancho completo en dispositivos pequeños */
+@media (max-width: 768px) {
+  .btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* ========================= */
+/* Íconos de la Navbar */
+/* ========================= */
+
+/* Espaciado entre los íconos y el texto de los enlaces en la navbar */
+.navbar-nav .nav-link i {
+  margin-right: 5px;
+}
+
+/* ========================= */
+/* Navbar */
+/* ========================= */
+
+.navbar {
+  padding: 15px 20px; /* Espaciado interior para mejorar la visibilidad */
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); /* Sombra sutil para mejor diseño */
+  transition: background-color 0.3s ease-in-out; /* Transición suave al cambiar de color */
+}
+
+/* Estilos de los enlaces en la navbar */
+.navbar-nav .nav-link {
+  font-size: 1.1rem;
+  font-weight: 500;
+  transition: color 0.3s ease-in-out, border-bottom 0.3s ease-in-out; /* Efecto de transición en color y subrayado */
+}
+
+/* Estilo del enlace activo en la navbar */
+.navbar-nav .nav-link.active {
+  color: #ffc107 !important; /* Color amarillo para resaltar el activo */
+  font-weight: bold;
+  border-bottom: 3px solid #ffc107; /* Subrayado para destacar la sección activa */
+}
+
+/* Efecto hover en los enlaces de la navbar */
+.navbar-nav .nav-link:hover {
+  color: #ffdd57 !important; /* Cambio de color al pasar el mouse */
+}
+
+/* Ajustes de la navbar en dispositivos móviles */
+@media (max-width: 768px) {
+  .navbar-nav {
+    text-align: center; /* Centra los enlaces en pantallas pequeñas */
+  }
+
+  .navbar-nav .nav-item {
+    margin-bottom: 10px; /* Espaciado entre elementos de la navbar */
+  }
+
+  .navbar-nav .nav-link.active {
+    border-bottom: none;
+    font-weight: bold;
+    color: #ffdd57 !important;
+  }
+}
+
+/* ========================= */
+/* Estilos del footer */
+/* ========================= */
+
+.footer {
+  background-color: #343a40; /* Fondo oscuro */
+  color: white; /* Texto en blanco */
+  text-align: center;
+  padding: 20px 0;
+}
+
+/* Estilos para el texto dentro del footer */
+.footer p {
+  font-size: 1rem;
+  margin-bottom: 10px;
+}
+
+/* ========================= */
+/* Íconos de Redes Sociales en el footer */
+/* ========================= */
+
+/* Alinear los íconos en fila y centrarlos */
+.footer-icons {
+  display: flex;
+  justify-content: center;
+  gap: 15px; /* Espaciado entre los íconos */
+}
+
+/* Estilos para los íconos del footer */
+.footer-icons a {
+  font-size: 1.8rem; /* Tamaño de los íconos */
+  color: white; /* Color inicial */
+  transition: transform 0.3s ease-in-out, color 0.3s ease-in-out;
+}
+
+/* Efecto hover en los íconos */
+.footer-icons a:hover {
+  transform: scale(1.2); /* Aumenta ligeramente el tamaño */
+  color: #ffc107; /* Cambia a color amarillo */
+}
+
+/* ========================= */
+/* Footer - Enlaces */
+/* ========================= */
+
+/* Estilos de los enlaces dentro del footer */
+footer a {
+  color: #ffc107; /* Color amarillo */
+  text-decoration: none;
+  transition: color 0.3s ease-in-out;
+}
+
+/* Efecto hover en los enlaces del footer */
+footer a:hover {
+  color: white; /* Cambio de color a blanco */
+}
