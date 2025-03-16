@@ -1,9 +1,9 @@
-import { createRouter, createWebHistory } from "vue-router";
+import { createRouter, createWebHashHistory } from "vue-router";
 import HomeView from "../views/HomeView.vue";
 import ContactView from "../views/ContactView.vue";
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL), // Usar modo de histórico correto
+  history: createWebHashHistory(), // 🔥 Usa hash para evitar erro 404 no GitHub Pages
   routes: [
     { path: "/", component: HomeView },
     { path: "/contact", component: ContactView },

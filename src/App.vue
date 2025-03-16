@@ -1,14 +1,14 @@
 <template>
   <div>
-    <!-- Navbar fija en la parte superior -->
+    <!-- Navbar fixa na parte superior -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
       <div class="container">
-        <!-- Logo con ícono en la navbar -->
-        <a class="navbar-brand fw-bold" href="/">
+        <!-- Logo com ícone na navbar -->
+        <router-link to="/" class="navbar-brand fw-bold">
           <i class="fas fa-laptop-code"></i> Mi Portafolio
-        </a>
+        </router-link>
 
-        <!-- Botón de colapso para dispositivos móviles -->
+        <!-- Botão de colapso para dispositivos móveis -->
         <button
           class="navbar-toggler"
           type="button"
@@ -16,22 +16,22 @@
           data-bs-target="#navbarNav"
           aria-controls="navbarNav"
           aria-expanded="false"
-          aria-label="Toggle navigation"
+          aria-label="Alternar navegação"
         >
           <span class="navbar-toggler-icon"></span>
         </button>
 
-        <!-- Menú de navegación (se han eliminado los apartados "Proyectos" y "Sobre Mí") -->
+        <!-- Menú de navegação -->
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav ms-auto">
             <li class="nav-item">
-              <!-- Enlace a la página de Inicio con ícono -->
+              <!-- Link correto para a página de início -->
               <router-link to="/" class="nav-link">
                 <i class="fas fa-home"></i> Inicio
               </router-link>
             </li>
             <li class="nav-item">
-              <!-- Enlace a la sección de Contacto con ícono -->
+              <!-- Link correto para a página de contato -->
               <router-link to="/contact" class="nav-link">
                 <i class="fas fa-envelope"></i> Contacto
               </router-link>
@@ -41,15 +41,15 @@
       </div>
     </nav>
 
-    <!-- Contenido principal dinámico -->
+    <!-- Conteúdo principal dinâmico -->
     <router-view></router-view>
 
-    <!-- Pie de página -->
+    <!-- Rodapé -->
     <footer class="footer bg-dark text-white text-center py-4">
       <div class="container">
         <p class="mb-3">© 2025 Mi Portafolio. Todos los derechos reservados.</p>
 
-        <!-- Íconos de Redes Sociales -->
+        <!-- Ícones de redes sociais -->
         <div class="footer-icons">
           <a href="https://www.linkedin.com/in/victor-amadeu-braga-heleno-583870266/" target="_blank">
             <i class="fab fa-linkedin"></i>
@@ -71,54 +71,54 @@
 
 <script>
 export default {
-  name: "App", // Nombre del componente principal
+  name: "App", // Nome do componente principal
 };
 </script>
 
 <style scoped>
-/* ====== ESTILOS PARA LA NAVBAR ====== */
+/* ====== Estilos para a Navbar ====== */
 .navbar {
-  padding: 15px 20px; /* Espaciado interno para mejorar la apariencia */
-  transition: background-color 0.3s ease-in-out; /* Transición suave en cambios de color */
+  padding: 15px 20px; /* Espaçamento interno para melhorar a aparência */
+  transition: background-color 0.3s ease-in-out; /* Transição suave ao mudar de cor */
 }
 
-/* Estilos generales de los enlaces en la navbar */
+/* Estilos dos links na navbar */
 .navbar-nav .nav-link {
-  font-size: 1.1rem; /* Ajusta el tamaño del texto */
-  font-weight: 500; /* Negrita moderada */
-  transition: color 0.3s ease-in-out, border-bottom 0.3s ease-in-out; /* Transiciones suaves */
+  font-size: 1.1rem; /* Ajusta o tamanho do texto */
+  font-weight: 500; /* Deixa o texto em negrito moderado */
+  transition: color 0.3s ease-in-out, border-bottom 0.3s ease-in-out;
 }
 
-/* Efecto hover en los enlaces */
+/* Efeito hover nos links */
 .navbar-nav .nav-link:hover {
-  color: #ffdd57 !important; /* Color amarillo más claro al pasar el cursor */
+  color: #ffdd57 !important; /* Cor amarela ao passar o mouse */
 }
 
-/* ====== ESTILOS PARA EL FOOTER ====== */
+/* ====== Estilos para o rodapé ====== */
 .footer {
-  background-color: #343a40; /* Color de fondo oscuro */
-  color: white; /* Texto en color blanco */
-  text-align: center; /* Centra el contenido */
-  padding: 20px 0; /* Espaciado interno */
+  background-color: #343a40; /* Cor de fundo escura */
+  color: white; /* Texto branco */
+  text-align: center;
+  padding: 20px 0;
 }
 
-/* Estilos de los íconos en el footer */
+/* Ícones do rodapé */
 .footer-icons {
-  display: flex; /* Usa flexbox para organizar los íconos */
-  justify-content: center; /* Centra los íconos horizontalmente */
-  gap: 15px; /* Espaciado entre los íconos */
+  display: flex;
+  justify-content: center;
+  gap: 15px;
 }
 
-/* Estilos generales de los íconos de redes sociales */
+/* Estilização dos ícones */
 .footer-icons a {
-  font-size: 1.8rem; /* Ajusta el tamaño de los íconos */
-  color: white; /* Color blanco predeterminado */
-  transition: transform 0.3s ease-in-out, color 0.3s ease-in-out; /* Transiciones suaves */
+  font-size: 1.8rem;
+  color: white;
+  transition: transform 0.3s ease-in-out, color 0.3s ease-in-out;
 }
 
-/* Efecto hover en los íconos de redes sociales */
+/* Efeito hover nos ícones */
 .footer-icons a:hover {
-  transform: scale(1.2); /* Aumenta ligeramente el tamaño */
-  color: #ffc107; /* Cambia el color a amarillo */
+  transform: scale(1.2);
+  color: #ffc107; /* Cor amarela ao passar o mouse */
 }
 </style>
