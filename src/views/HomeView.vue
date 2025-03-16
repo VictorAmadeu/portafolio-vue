@@ -101,7 +101,7 @@
       <h2 class="fw-bold">Contáctame</h2>
       <p>Si tienes alguna consulta, no dudes en enviarme un mensaje.</p>
       <a
-        href="/contact"
+        href="/portafolio-vue/#/contact"
         class="btn btn-outline-dark btn-lg mt-3 custom-btn"
         data-aos="zoom-in"
       >
