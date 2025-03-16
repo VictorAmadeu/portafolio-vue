@@ -44,8 +44,10 @@
             >
               <i class="fab fa-github fa-lg"></i> GitHub
             </a>
+
+            <!-- 📌 CORREÇÃO AQUI: Caminho para o PDF inclui /portafolio-vue/ -->
             <a
-              href="https://victoramadeu.github.io/portafolio-vue/curriculo.pdf"
+              href="/portafolio-vue/curriculo.pdf"
               download
               class="btn btn-secondary custom-btn"
             >
