@@ -3,7 +3,7 @@ import fs from "fs";
 import { readFile, writeFile } from "fs/promises";
 
 // Definimos el puerto del servidor
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 // Función para leer el archivo JSON
 const readData = async () => {
