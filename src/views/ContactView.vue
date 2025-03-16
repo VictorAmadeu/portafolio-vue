@@ -55,29 +55,28 @@ export default {
      * Método para enviar el formulario al backend
      */
     async sendMessage() {
-      this.loading = true; // Activa el estado de carga
-      this.responseMessage = ""; // Limpia el mensaje de respuesta anterior
-      
+      // Se elimina el uso de "loading" y "responseMessage" ya que se utilizan alertas para la respuesta.
       try {
-        // Petición al backend para enviar el mensaje
-        const response = await fetch("http://localhost:3000/contact", {
-          method: "POST", // Método HTTP
-          headers: { "Content-Type": "application/json" }, // Tipo de contenido JSON
-          body: JSON.stringify(this.form), // Convierte los datos del formulario a JSON
+        // Realiza la petición al backend usando la URL actualizada a Render
+        const response = await fetch("https://portafolio-vue.onrender.com/contact", {
+          method: "POST", // Especifica que se enviará una solicitud HTTP POST
+          headers: { "Content-Type": "application/json" }, // Indica que el contenido enviado es JSON
+          // Convierte a JSON los datos del formulario (se envían solo email y message)
+          body: JSON.stringify({
+            email: this.form.email,
+            message: this.form.message
+          }),
         });
 
-        // Obtiene la respuesta del servidor
-        const data = await response.json();
-        this.responseMessage = data.message; // Guarda el mensaje de respuesta
-
-        // Si la respuesta es exitosa, limpia los campos del formulario
+        // Comprueba si la respuesta del servidor es exitosa (status HTTP 200-299)
         if (response.ok) {
-          this.form = { name: "", email: "", message: "" };
+          alert("Mensagem enviada!"); // Muestra una alerta indicando éxito
+        } else {
+          alert("Erro ao enviar mensagem."); // Muestra una alerta indicando error en el envío
         }
       } catch (error) {
-        this.responseMessage = "Error al enviar el mensaje."; // Mensaje de error en caso de fallo
-      } finally {
-        this.loading = false; // Desactiva el estado de carga
+        alert("Erro ao conectar ao servidor."); // Alerta si hay un error en la conexión con el servidor
+        console.error(error); // Imprime el error en la consola para depuración
       }
     },
   },
