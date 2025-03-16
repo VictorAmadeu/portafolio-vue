@@ -45,7 +45,7 @@
               <i class="fab fa-github fa-lg"></i> GitHub
             </a>
             <a
-              href="/docs/curriculo.pdf"
+              href="https://victoramadeu.github.io/portafolio-vue/curriculo.pdf"
               download
               class="btn btn-secondary custom-btn"
             >
