@@ -47,7 +47,7 @@
 
             <!-- 📌 CORREÇÃO AQUI: Caminho para o PDF inclui /portafolio-vue/ -->
             <a
-              href="/portafolio-vue/curriculo.pdf"
+              href="https://victoramadeu.github.io/portafolio-vue/curriculo.pdf"
               download
               class="btn btn-secondary custom-btn"
             >
