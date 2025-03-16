@@ -1,23 +1,28 @@
 // Línea 1: Importamos la función "defineConfig" desde el paquete "vite".
-// Esta función nos ayuda a definir y tipar la configuración de Vite de manera clara.
+// Esta función nos ayuda a definir la configuración de Vite de manera tipada y clara.
 import { defineConfig } from "vite";
 
 // Línea 2: Importamos el plugin de Vue para Vite, que permite procesar y compilar archivos .vue.
-// Esto es esencial para poder utilizar Vue en nuestro proyecto.
+// Este plugin es esencial para que Vite entienda y maneje correctamente los componentes de Vue.js.
 import vue from "@vitejs/plugin-vue";
 
-// Línea 4: Comentario que nos remite a la documentación oficial de Vite, para consultas adicionales.
-// No afecta la ejecución del código.
-// https://vite.dev/config/
-
-// Línea 5-9: Exportamos por defecto la configuración definida con "defineConfig".
-// Dentro del objeto de configuración incluimos las propiedades necesarias para nuestro proyecto.
+// Línea 4: Exportamos por defecto la configuración de Vite utilizando la función "defineConfig".
+// Esta estructura nos permite organizar de forma clara todas las opciones de configuración necesarias para el proyecto.
 export default defineConfig({
-  // Línea 6: Propiedad "base" que define el camino base (URL base) de la aplicación cuando se despliega.
-  // Esto es útil cuando el proyecto se aloja en un subdirectorio, en este caso "/portafolio-vue/".
+  // Línea 6: Definimos la propiedad "base", que especifica la URL base de la aplicación cuando se despliega.
+  // Este ajuste es importante cuando el proyecto se aloja en un subdirectorio, como en GitHub Pages.
+  // Aquí "/portafolio-vue/" representa la ruta en la que estará accesible el sitio.
   base: "/portafolio-vue/",
 
-  // Línea 7: Propiedad "plugins", donde registramos los plugins que Vite usará para procesar el código.
-  // Aquí, pasamos el plugin de Vue, que se invoca como "vue()", permitiendo la transformación adecuada de los componentes Vue.
+  // Línea 10: Definimos la propiedad "plugins", que es un array donde registramos los plugins que Vite usará.
+  // En este caso, estamos utilizando el plugin de Vue, invocándolo con "vue()".
+  // Esto permite que los archivos .vue sean procesados correctamente por Vite.
   plugins: [vue()],
+
+  // Línea 14: Agregamos la configuración "build" para definir opciones relacionadas con la construcción (compilación) del proyecto.
+  build: {
+    // Línea 16: Definimos la propiedad "outDir", que indica en qué carpeta se generarán los archivos de compilación.
+    // GitHub Pages requiere que los archivos del sitio se encuentren en la carpeta "/docs", por lo que especificamos esa ruta.
+    outDir: "docs",
+  },
 });
