@@ -1,211 +1,113 @@
-//////////////////////////////////////////////////////////////////////////
-// ✅ Importamos módulos nativos de Node.js
-//////////////////////////////////////////////////////////////////////////
-import http from "http"; /* Importa el módulo 'http' de Node.js para crear el servidor */
-import {
-  readFile,
-  writeFile,
-} from "fs/promises"; /* Importa métodos de lectura/escritura de archivos como promesas */
-import { parse } from "url"; /* Importa la función 'parse' para analizar rutas (pathname) de las solicitudes */
-
-//////////////////////////////////////////////////////////////////////////
-// ✅ Variables de entorno
-//////////////////////////////////////////////////////////////////////////
-import dotenv from "dotenv"; /* Importa dotenv para cargar variables de entorno desde un archivo .env */
-dotenv.config(); /* Llama a la función config() para que dotenv lea y aplique las variables definidas en .env */
-
-//////////////////////////////////////////////////////////////////////////
-// ✅ Nodemailer
-//////////////////////////////////////////////////////////////////////////
-import nodemailer from "nodemailer"; /* Importa la librería nodemailer para enviar correos electrónicos */
-
-//////////////////////////////////////////////////////////////////////////
-// ✅ Configurar transporte Outlook
-//////////////////////////////////////////////////////////////////////////
-const transporter = nodemailer.createTransport({
-  service:
-    "hotmail" /* Especificamos que usaremos el servicio de correo 'hotmail' (Outlook) */,
-  auth: {
-    user: process.env
-      .OUTLOOK_EMAIL /* Indica el correo Outlook desde las variables de entorno (.env) */,
-    pass: process.env
-      .OUTLOOK_APP_PASSWORD /* Indica la contraseña de aplicación generada en Outlook */,
-  },
-}); /* Esta constante 'transporter' es el objeto que usaremos para enviar emails con nodemailer */
-
-//////////////////////////////////////////////////////////////////////////
-// ✅ Puerto de escucha
-//////////////////////////////////////////////////////////////////////////
-const PORT =
-  process.env.PORT ||
-  3000; /* Toma el valor 'PORT' de .env o, si no existe, usa 3000 por defecto */
-
-//////////////////////////////////////////////////////////////////////////
-// ✅ Función para leer el JSON local (data.json)
-//////////////////////////////////////////////////////////////////////////
-const readData = async () => {
-  try {
-    /* Intentamos leer el archivo 'data.json' con la codificación 'utf-8' */
-    const data = await readFile("data.json", "utf-8");
-    /* Convertimos el contenido de texto en un objeto JavaScript */
-    return JSON.parse(data);
-  } catch (err) {
-    /* Si hay algún error (por ejemplo, el archivo no existe), retornamos una estructura base */
-    return { projects: [], messages: [] };
-  }
-};
-
-//////////////////////////////////////////////////////////////////////////
-// ✅ Función para guardar (escribir) el JSON local (data.json)
-//////////////////////////////////////////////////////////////////////////
-const writeData = async (data) => {
-  /* Convertimos el objeto JavaScript 'data' en un texto JSON con 2 espacios de indentación */
-  const jsonText = JSON.stringify(data, null, 2);
-  /* Escribimos ese texto en el archivo 'data.json' con la codificación 'utf-8' */
-  await writeFile("data.json", jsonText, "utf-8");
-};
-
-//////////////////////////////////////////////////////////////////////////
-// ✅ Creamos el servidor HTTP
-//////////////////////////////////////////////////////////////////////////
-const server = http.createServer(async (req, res) => {
-  /* Extraemos el 'pathname' de la URL de la petición usando 'parse' */
-  const { pathname } = parse(req.url, true);
-
-  ////////////////////////////////////////////////////////////////////////
-  // CORS y cabeceras iniciales
-  ////////////////////////////////////////////////////////////////////////
-  res.setHeader(
-    "Access-Control-Allow-Origin",
-    "*"
-  ); /* Permite solicitudes desde cualquier origen */
-  res.setHeader(
-    "Access-Control-Allow-Methods",
-    "GET, POST, OPTIONS"
-  ); /* Permite métodos GET, POST y OPTIONS */
-  res.setHeader(
-    "Access-Control-Allow-Headers",
-    "Content-Type"
-  ); /* Permite la cabecera 'Content-Type' */
-  res.setHeader(
-    "Content-Type",
-    "application/json"
-  ); /* Indicamos que la respuesta será de tipo JSON */
-
-  ////////////////////////////////////////////////////////////////////////
-  // Manejo de la petición OPTIONS (CORS preflight)
-  ////////////////////////////////////////////////////////////////////////
-  if (req.method === "OPTIONS") {
-    res.writeHead(204); /* 204 significa "No Content" */
-    return res.end(); /* Terminamos la respuesta inmediatamente */
-  }
-
-  ////////////////////////////////////////////////////////////////////////
-  // ✅ GET /projects
-  ////////////////////////////////////////////////////////////////////////
-  if (pathname === "/projects" && req.method === "GET") {
-    /* Llamamos a la función readData() para obtener los datos del archivo JSON */
-    const data = await readData();
-    /* Enviamos estado 200 (OK) para indicar que la solicitud tuvo éxito */
-    res.writeHead(200);
-    /* Convertimos 'data.projects' a JSON y lo enviamos como respuesta */
-    return res.end(JSON.stringify(data.projects));
-  }
-
-  ////////////////////////////////////////////////////////////////////////
-  // ✅ GET /messages → lista todas las mensajes
-  ////////////////////////////////////////////////////////////////////////
-  if (pathname === "/messages" && req.method === "GET") {
-    /* Leemos el contenido actual de 'data.json' */
-    const data = await readData();
-    /* Devolvemos las mensajes que se han guardado en 'data.messages' */
-    res.writeHead(200);
-    /* Convertimos 'data.messages' en JSON y lo enviamos */
-    return res.end(JSON.stringify(data.messages));
-  }
-
-  ////////////////////////////////////////////////////////////////////////
-  // ✅ POST /contact
-  ////////////////////////////////////////////////////////////////////////
-  if (pathname === "/contact" && req.method === "POST") {
-    /* Inicializamos una variable 'body' para ir concatenando los datos de la solicitud */
-    let body = "";
-
-    /* Evento 'data': se dispara cada vez que llega un chunk (fragmento) de datos */
-    req.on("data", (chunk) => {
-      /* Convertimos ese chunk a texto y lo añadimos a la variable 'body' */
-      body += chunk.toString();
-    });
-
-    /* Evento 'end': se dispara cuando termina de llegar toda la data del body */
-    req.on("end", async () => {
-      try {
-        /* Parseamos el body en formato JSON, obteniendo un objeto con { name, email, message } */
-        const parsed = JSON.parse(body);
-
-        /* Extraemos name, email y message del objeto 'parsed' */
-        const { name, email, message } = parsed;
-
-        /* Validamos que no falten datos obligatorios */
-        if (!name || !email || !message) {
-          /* Devolvemos estado 400 indicando que los campos son inválidos */
-          res.writeHead(400);
-          return res.end(
-            JSON.stringify({ error: "Campos obrigatórios ausentes." })
-          );
-        }
-
-        /* Leemos el archivo JSON actual para no sobreescribir lo existente */
-        const data = await readData();
-        /* Agregamos la nueva entrada de mensaje al array 'messages' */
-        data.messages.push({ name, email, message });
-        /* Guardamos los cambios en 'data.json' */
-        await writeData(data);
-
-        /* Enviamos un correo usando el objeto 'transporter' de Nodemailer */
-        await transporter.sendMail({
-          from: `"Portafolio Victor Amadeu" <${process.env.OUTLOOK_EMAIL}>` /* Remitente */,
-          to: process.env.OUTLOOK_EMAIL /* Destinatario (nosotros mismos) */,
-          subject: `📬 Nuevo contacto - ${name}` /* Asunto del correo */,
-          html: `
-            <h2>Nuevo mensaje recibido:</h2>
-            <p><strong>Nombre:</strong> ${name}</p>
-            <p><strong>Email:</strong> ${email}</p>
-            <p><strong>Mensaje:</strong> ${message}</p>
-          ` /* Contenido en formato HTML */,
-        });
-
-        /* Respondemos con estado 201 (Created), indicando éxito */
-        res.writeHead(201);
-        res.end(JSON.stringify({ message: "Mensaje enviado con éxito." }));
-      } catch (err) {
-        /* Si ocurre un error, lo registramos en consola */
-        console.error("❌ Erro ao processar mensagem:", err.message);
-        /* Devolvemos 400 como indicación de datos malformados o error */
-        res.writeHead(400);
-        res.end(JSON.stringify({ error: "Error al procesar el mensaje." }));
-      }
-    });
-
-    /* Cuando usamos 'return;' aquí, indicamos que no se siga ejecutando el resto de código */
-    return;
-  }
-
-  ////////////////////////////////////////////////////////////////////////
-  // ❌ Ruta no encontrada
-  ////////////////////////////////////////////////////////////////////////
-  res.writeHead(
-    404
-  ); /* 404 indica que la ruta solicitada no existe en este servidor */
-  res.end(
-    JSON.stringify({ error: "Ruta no encontrada" })
-  ); /* Enviamos un JSON de error */
+////////////////////////////////////////////////////////////////////////////////
+// 1) Importamos 'dotenv' para poder usar variables de entorno definidas en .env
+import dotenv from "dotenv";
+////////////////////////////////////////////////////////////////////////////////
+// 2) Llamamos a la función config() para que se carguen las variables de .env
+dotenv.config();
+////////////////////////////////////////////////////////////////////////////////
+// 3) Importamos 'express' para crear un servidor de forma sencilla
+import express from "express";
+////////////////////////////////////////////////////////////////////////////////
+// 4) Importamos 'fs' (File System) para leer/escribir nuestro archivo data.json
+import fs from "fs";
+////////////////////////////////////////////////////////////////////////////////
+// 5) Importamos 'cors' para permitir solicitudes desde otros orígenes (CORS)
+import cors from "cors";
+////////////////////////////////////////////////////////////////////////////////
+// 6) Creamos la aplicación Express
+const app = express();
+////////////////////////////////////////////////////////////////////////////////
+// 7) Definimos el puerto: si existe en las variables de entorno, lo usa; de lo contrario, 3000
+const PORT = process.env.PORT || 3000;
+////////////////////////////////////////////////////////////////////////////////
+// 8) Definimos la ruta (archivo) donde guardaremos y leeremos nuestros datos
+const DATA_FILE = "data.json";
+////////////////////////////////////////////////////////////////////////////////
+// 9) Habilitamos CORS en la app, para evitar problemas de seguridad al hacer fetch desde el frontend
+app.use(cors());
+////////////////////////////////////////////////////////////////////////////////
+// 10) Habilitamos el parseo de JSON en el body de las solicitudes
+app.use(express.json());
+////////////////////////////////////////////////////////////////////////////////
+// 11) Ruta GET /projects → Devuelve la lista de proyectos desde DATA_FILE
+app.get("/projects", (req, res) => {
+  // 11.1) Leemos el archivo data.json de forma asíncrona (en este caso, con callback)
+  fs.readFile(DATA_FILE, "utf8", (err, data) => {
+    // 11.2) Si hay error al leer el archivo, respondemos con código 500 (Internal Server Error)
+    if (err) {
+      return res.status(500).json({ error: "Error al leer proyectos." });
+    }
+    // 11.3) Si data no está vacío, lo convertimos de texto a objeto JavaScript, si no, un array vacío
+    const jsonData = data ? JSON.parse(data) : { projects: [], messages: [] };
+    // 11.4) Devolvemos la parte 'projects' en la respuesta
+    return res.json(jsonData.projects || []);
+  });
 });
+////////////////////////////////////////////////////////////////////////////////
+// 12) Ruta GET /messages → Devuelve todas las "mensajes" guardadas en DATA_FILE
+app.get("/messages", (req, res) => {
+  // 12.1) Leemos el archivo data.json
+  fs.readFile(DATA_FILE, "utf8", (err, data) => {
+    // 12.2) Si ocurre algún error de lectura, enviamos estado 500
+    if (err) {
+      return res.status(500).json({ error: "Error al leer mensajes." });
+    }
+    // 12.3) Si todo va bien, convertimos el contenido a objeto
+    const jsonData = data ? JSON.parse(data) : { projects: [], messages: [] };
+    // 12.4) Retornamos el array de mensajes
+    return res.json(jsonData.messages || []);
+  });
+});
+////////////////////////////////////////////////////////////////////////////////
+// 13) Ruta POST /contact → Guarda un nuevo mensaje en DATA_FILE (sin enviar email)
+app.post("/contact", (req, res) => {
+  // 13.1) 'req.body' debería contener { name, email, message }, que llegan desde el frontend
+  const { name, email, message } = req.body;
 
-//////////////////////////////////////////////////////////////////////////
-// ✅ Iniciamos el servidor en el puerto definido (PORT)
-//////////////////////////////////////////////////////////////////////////
-server.listen(PORT, () => {
-  /* Imprimimos un mensaje en consola para saber que el servidor está en marcha */
+  // 13.2) Validamos campos mínimos
+  if (!name || !email || !message) {
+    return res.status(400).json({ error: "Faltan campos obligatorios." });
+  }
+
+  // 13.3) Leemos el archivo data.json para no pisar la información previa
+  fs.readFile(DATA_FILE, "utf8", (err, data) => {
+    // 13.4) Si falla la lectura, devolvemos error 500
+    if (err) {
+      return res
+        .status(500)
+        .json({ error: "Error al acceder al archivo de datos." });
+    }
+
+    // 13.5) Convertimos a objeto o, si estaba vacío/inexistente, creamos una estructura base
+    const jsonData = data ? JSON.parse(data) : { projects: [], messages: [] };
+
+    // 13.6) Agregamos el nuevo mensaje al array 'messages'
+    jsonData.messages.push({ name, email, message });
+
+    // 13.7) Guardamos los cambios en el archivo data.json
+    fs.writeFile(
+      DATA_FILE,
+      JSON.stringify(jsonData, null, 2),
+      "utf8",
+      (writeErr) => {
+        // 13.8) Si hay error al escribir, devolvemos estado 500
+        if (writeErr) {
+          return res
+            .status(500)
+            .json({ error: "Error al guardar el mensaje." });
+        }
+        // 13.9) Devolvemos estado 201 (Created) indicando que todo salió bien
+        return res
+          .status(201)
+          .json({ message: "Mensaje almacenado con éxito." });
+      }
+    );
+  });
+});
+////////////////////////////////////////////////////////////////////////////////
+// 14) Ponemos el servidor a escuchar en el puerto definido
+app.listen(PORT, () => {
+  // 14.1) Mensaje de confirmación en la consola
   console.log(`🚀 Servidor rodando en http://localhost:${PORT}`);
 });
+////////////////////////////////////////////////////////////////////////////////
