@@ -1,19 +1,31 @@
 <!-- 
   A continuación verás el archivo "MessagesView.vue" completamente actualizado,
-  con las modificaciones solicitadas para mejorar el estilo de la tabla.
+  con las modificaciones solicitadas para mejorar el estilo de la tabla 
+  y aumentar el espacio inferior (evitando que el footer quede muy cerca).
   Incluye explicaciones didácticas línea por línea en TODO el código, 
   sin dejar ninguna línea sin comentarios.
+
   IMPORTANTE: Sustituye la URL de fetch("https://portafolio-vue.onrender.com/messages")
   por la de tu propio backend si fuera distinta.
 -->
 
 <template>
-  <!-- Contenedor principal con clase de Bootstrap "container" y margen superior (mt-5) -->
+  <!-- 
+    "container" es la clase de Bootstrap para centrar el contenido y 
+    "mt-5" para añadir margen superior.
+    Este contenedor abarca toda la sección de mensajes 
+  -->
   <div class="container mt-5">
-    <!-- Título centrado (text-center) y con margen inferior (mb-4) para la sección de mensajes -->
+    <!-- 
+      Título centrado (text-center) con margen inferior (mb-4). 
+      Texto que indica la sección de Mensajes Recibidos 
+    -->
     <h2 class="text-center mb-4">📥 Mensagens Recebidas</h2>
 
-    <!-- Verificamos si "messages" tiene datos con v-if -->
+    <!-- 
+      Verificamos si "messages" tiene datos con v-if.
+      Si "messages.length" > 0, mostramos la tabla; de lo contrario, el bloque alternativo.
+    -->
     <div v-if="messages.length">
       <!-- 
         "table-responsive" es una clase de Bootstrap que hace la tabla desplazable 
@@ -126,9 +138,18 @@ export default {
   sin afectar a otros componentes de la aplicación.
 */
 
-/* Ajusta el ancho máximo del contenedor a 1000px */
+/* 
+  Ajustamos el contenedor para que ocupe al menos el 80% de la altura de la pantalla (min-height: 80vh)
+  y añadimos un padding-bottom para separar el contenido del footer.
+  También usamos flex para centrar verticalmente si el contenido es corto.
+*/
 .container {
-  max-width: 1000px;
+  max-width: 1000px; /* ancho máximo de 1000px para la tabla */
+  min-height: 80vh;  /* ocupa el 80% de la altura de la ventana */
+  padding-bottom: 4rem; /* espacio extra abajo para que el footer no quede pegado */
+  display: flex;         /* convertimos el contenedor en flexbox */
+  flex-direction: column; /* apilamos elementos verticalmente */
+  justify-content: center; /* centramos el contenido verticalmente */
 }
 
 /* 

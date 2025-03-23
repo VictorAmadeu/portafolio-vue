@@ -1,17 +1,17 @@
 <template>
-  <!-- Contêiner principal com margem superior (mt-5) -->
+  <!-- Contenedor principal con margen superior (mt-5) -->
   <div class="container mt-5">
-    <!-- Título centralizado para a seção de contato -->
-    <h2 class="text-center mb-4">Contato</h2>
+    <!-- Título centrado para la sección de contacto -->
+    <h2 class="text-center mb-4">Contacto</h2>
 
-    <!-- Formulário que chama o método sendMessage ao ser enviado -->
-    <!-- O modificador .prevent impede o comportamento padrão (recarregar a página) -->
+    <!-- Formulario que dispara la función 'sendMessage' en el evento 'submit' 
+         con .prevent para evitar recargar la página -->
     <form @submit.prevent="sendMessage">
       
-      <!-- Campo Nome -->
+      <!-- Campo Nombre -->
       <div class="mb-3">
-        <label for="name" class="form-label">Nome</label>
-        <!-- Campo de texto vinculado a form.name com v-model -->
+        <label for="name" class="form-label">Nombre</label>
+        <!-- Input de texto enlazado a form.name con v-model -->
         <input
           type="text"
           v-model="form.name"
@@ -23,8 +23,8 @@
 
       <!-- Campo Email -->
       <div class="mb-3">
-        <label for="email" class="form-label">Email</label>
-        <!-- Campo do tipo email com validação automática do navegador -->
+        <label for="email" class="form-label">Correo Electrónico</label>
+        <!-- Input de tipo email con validación básica del navegador -->
         <input
           type="email"
           v-model="form.email"
@@ -34,10 +34,10 @@
         />
       </div>
 
-      <!-- Campo Assunto -->
+      <!-- Campo Asunto -->
       <div class="mb-3">
-        <label for="subject" class="form-label">Assunto</label>
-        <!-- Campo de texto para o assunto do contato -->
+        <label for="subject" class="form-label">Asunto</label>
+        <!-- Input de texto enlazado a form.subject -->
         <input
           type="text"
           v-model="form.subject"
@@ -47,10 +47,10 @@
         />
       </div>
 
-      <!-- Campo Mensagem -->
+      <!-- Campo Mensaje -->
       <div class="mb-3">
-        <label for="message" class="form-label">Mensagem</label>
-        <!-- Área de texto com 5 linhas de altura -->
+        <label for="message" class="form-label">Mensaje</label>
+        <!-- Textarea con altura de 5 filas -->
         <textarea
           v-model="form.message"
           class="form-control"
@@ -60,7 +60,7 @@
         ></textarea>
       </div>
 
-      <!-- Botão de envio do formulário -->
+      <!-- Botón para enviar el formulario -->
       <button type="submit" class="btn btn-primary">Enviar</button>
     </form>
   </div>
@@ -68,50 +68,49 @@
 
 <script>
 /*
-  Este componente Vue chama a API do backend ao enviar o formulário.
-  Os dados são enviados via método POST no formato JSON.
+  Este componente Vue envía los datos al backend alojado en Render.
+  Los datos se envían mediante una solicitud POST en formato JSON.
 */
 export default {
-  // Nome do componente (boa prática para debug)
+  // Nombre del componente para depuración
   name: "ContactView",
 
-  // Dados reativos do componente
+  // data() retorna las propiedades reactivas
   data() {
     return {
-      // Objeto form agrupa todos os campos do formulário
+      // 'form' agrupa todos los campos del formulario
       form: {
-        name: "",     // Nome do remetente
-        email: "",    // Email do remetente
-        subject: "",  // Assunto da mensagem
-        message: "",  // Texto da mensagem
+        name: "",
+        email: "",
+        subject: "",
+        message: ""
       },
     };
   },
 
-  // Métodos disponíveis no componente
+  // Métodos disponibles en este componente
   methods: {
-    // Função assíncrona responsável por enviar os dados ao servidor
+    // Función asíncrona que envía los datos al servidor
     async sendMessage() {
       try {
-        // Faz a requisição POST para o backend hospedado no Render
+        // Enviamos una solicitud POST al backend en Render
         const response = await fetch("https://portafolio-vue.onrender.com/contact", {
-          method: "POST", // Método de envio de dados
+          method: "POST",
           headers: {
-            "Content-Type": "application/json", // Indica que estamos enviando JSON
+            "Content-Type": "application/json"
           },
-          // Converte o objeto form em uma string JSON
+          // Convertimos form en JSON para el cuerpo de la solicitud
           body: JSON.stringify(this.form),
         });
 
-        // Aguarda a resposta convertida em JSON
+        // Convertimos la respuesta a objeto/array JSON
         const data = await response.json();
 
-        // Verifica se o envio foi bem-sucedido
+        // Verificamos si la respuesta fue exitosa (código 2xx)
         if (response.ok) {
-          // Mostra alerta de sucesso
-          alert("Mensagem enviada com sucesso!");
+          alert("Mensaje enviado con éxito!");
 
-          // Limpa o formulário
+          // Limpiamos el formulario
           this.form = {
             name: "",
             email: "",
@@ -119,13 +118,13 @@ export default {
             message: ""
           };
         } else {
-          // Se o servidor respondeu com erro, mostra mensagem apropriada
-          alert(data.error || "Erro ao enviar mensagem.");
+          // Si el servidor respondió con un código de error
+          alert(data.error || "Error al enviar el mensaje.");
         }
       } catch (err) {
-        // Captura erros de rede ou exceções
-        console.error("Erro:", err);
-        alert("Erro ao enviar mensagem.");
+        // Capturamos errores de red o excepciones
+        console.error("Error:", err);
+        alert("Error al enviar el mensaje.");
       }
     },
   },
@@ -133,14 +132,22 @@ export default {
 </script>
 
 <style scoped>
-/* Aplica os estilos apenas neste componente */
+/* 
+  'scoped' indica que los estilos sólo afectan a este componente 
+*/
 
-/* Define uma largura máxima para o container */
+/* Contenedor principal con altura mínima de 80% de la pantalla,
+   centrado verticalmente y margen inferior para separar del footer */
 .container {
   max-width: 900px;
+  min-height: 80vh;         /* ocupa 80% de la altura de la ventana */
+  display: flex;            /* permite centrar el contenido */
+  flex-direction: column;   /* apila los elementos en columna */
+  justify-content: center;  /* centra verticalmente el formulario */
+  padding-bottom: 4rem;     /* espacio extra antes del footer */
 }
 
-/* Adiciona margem ao botão para separá-lo dos campos acima */
+/* Margen superior para el botón 'Enviar' */
 .btn-primary {
   margin-top: 1rem;
 }
