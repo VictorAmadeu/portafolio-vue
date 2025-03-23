@@ -1,14 +1,23 @@
-<template>
-  <div>
-    <!-- Navbar fixa na parte superior -->
+<!-- ******************** INICIO DE App.vue ******************** -->
+<template> <!-- Apertura de la sección del template donde definimos la estructura visual -->
+  <div> <!-- Contenedor principal para agrupar navbar, contenido y footer -->
+  
+    <!-- ******************** NAVBAR ******************** -->
+    <!-- Barra de navegación fija en la parte superior, con clase de Bootstrap -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-      <div class="container">
-        <!-- Logo com ícone na navbar -->
+      <div class="container"> <!-- Contenedor de Bootstrap que centra y da espaciado -->
+      
+        <!-- ******************** LOGO E ÍCONE ******************** -->
+        <!-- router-link: para navegar entre rutas en Vue sin recargar la página -->
         <router-link to="/" class="navbar-brand fw-bold">
-          <i class="fas fa-laptop-code"></i> Mi Portafolio
+          <!-- ícono de Font Awesome -->
+          <i class="fas fa-laptop-code"></i> 
+          Mi Portafolio
         </router-link>
+        <!-- Fin del logo e ícono -->
 
-        <!-- Botão de colapso para dispositivos móveis -->
+        <!-- ******************** BOTÓN DE COLAPSO ******************** -->
+        <!-- Se muestra en móviles para expandir/colapsar el menú -->
         <button
           class="navbar-toggler"
           type="button"
@@ -18,107 +27,167 @@
           aria-expanded="false"
           aria-label="Alternar navegação"
         >
-          <span class="navbar-toggler-icon"></span>
+          <span class="navbar-toggler-icon"></span> <!-- Ícono tipo hamburguesa -->
         </button>
+        <!-- Fin del botón de colapso -->
 
-        <!-- Menú de navegação -->
+        <!-- ******************** MENÚ DE NAVEGACIÓN ******************** -->
+        <!-- collapse: se expande o se colapsa al hacer clic en el botón en móviles -->
         <div class="collapse navbar-collapse" id="navbarNav">
+          <!-- ul: lista de elementos de navegación -->
           <ul class="navbar-nav ms-auto">
+            <!-- ms-auto: empuja los ítems a la derecha -->
+
+            <!-- ******************** ÍTEM 1: INICIO ******************** -->
             <li class="nav-item">
-              <!-- Link correto para a página de início -->
+              <!-- router-link a la ruta raíz "/" -->
               <router-link to="/" class="nav-link">
-                <i class="fas fa-home"></i> Inicio
+                <!-- ícono de casa (home) con Font Awesome -->
+                <i class="fas fa-home"></i> 
+                Inicio
               </router-link>
             </li>
+            <!-- Fin del ítem 1 de navegación -->
+
+            <!-- ******************** ÍTEM 2: CONTACTO ******************** -->
             <li class="nav-item">
-              <!-- Link correto para a página de contato -->
+              <!-- router-link a la ruta "/contact" -->
               <router-link to="/contact" class="nav-link">
-                <i class="fas fa-envelope"></i> Contacto
+                <!-- ícono de sobre (envelope) con Font Awesome -->
+                <i class="fas fa-envelope"></i>
+                Contacto
               </router-link>
             </li>
-          </ul>
-        </div>
-      </div>
+            <!-- Fin del ítem 2 de navegación -->
+
+            <!-- ******************** ÍTEM 3: MENSAJES NUEVO ******************** -->
+            <li class="nav-item">
+              <!-- router-link a la ruta "/messages" 
+                   donde mostraremos la lista de mensajes del formulario -->
+              <router-link to="/messages" class="nav-link">
+                <!-- ícono de inbox con Font Awesome -->
+                <i class="fas fa-inbox"></i>
+                Mensajes
+              </router-link>
+            </li>
+            <!-- Fin del ítem 3 de navegación -->
+
+          </ul> <!-- Fin de la lista de ítems de navegación -->
+        </div> <!-- Fin del contenedor con la clase collapse navbar-collapse -->
+      </div> <!-- Fin de .container -->
     </nav>
+    <!-- Fin de la navbar -->
 
-    <!-- Conteúdo principal dinâmico -->
+
+    <!-- ******************** CONTENIDO PRINCIPAL DINÁMICO ******************** -->
+    <!-- router-view: Aquí Vue inyecta los componentes de cada ruta -->
     <router-view></router-view>
+    <!-- Fin del contenido dinámico -->
 
-    <!-- Rodapé -->
+
+    <!-- ******************** FOOTER O RODAPÉ ******************** -->
     <footer class="footer bg-dark text-white text-center py-4">
       <div class="container">
+        <!-- Texto de derechos reservados -->
         <p class="mb-3">© 2025 Mi Portafolio. Todos los derechos reservados.</p>
 
-        <!-- Ícones de redes sociais -->
+        <!-- Íconos de redes sociales -->
         <div class="footer-icons">
-          <a href="https://www.linkedin.com/in/victor-amadeu-braga-heleno-583870266/" target="_blank">
+          <!-- Enlace a LinkedIn -->
+          <a 
+            href="https://www.linkedin.com/in/victor-amadeu-braga-heleno-583870266/" 
+            target="_blank"
+          >
             <i class="fab fa-linkedin"></i>
           </a>
-          <a href="https://www.instagram.com/victoramadeu_?igsh=MXQxeTllNDl5MHp4dA==" target="_blank">
+          <!-- Enlace a Instagram -->
+          <a 
+            href="https://www.instagram.com/victoramadeu_?igsh=MXQxeTllNDl5MHp4dA==" 
+            target="_blank"
+          >
             <i class="fab fa-instagram"></i>
           </a>
-          <a href="https://github.com/VictorAmadeu" target="_blank">
+          <!-- Enlace a GitHub -->
+          <a 
+            href="https://github.com/VictorAmadeu" 
+            target="_blank"
+          >
             <i class="fab fa-github"></i>
           </a>
+          <!-- Enlace al correo (mailto) -->
           <a href="mailto:victor@example.com">
             <i class="fas fa-envelope"></i>
           </a>
         </div>
       </div>
     </footer>
-  </div>
-</template>
+    <!-- Fin del footer -->
+
+  </div> <!-- Fin de la envoltura principal -->
+</template> <!-- Cierre del template -->
 
 <script>
+/*
+  Este script define el componente principal App,
+  que únicamente administra la estructura global:
+  - Navbar
+  - <router-view> para el contenido
+  - Footer
+*/
 export default {
-  name: "App", // Nome do componente principal
+  name: "App", // Nombre identificativo del componente principal
 };
 </script>
 
 <style scoped>
-/* ====== Estilos para a Navbar ====== */
+/* ====== Estilos para la Navbar ====== */
+
+/* .navbar: clase de Bootstrap para la barra de navegación */
 .navbar {
-  padding: 15px 20px; /* Espaçamento interno para melhorar a aparência */
-  transition: background-color 0.3s ease-in-out; /* Transição suave ao mudar de cor */
+  padding: 15px 20px; /* Margen interno para más espacio en la barra */
+  transition: background-color 0.3s ease-in-out; /* Transición suave al cambiar color */
 }
 
-/* Estilos dos links na navbar */
+/* Estilos para los enlaces de la navbar */
 .navbar-nav .nav-link {
-  font-size: 1.1rem; /* Ajusta o tamanho do texto */
-  font-weight: 500; /* Deixa o texto em negrito moderado */
+  font-size: 1.1rem; /* Tamaño de fuente más grande */
+  font-weight: 500;  /* Negrita moderada */
   transition: color 0.3s ease-in-out, border-bottom 0.3s ease-in-out;
 }
 
-/* Efeito hover nos links */
+/* Hover en los enlaces: cambio a color amarillo */
 .navbar-nav .nav-link:hover {
-  color: #ffdd57 !important; /* Cor amarela ao passar o mouse */
+  color: #ffdd57 !important; /* !important para sobrescribir estilo por defecto */
 }
 
-/* ====== Estilos para o rodapé ====== */
+/* ====== Estilos para el footer ====== */
+
+/* Clase footer: color de fondo oscuro, texto blanco */
 .footer {
-  background-color: #343a40; /* Cor de fundo escura */
-  color: white; /* Texto branco */
+  background-color: #343a40;
+  color: white;
   text-align: center;
-  padding: 20px 0;
+  padding: 20px 0; /* Espacio vertical */
 }
 
-/* Ícones do rodapé */
+/* footer-icons: contenedor de íconos en el footer */
 .footer-icons {
   display: flex;
-  justify-content: center;
-  gap: 15px;
+  justify-content: center; /* Centra los íconos horizontalmente */
+  gap: 15px;               /* Espacio entre íconos */
 }
 
-/* Estilização dos ícones */
+/* Estilos para los íconos del footer */
 .footer-icons a {
-  font-size: 1.8rem;
-  color: white;
+  font-size: 1.8rem;      /* Íconos algo grandes */
+  color: white;           /* Color blanco */
   transition: transform 0.3s ease-in-out, color 0.3s ease-in-out;
 }
 
-/* Efeito hover nos ícones */
+/* Efecto hover en íconos: se agrandan y cambian a color amarillo */
 .footer-icons a:hover {
   transform: scale(1.2);
-  color: #ffc107; /* Cor amarela ao passar o mouse */
+  color: #ffc107;
 }
 </style>
+<!-- ******************** FIN DE App.vue ******************** -->
