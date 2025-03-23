@@ -78,12 +78,12 @@ const server = http.createServer(async (req, res) => {
         {
           sender: {
             name: "Portafolio Victor Amadeu",
-            email: "Victoremmadrid@outlook.com", // 👈 remetente validado e funcional
+            email: "victoremmadrid@outlook.com", // 👈 remetente validado e funcional
           },
 
           to: [
             {
-              email: "Victoremmadrid@outlook.com", // 👈 destinatário principal
+              email: "victoremmadrid@outlook.com", // 👈 destinatário principal
               name: "Victor Amadeu",
             },
           ],
