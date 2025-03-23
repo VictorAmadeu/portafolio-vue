@@ -15,16 +15,17 @@ const PORT = process.env.PORT || 3000;
 // ✅ Leemos los datos del archivo JSON (proyectos y mensajes)
 const readData = async () => {
   try {
-    const data = await readFile("data.json", "utf-8");
-    return JSON.parse(data);
+    const data = await readFile("data.json", "utf-8"); // Leemos el contenido como texto
+    return JSON.parse(data); // Convertimos el texto JSON en objeto
   } catch (error) {
-    return { projects: [], messages: [] }; // En caso de error, devolvemos estructura vacía
+    // En caso de error, devolvemos estructura vacía
+    return { projects: [], messages: [] };
   }
 };
 
 // ✅ Guardamos los datos actualizados en el archivo JSON
 const writeData = async (data) => {
-  await writeFile("data.json", JSON.stringify(data, null, 2), "utf-8");
+  await writeFile("data.json", JSON.stringify(data, null, 2), "utf-8"); // Escribimos el JSON formateado
 };
 
 // ✅ Leemos la clave API y el email destino desde las variables de entorno (.env)
@@ -34,90 +35,91 @@ const TO_EMAIL = process.env.TO_EMAIL;
 // ✅ Creamos el servidor HTTP
 const server = http.createServer(async (req, res) => {
   // ✅ Configuramos cabeceras CORS y tipo de contenido
-  res.setHeader("Content-Type", "application/json");
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Access-Control-Allow-Methods", "GET, POST");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+  res.setHeader("Content-Type", "application/json"); // Indicamos que responderemos en formato JSON
+  res.setHeader("Access-Control-Allow-Origin", "*"); // Permitimos solicitudes de cualquier origen
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST"); // Permitimos métodos GET y POST
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type"); // Permitimos cabecera Content-Type
 
   // ✅ Manejamos solicitudes OPTIONS (preflight)
   if (req.method === "OPTIONS") {
-    res.writeHead(204);
-    return res.end();
+    res.writeHead(204); // 204 = Sin contenido
+    return res.end(); // Terminamos la respuesta
   }
 
   // ✅ Ruta GET para obtener proyectos
   if (req.url === "/projects" && req.method === "GET") {
-    const data = await readData();
-    res.writeHead(200);
-    return res.end(JSON.stringify(data.projects));
+    const data = await readData(); // Leemos los proyectos desde data.json
+    res.writeHead(200); // Respuesta exitosa
+    return res.end(JSON.stringify(data.projects)); // Enviamos los proyectos al frontend
   }
 
   // ✅ Ruta POST para recibir mensajes del formulario de contacto
   if (req.url === "/contact" && req.method === "POST") {
-    let body = "";
+    let body = ""; // Inicializamos la variable para recibir el cuerpo
 
-    // ✅ Recibimos los datos del body
+    // ✅ Recibimos los datos del body en partes (chunks)
     req.on("data", (chunk) => {
-      body += chunk.toString();
+      body += chunk.toString(); // Convertimos cada chunk a texto y lo agregamos
     });
 
     // ✅ Cuando terminamos de recibir, procesamos la solicitud
     req.on("end", async () => {
       try {
-        const newMessage = JSON.parse(body); // Convertimos el body en objeto
+        const newMessage = JSON.parse(body); // Convertimos el texto recibido en objeto
 
-        // ✅ Guardamos el mensaje en el archivo JSON
-        const data = await readData();
-        data.messages.push(newMessage);
-        await writeData(data);
+        // ✅ Guardamos el mensaje en el archivo local (data.json)
+        const data = await readData(); // Leemos los datos existentes
+        data.messages.push(newMessage); // Agregamos el nuevo mensaje
+        await writeData(data); // Guardamos el archivo actualizado
 
-        // ✅ Enviamos el mensaje vía correo electrónico con Brevo
+        // ✅ Enviamos el mensaje vía correo electrónico con la API de Brevo
         await axios.post(
-          "https://api.brevo.com/v3/smtp/email",
+          "https://api.brevo.com/v3/smtp/email", // Endpoint de envío
           {
             sender: {
               name: "Portafolio Victor Amadeu",
-              email: "noreply@victorportafolio.com", // Puede ser ficticio
+              email: "noreply@victorportafolio.com", // Correo ficticio (no requiere estar registrado)
             },
             to: [
               {
-                email: TO_EMAIL,
+                email: TO_EMAIL, // Email configurado en .env
                 name: "Victor Amadeu",
               },
             ],
-            subject: `📬 Nuevo mensaje - ${newMessage.nome}`,
+            subject: `📬 Nuevo mensaje - ${newMessage.nome}`, // Asunto del correo
             htmlContent: `
               <h2>Nuevo mensaje recibido</h2>
               <p><strong>Nombre:</strong> ${newMessage.nome}</p>
               <p><strong>Email:</strong> ${newMessage.email}</p>
               <p><strong>Mensaje:</strong><br/>${newMessage.mensagem}</p>
-            `,
+            `, // Contenido HTML del correo
           },
           {
             headers: {
-              "api-key": BREVO_API_KEY,
-              "Content-Type": "application/json",
-              accept: "application/json",
+              "api-key": BREVO_API_KEY, // Clave secreta de Brevo desde .env
+              "Content-Type": "application/json", // Indicamos que enviamos JSON
+              accept: "application/json", // Esperamos JSON como respuesta
             },
           }
         );
 
         // ✅ Enviamos respuesta al frontend
-        res.writeHead(201);
+        res.writeHead(201); // 201 = creado con éxito
         res.end(JSON.stringify({ message: "Mensaje enviado con éxito." }));
       } catch (error) {
+        // ✅ En caso de error en el envío, mostramos mensaje
         console.error("Error al enviar el correo:", error.message);
-        res.writeHead(400);
+        res.writeHead(400); // 400 = error en los datos
         res.end(JSON.stringify({ error: "Error al procesar el mensaje." }));
       }
     });
 
-    return;
+    return; // Finalizamos el flujo
   }
 
   // ✅ Ruta no encontrada
-  res.writeHead(404);
-  res.end(JSON.stringify({ error: "Ruta no encontrada" }));
+  res.writeHead(404); // 404 = no encontrado
+  res.end(JSON.stringify({ error: "Ruta no encontrada" })); // Enviamos error al frontend
 });
 
 // ✅ Iniciamos el servidor
