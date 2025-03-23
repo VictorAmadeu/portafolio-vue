@@ -73,35 +73,36 @@ const server = http.createServer(async (req, res) => {
         await writeData(data); // Guardamos el archivo actualizado
 
         // ✅ Enviamos el mensaje vía correo electrónico con la API de Brevo
-        await axios.post(
-          "https://api.brevo.com/v3/smtp/email",
-          {
-            sender: {
-              name: "Portafolio Victor Amadeu",
-              email: "victoremmadrid@outlook.com", // 👈 Seu email real validado no Brevo
-            },
-            to: [
-              {
-                email: "victoremmadrid@outlook.com",
-                name: "Victor Amadeu",
-              },
-            ],
-            subject: `📬 Nuevo contacto desde el portafolio - ${newMessage.name}`,
-            htmlContent: `
-  <h2>¡Nueva mensaje recibido!</h2>
-  <p><strong>Nombre:</strong> ${newMessage.name}</p>
-  <p><strong>Email:</strong> ${newMessage.email}</p>
-  <p><strong>Mensaje:</strong><br/>${newMessage.message}</p>
-`,
+      await axios.post(
+        "https://api.brevo.com/v3/smtp/email",
+        {
+          sender: {
+            name: "Portafolio Victor Amadeu",
+            email: "noreply@brevo-mail.com", // 👈 Mude aqui para o padrão Brevo!
           },
-          {
-            headers: {
-              "api-key": process.env.BREVO_API_KEY,
-              "Content-Type": "application/json",
-              accept: "application/json",
+          to: [
+            {
+              email: "victoremmadrid@outlook.com",
+              name: "Victor Amadeu",
             },
-          }
-        );
+          ],
+          subject: `📬 Nuevo contacto desde el portafolio - ${newMessage.name}`,
+          htmlContent: `
+      <h2>¡Nueva mensaje recibido!</h2>
+      <p><strong>Nombre:</strong> ${newMessage.name}</p>
+      <p><strong>Email:</strong> ${newMessage.email}</p>
+      <p><strong>Mensaje:</strong><br/>${newMessage.message}</p>
+    `,
+        },
+        {
+          headers: {
+            "api-key": process.env.BREVO_API_KEY,
+            "Content-Type": "application/json",
+            accept: "application/json",
+          },
+        }
+      );
+
 
         // ✅ Enviamos respuesta al frontend
         res.writeHead(201); // 201 = creado con éxito
