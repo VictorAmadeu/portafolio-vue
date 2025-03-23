@@ -1,44 +1,46 @@
 <!-- 
-  A continuación, presentamos el archivo "messages.view.vue" 
-  con el código actualizado y comentarios didácticos línea por línea.
-  IMPORTANTE: Sustituye la URL de "fetch(...)" con la de tu backend real, 
-  por ejemplo: "https://TU_BACKEND.onrender.com/api/messages".
+  A continuación encontrarás el archivo MessagesView.vue completamente funcional 
+  y actualizado, con explicaciones didácticas línea por línea en todo el código.
+  Recuerda sustituir "https://portafolio-vue.onrender.com/messages" por la URL de tu propio backend,
+  si fuera el caso. 
 -->
 
 <template>
-  <!-- Contenedor principal que aplica márgenes en la parte superior -->
+  <!-- Contenedor principal con clases de Bootstrap para espaciar la sección -->
   <div class="container mt-5">
-    <!-- Título centrado para la sección de mensajes recibidos -->
+    <!-- Título centrado con margen inferior de 4 unidades -->
     <h2 class="text-center mb-4">📨 Mensagens Recebidas</h2>
 
-    <!-- Condicional que muestra la tabla sólo si existe al menos un mensaje -->
+    <!-- Estructura condicional que evalúa si "messages.length" es mayor que 0 -->
     <div v-if="messages.length">
-      <!-- Tabla con clases de Bootstrap para estilo y borde -->
+      <!-- Tabla con estilo de Bootstrap, bordeada y con rayas alternadas (striped) -->
       <table class="table table-bordered table-striped">
-        <!-- Encabezado oscuro de la tabla -->
+        <!-- Encabezado de tabla con fondo oscuro de Bootstrap -->
         <thead class="table-dark">
           <tr>
-            <!-- Cabecera para el nombre de quien envía -->
+            <!-- Encabezado de columna para el nombre de la persona -->
             <th>Nome</th>
-            <!-- Cabecera para el email de quien envía -->
+            <!-- Encabezado de columna para el correo electrónico -->
             <th>Email</th>
-            <!-- Cabecera para el asunto del mensaje -->
+            <!-- Encabezado de columna para el asunto del mensaje -->
             <th>Assunto</th>
-            <!-- Cabecera para el contenido del mensaje -->
+            <!-- Encabezado de columna para el cuerpo del mensaje -->
             <th>Mensagem</th>
           </tr>
         </thead>
-        <!-- Cuerpo de la tabla donde se listan los mensajes -->
+        <!-- Cuerpo de la tabla donde se despliegan los datos reales -->
         <tbody>
-          <!-- Recorremos el array "messages" con v-for, 
-               mostrando cada mensaje y su índice. 
-               :key="index" ayuda a Vue a renderizar la lista de forma eficiente. -->
+          <!-- 
+            Bucle v-for que recorre el array "messages".
+            "msg" representa cada elemento, "index" es la posición en el array.
+            ":key" ayuda a Vue a optimizar la renderización de listas.
+          -->
           <tr v-for="(msg, index) in messages" :key="index">
-            <!-- Muestra el nombre del remitente -->
+            <!-- Muestra el nombre de la persona que envía el mensaje -->
             <td>{{ msg.name }}</td>
-            <!-- Muestra el email del remitente -->
+            <!-- Muestra el email de la persona que envía el mensaje -->
             <td>{{ msg.email }}</td>
-            <!-- Muestra el asunto del mensaje -->
+            <!-- Muestra el asunto enviado por la persona -->
             <td>{{ msg.subject }}</td>
             <!-- Muestra el contenido del mensaje -->
             <td>{{ msg.message }}</td>
@@ -47,7 +49,10 @@
       </table>
     </div>
 
-    <!-- Si no hay mensajes en el array "messages", se muestra este texto -->
+    <!-- 
+      Si "messages" está vacío, se muestra este bloque alternativo.
+      "v-else" se activa cuando v-if="messages.length" es false (o sea, 0 mensajes).
+    -->
     <div v-else>
       <p class="text-muted text-center">Nenhuma mensagem recebida ainda.</p>
     </div>
@@ -56,51 +61,50 @@
 
 <script>
 /* 
-  Exportamos el componente para su uso dentro de la aplicación Vue.
-  Dentro del objeto exportado, se definen:
-  - name (opcional, para identificar el componente),
-  - data (función que retorna las variables reactivas),
-  - ciclos de vida como "mounted" para obtener los mensajes al iniciar. 
+  Exportamos por defecto (default export) este componente de Vue,
+  para poder usarlo en cualquier parte de la aplicación (por ejemplo, en el router).
 */
 export default {
-  // Nombre opcional del componente (buena práctica para depuración)
-  name: 'MessagesView',
+  // "name" es una buena práctica para depurar el componente o identificarlo
+  name: "MessagesView",
 
-  // data() define las propiedades reactivas que usaremos en el template
+  // "data()" retorna un objeto con las propiedades reactivas que usaremos en la plantilla
   data() {
     return {
-      // messages será un array que se llenará con los datos traídos del backend
+      // "messages" es un array donde se guardarán los datos traídos del backend
       messages: [],
     };
   },
 
-  // mounted() se ejecuta después de que el componente haya sido insertado en el DOM
-  mounted() {
-    // Realizamos la petición fetch al backend para obtener la lista de mensajes
-    fetch('https://TU_BACKEND.onrender.com/api/messages')
-      // Convertimos la respuesta HTTP a formato JSON
-      .then(res => res.json())
-      // Asignamos los datos recibidos a la variable messages
-      .then(data => {
-        // Si deseas mostrar los mensajes más recientes primero, podrías usar data.reverse()
-        // this.messages = data.reverse();
-        this.messages = data;
-      })
-      // En caso de error, lo mostramos por consola
-      .catch(err => {
-        console.error('Erro ao buscar mensagens:', err);
-      });
+  // "mounted()" es un ciclo de vida de Vue que se ejecuta inmediatamente
+  // después de que el componente ha sido insertado en el DOM.
+  async mounted() {
+    try {
+      // Hacemos la petición GET al backend para obtener la lista de mensajes
+      // Reemplaza esta URL por tu endpoint si es diferente
+      const res = await fetch("https://portafolio-vue.onrender.com/messages");
+
+      // Convertimos la respuesta en un objeto JSON que contendrá el array de mensajes
+      const data = await res.json();
+
+      // Guardamos los datos en "messages" para poder mostrarlos en la tabla
+      // "reverse()" invierte el orden, mostrando los más recientes primero
+      this.messages = data.reverse();
+    } catch (err) {
+      // Si ocurre un error en la petición o la conversión a JSON, lo reportamos en la consola
+      console.error("Erro ao buscar mensagens:", err);
+    }
   },
 };
 </script>
 
 <style scoped>
 /* 
-  "scoped" indica que estos estilos sólo se aplicarán al 
-  contenido de este componente y no a otros componentes 
+  "scoped" indica que estos estilos sólo se aplicarán dentro de este componente,
+  sin afectar a otros componentes del proyecto.
 */
 .container {
-  /* Limita el ancho máximo de la sección principal a 900px */
+  /* Define un ancho máximo de 900 píxeles para el contenedor */
   max-width: 900px;
 }
 </style>
