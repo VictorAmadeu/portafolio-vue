@@ -78,7 +78,7 @@ const server = http.createServer(async (req, res) => {
         {
           sender: {
             name: "Portafolio Victor Amadeu",
-            email: "victoremmadrid@outlook.com", // 👈 remetente validado e funcional
+            email: "noreply@brevo-mail.com", // 👈 remetente validado e funcional
           },
 
           to: [
