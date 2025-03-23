@@ -25,3 +25,7 @@ dist-ssr
 git
 main
 rm
+
+# Ocultar chaves API e arquivos sensíveis
+.env
+

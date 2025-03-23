@@ -78,11 +78,12 @@ const server = http.createServer(async (req, res) => {
         {
           sender: {
             name: "Portafolio Victor Amadeu",
-            email: "noreply@brevo-mail.com", // 👈 Mude aqui para o padrão Brevo!
+            email: "victoremmadrid@outlook.com", // 👈 remetente validado e funcional
           },
+
           to: [
             {
-              email: "victoremmadrid@outlook.com",
+              email: "victoremmadrid@outlook.com", // 👈 destinatário principal
               name: "Victor Amadeu",
             },
           ],
