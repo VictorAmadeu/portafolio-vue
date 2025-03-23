@@ -1,10 +1,14 @@
 <!-- 
   A continuación verás el archivo "MessagesView.vue" completamente actualizado,
-  combinando la nueva apariencia de la tabla (estilo, espacio y modo oscuro)
-  con la protección por contraseña para que solo tú tengas acceso.
+  combinado con el estilo actual de la tabla y la protección adicional mediante 
+  contraseña + persistencia en localStorage.
 
-  Incluye explicaciones didácticas línea por línea en TODO el código, 
-  sin dejar ninguna línea sin comentarios.
+  De esta forma:
+  1) Si el usuario ya ha introducido la contraseña anteriormente (en esta sesión),
+     no se le volverá a pedir mientras no cierre el navegador.
+  2) Si es la primera vez, se mostrará el formulario de contraseña (campo password).
+  3) Al introducir la contraseña correcta ("Victor01121993aaa"), se guarda en localStorage
+     para mantener la sesión autenticada en la vista de mensajes.
 
   IMPORTANTE: Sustituye la URL de fetch("https://portafolio-vue.onrender.com/messages")
   por la de tu propio backend si fuera distinta.
@@ -13,18 +17,18 @@
 <template>
   <!-- 
     Envolvemos TODO en un contenedor que, por defecto, muestra:
-    1) La tabla de mensajes (si "authenticated" es true)
-    2) El formulario de contraseña si "authenticated" es false.
+    1) La tabla de mensajes (si isAuthenticated es true)
+    2) El formulario de contraseña si isAuthenticated es false.
     Se controla con v-if y v-else en la raíz.
   -->
   <div>
     <!-- 
       Sección principal que muestra la tabla de mensajes 
-      SOLO si "authenticated" es true
+      SOLO si "isAuthenticated" es true
     -->
     <div 
       class="container mt-5"
-      v-if="authenticated"
+      v-if="isAuthenticated"
     >
       <!-- Título centrado (text-center) con margen inferior (mb-4). -->
       <h2 class="text-center mb-4">📥 Mensagens Recebidas</h2>
@@ -76,9 +80,7 @@
                 ":key" ayuda a Vue a optimizar la renderización de listas.
               -->
               <tr v-for="(msg, index) in messages" :key="index">
-                <!-- 
-                  Muestra el nombre del remitente guardado en "msg.name"
-                -->
+                <!-- Muestra el nombre del remitente guardado en "msg.name" -->
                 <td>{{ msg.name }}</td>
                 <!-- Muestra el email del remitente guardado en "msg.email" -->
                 <td>{{ msg.email }}</td>
@@ -103,9 +105,9 @@
     </div>
     
     <!-- 
-      Si NO estamos autenticados (authenticated = false),
+      Si NO estamos autenticados (isAuthenticated = false),
       mostramos un formulario de contraseña para restringir acceso.
-      "v-else" complementa el v-if="authenticated" anterior.
+      "v-else" complementa el v-if="isAuthenticated" anterior.
     -->
     <div 
       class="container mt-5 text-center"
@@ -146,8 +148,9 @@
 <script>
 /* 
   Este componente se encarga de:
-  - Proteger la vista de mensajes con una contraseña (passwordInput).
-  - Mostrar la tabla de mensajes solamente si el usuario ingresa la contraseña correcta.
+  1) Proteger la vista de mensajes con una contraseña (passwordInput).
+  2) Guardar la autenticación en localStorage para NO pedir la contraseña cada vez.
+  3) Mostrar la tabla de mensajes solamente si el usuario pasa la contraseña.
 */
 export default {
   // "name" es buena práctica para debug e identificación del componente
@@ -156,36 +159,52 @@ export default {
   /* 
     data() retorna un objeto con las propiedades reactivas:
     1) messages: array donde guardamos los mensajes del backend.
-    2) authenticated: booleano que indica si el usuario pasó la barrera de contraseña.
+    2) isAuthenticated: booleano que indica si el usuario ya pasó la barrera de contraseña.
     3) passwordInput: almacena la contraseña digitada en el input.
     4) error: muestra si la contraseña está incorrecta.
   */
   data() {
     return {
       messages: [],
-      authenticated: false,
+      isAuthenticated: false,  // renombramos de 'authenticated' a 'isAuthenticated'
       passwordInput: "",
       error: false,
     };
   },
 
   /* 
-    methods: seccion donde definimos funciones.
-    1) checkPassword(): verifica si la contraseña digitada es la correcta.
-    2) fetchMessages(): si la contraseña es correcta, hace GET al backend para obtener mensajes.
+    Ciclo de vida "mounted": se ejecuta justo después de que el componente se haya montado en el DOM.
+    Aquí verificamos si ya existe una sesión guardada en localStorage. 
+    Si la hay, saltamos el paso de contraseña y cargamos los mensajes de inmediato.
   */
+  async mounted() {
+    // Checamos si hay un item "isAuthenticatedMessages" en localStorage
+    const authFlag = localStorage.getItem("isAuthenticatedMessages");
+
+    // Si authFlag es "true", el usuario ya había pasado la contraseña
+    if (authFlag === "true") {
+      this.isAuthenticated = true;
+      // Cargamos los mensajes directamente
+      await this.fetchMessages();
+    }
+  },
+
   methods: {
     // Verifica la contraseña ingresada y, si es correcta, carga los mensajes
-    checkPassword() {
-      // Aquí defines la contraseña que deseas proteger
-      const correctPassword = "Victor01121993aaa"; // MODIFICA esta línea con tu contraseña
+    async checkPassword() {
+      // Contraseña protegida. Puedes cambiarla a la que prefieras:
+      const correctPassword = "Victor01121993aaa";
 
       if (this.passwordInput === correctPassword) {
-        // Si coincide, marcamos authenticated = true y luego llamamos a fetchMessages()
-        this.authenticated = true;
-        this.fetchMessages();
+        // Si coincide, marcamos isAuthenticated = true
+        this.isAuthenticated = true;
+        // Guardamos esta info en localStorage para no pedir la contraseña otra vez
+        localStorage.setItem("isAuthenticatedMessages", "true");
+
+        // Cargamos los mensajes del backend
+        await this.fetchMessages();
       } else {
-        // Se muestra el error y permanece sin autenticar
+        // Si no coincide, mostramos error
         this.error = true;
       }
     },
@@ -193,7 +212,7 @@ export default {
     // Hace la petición GET al backend para obtener la lista de mensajes
     async fetchMessages() {
       try {
-        // Sustituye la URL si tu endpoint es distinto
+        // Ajusta la URL si tu endpoint es distinto
         const res = await fetch("https://portafolio-vue.onrender.com/messages");
         // Convertimos la respuesta a JSON
         const data = await res.json();
