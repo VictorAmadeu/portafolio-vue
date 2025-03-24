@@ -3,7 +3,8 @@
     <!-- Sección Hero con fondo degradado -->
     <section class="hero-section">
       <div class="hero-content">
-        <!-- Contenedor de la imagen de perfil alineada a la izquierda -->
+
+        <!-- [INICIO] IMAGEN DE PERFIL - NO SE HA TOCADO NADA AQUÍ -->
         <div class="profile-image-container">
           <img
             src="../assets/images/profile.jpg"
@@ -11,8 +12,9 @@
             class="profile-image"
           />
         </div>
+        <!-- [FIN] IMAGEN DE PERFIL - TODO IGUAL -->
 
-        <!-- Contenido de bienvenida alineado a la derecha -->
+        <!-- Contenido de bienvenida, desplazado a la derecha -->
         <div class="hero-text">
           <h1 class="display-4 fw-bold hero-title">
             Bienvenido a Mi Portafolio
@@ -113,14 +115,14 @@ export default {
 </script>
 
 <style scoped>
-/* 📌 Contenedor principal */
+/* Contenedor principal */
 .home-container {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-/* 📌 Sección Hero con fondo degradado */
+/* Hero con fondo degradado */
 .hero-section {
   background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
   color: white;
@@ -129,7 +131,7 @@ export default {
   width: 100%;
 }
 
-/* 📌 Contenedor flexible para la imagen y el texto */
+/* Contenedor flexible para la imagen y el texto */
 .hero-content {
   display: flex;
   align-items: center;
@@ -140,11 +142,7 @@ export default {
   flex-wrap: wrap;
 }
 
-/* ================================ */
-/* 🔒 Estilos EXCLUSIVOS da IMAGEM */
-/* ================================ */
-
-/* 📸 Contenedor da imagem de perfil */
+/* [INICIO] CSS EXCLUSIVO DE LA IMAGEN - SIN CAMBIOS */
 .profile-image-container {
   width: 250px;
   height: 250px;
@@ -163,34 +161,31 @@ export default {
   object-fit: cover;
   object-position: center;
 }
+/* [FIN] CSS EXCLUSIVO DE LA IMAGEN - NADA ALTERADO */
 
-/* ================================ */
-/* 🧭 Conteúdo textual (TÍTULO + BOTÕES) */
-/* ================================ */
-
-/* 📌 Contenedor del texto de bienvenida */
+/* Contenedor del texto de bienvenida */
 .hero-text {
   text-align: center;
   max-width: 700px;
 
-  /* ✅ Desplazamiento hacia la derecha */
-  margin-left: 50px;
+  /* 🔥 Aumentando el desplazamiento hacia la derecha */
+  margin-left: 150px;
 }
 
-/* 📌 Ajuste del título */
+/* Ajuste del título */
 .hero-title {
   font-size: 3rem;
   font-weight: bold;
   margin-bottom: 15px;
 }
 
-/* 📌 Subtítulo */
+/* Subtítulo */
 .hero-subtitle {
   font-size: 1.3rem;
   margin-bottom: 20px;
 }
 
-/* 📌 Botones de Redes Sociales */
+/* Botones de Redes Sociales */
 .social-buttons {
   display: flex;
   flex-wrap: wrap;
@@ -198,7 +193,7 @@ export default {
   justify-content: center;
 }
 
-/* 📌 Estilos para los botones de redes sociales */
+/* Estilos para los botones */
 .custom-btn {
   font-size: 1.1rem;
   padding: 12px 20px;
@@ -211,7 +206,6 @@ export default {
   overflow: hidden;
 }
 
-/* 📌 Efecto de animación en los botones */
 .custom-btn::after {
   content: "";
   position: absolute;
@@ -225,23 +219,21 @@ export default {
   border-radius: 50%;
 }
 
-/* 📌 Expansión del efecto hover */
 .custom-btn:hover::after {
   transform: translate(-50%, -50%) scale(1);
 }
 
-/* 📌 Efecto hover para los botones */
 .custom-btn:hover {
   transform: translateY(-5px);
   box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);
 }
 
-/* 📌 Sección de Contacto */
+/* Sección de Contacto */
 .contact-section {
   background: #f8f9fa;
 }
 
-/* 📱 Ajustes Responsive */
+/* Responsivo */
 @media (max-width: 1024px) {
   .hero-content {
     flex-direction: column;
@@ -251,7 +243,7 @@ export default {
     font-size: 2.5rem;
   }
 
-  /* 🔄 Eliminamos el margin-left en pantallas menores */
+  /* Eliminamos la margen-left en pantallas medianas/pequeñas */
   .hero-text {
     margin-left: 0;
   }
@@ -270,7 +262,7 @@ export default {
     width: 100%;
     justify-content: center;
   }
-
+  
   .hero-text {
     margin-left: 0;
   }
