@@ -113,14 +113,12 @@ export default {
 </script>
 
 <style scoped>
-/* 📌 Contenedor principal */
 .home-container {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-/* 📌 Sección Hero con fondo degradado */
 .hero-section {
   background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
   color: white;
@@ -129,18 +127,16 @@ export default {
   width: 100%;
 }
 
-/* 📌 Contenedor flexible para la imagen y el texto */
 .hero-content {
   display: flex;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: center;
   gap: 30px;
   max-width: 1200px;
   padding: 30px;
   flex-wrap: wrap;
 }
 
-/* 📌 Imagen de perfil alineada a la izquierda */
 .profile-image-container {
   width: 250px;
   height: 250px;
@@ -159,35 +155,37 @@ export default {
   object-position: center;
 }
 
-/* 📌 Contenedor del texto de bienvenida */
+/* ✅ Desplazamiento adicional hacia la derecha */
 .hero-text {
-  text-align: left;
+  text-align: center;
   max-width: 700px;
-  margin-left: auto; /* Desplaza el contenido hacia la derecha */
+  margin-left: 30px;
 }
 
-/* 📌 Título */
+@media (max-width: 1024px) {
+  .hero-text {
+    margin-left: 0;
+  }
+}
+
 .hero-title {
   font-size: 3rem;
   font-weight: bold;
   margin-bottom: 15px;
 }
 
-/* 📌 Subtítulo */
 .hero-subtitle {
   font-size: 1.3rem;
   margin-bottom: 20px;
 }
 
-/* 📌 Botones sociales */
 .social-buttons {
   display: flex;
   flex-wrap: wrap;
   gap: 15px;
-  justify-content: flex-start;
+  justify-content: center;
 }
 
-/* 📌 Estilos para los botones */
 .custom-btn {
   font-size: 1.1rem;
   padding: 12px 20px;
@@ -222,25 +220,17 @@ export default {
   box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);
 }
 
-/* 📌 Sección de contacto */
 .contact-section {
   background: #f8f9fa;
 }
 
-/* 📱 Responsive */
 @media (max-width: 1024px) {
   .hero-content {
     flex-direction: column;
-    text-align: center;
   }
 
-  .hero-text {
-    margin-left: 0;
-    text-align: center;
-  }
-
-  .social-buttons {
-    justify-content: center;
+  .hero-title {
+    font-size: 2.5rem;
   }
 }
 
