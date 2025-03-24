@@ -156,6 +156,7 @@ export default {
   align-items: center;
 }
 
+/* 📸 Imagem da foto de perfil */
 .profile-image {
   width: 100%;
   height: 100%;
