@@ -1,3 +1,9 @@
+<!-- 
+  A continuación verás el archivo "ContactView.vue" actualizado 
+  con mejoras de responsividad para pantallas pequeñas (móviles).
+  Los comentarios y textos se mantienen EN ESPAÑOL.
+-->
+
 <template>
   <!-- Contenedor principal con margen superior (mt-5) -->
   <div class="container mt-5">
@@ -150,5 +156,29 @@ export default {
 /* Margen superior para el botón 'Enviar' */
 .btn-primary {
   margin-top: 1rem;
+}
+
+/* 
+  Medias queries para pantallas pequeñas (hasta 768px).
+  Ajustamos padding, tipografía y anchos para mejor visibilidad.
+*/
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem;
+    margin-top: 2rem;
+    justify-content: flex-start; /* Evita forzar la vertical en pantallas bajas */
+    min-height: auto;           /* Deja que crezca según el contenido */
+  }
+  
+  h2 {
+    font-size: 1.5rem;
+  }
+
+  /* Ajustamos el ancho de los inputs y el botón para que no queden muy grandes */
+  .form-control,
+  button {
+    font-size: 1rem;
+    width: 100%; 
+  }
 }
 </style>
