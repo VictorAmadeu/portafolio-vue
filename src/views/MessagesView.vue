@@ -1,14 +1,35 @@
 <template>
-  <!-- Vista protegida por contraseña -->
   <div>
-    <!-- Sección con la tabla de mensajes (solo si autenticado) -->
-    <div class="container mt-5" v-if="isAuthenticated">
+    <!-- Sección protegida (autenticado) -->
+    <div class="container mt-4" v-if="isAuthenticated">
       <h2 class="text-center mb-4">📥 Mensajes Recibidos</h2>
 
       <!-- Si hay mensajes -->
       <div v-if="messages.length">
-        <!-- Scroll horizontal en móviles -->
-        <div class="table-responsive">
+        <!-- MOBILE FIRST: Cards para pantallas pequeñas -->
+        <div class="d-md-none">
+          <div
+            v-for="(msg, index) in messages"
+            :key="msg._id || index"
+            class="card mb-3 shadow-sm"
+          >
+            <div class="card-body">
+              <h5 class="card-title">{{ msg.name }}</h5>
+              <h6 class="card-subtitle mb-2 text-muted">{{ msg.email }}</h6>
+              <p class="card-text"><strong>Asunto:</strong> {{ msg.subject }}</p>
+              <p class="card-text">{{ msg.message }}</p>
+              <button
+                class="btn btn-danger btn-sm mt-2 w-100"
+                @click="deleteMessage(msg._id)"
+              >
+                🗑️ Eliminar
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- TABLA para pantallas medianas y grandes -->
+        <div class="table-responsive d-none d-md-block">
           <table class="table table-hover table-bordered shadow-sm rounded-3">
             <thead class="table-dark text-center">
               <tr>
@@ -20,7 +41,10 @@
               </tr>
             </thead>
             <tbody class="table-light">
-              <tr v-for="(msg, index) in messages" :key="msg._id || index">
+              <tr
+                v-for="(msg, index) in messages"
+                :key="msg._id || index"
+              >
                 <td>{{ msg.name }}</td>
                 <td>{{ msg.email }}</td>
                 <td>{{ msg.subject }}</td>
@@ -30,7 +54,7 @@
                     class="btn btn-danger btn-sm"
                     @click="deleteMessage(msg._id)"
                   >
-                    🗑️ Borrar
+                    🗑️ Eliminar
                   </button>
                 </td>
               </tr>
@@ -45,10 +69,11 @@
       </div>
     </div>
 
-    <!-- Formulario para ingresar contraseña -->
+    <!-- Sección de autenticación -->
     <div class="container mt-5 text-center" v-else>
       <h3>🔐 Acceso Restringido</h3>
       <p>Escribe la contraseña para ver los mensajes:</p>
+
       <input
         type="password"
         v-model="passwordInput"
@@ -69,7 +94,6 @@
 <script>
 export default {
   name: "MessagesView",
-
   data() {
     return {
       messages: [],
@@ -78,7 +102,6 @@ export default {
       error: false,
     };
   },
-
   async mounted() {
     const authFlag = localStorage.getItem("isAuthenticatedMessages");
     if (authFlag === "true") {
@@ -86,7 +109,6 @@ export default {
       await this.fetchMessages();
     }
   },
-
   methods: {
     async checkPassword() {
       const correctPassword = "Victor01121993aaa";
@@ -98,7 +120,6 @@ export default {
         this.error = true;
       }
     },
-
     async fetchMessages() {
       try {
         const res = await fetch("https://portafolio-vue.onrender.com/messages");
@@ -108,7 +129,6 @@ export default {
         console.error("Error al cargar mensajes:", error);
       }
     },
-
     async deleteMessage(id) {
       const confirmDelete = confirm("¿Estás seguro de querer borrar este mensaje?");
       if (!confirmDelete) return;
@@ -134,48 +154,39 @@ export default {
 </script>
 
 <style scoped>
+/* Contenedor principal */
 .container {
   max-width: 1000px;
-  min-height: 85vh;
+  min-height: 80vh;
   padding-bottom: 4rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
 
-/* Scroll horizontal */
-.table-responsive {
-  width: 100%;
-  overflow-x: auto;
-}
-
+/* Tabla clásica */
 table {
   background-color: white;
   border-radius: 10px;
   overflow: hidden;
   font-size: 0.95rem;
-  min-width: 600px;
 }
 
 thead th {
   background-color: #343a40;
   color: white;
-  white-space: nowrap;
 }
 
 tbody td {
   vertical-align: middle;
   text-align: left;
-  word-break: break-word;
-  max-width: 200px;
-  white-space: normal;
 }
 
 tr:hover {
   background-color: #f1f1f1;
 }
 
-/* Dark mode */
+/* Dark Mode */
 body.dark-mode table {
   background-color: #1e1e1e;
   color: #e0e0e0;
@@ -189,30 +200,13 @@ body.dark-mode tr:hover {
   background-color: #2a2a2a;
 }
 
-/* Responsividad para móviles */
-@media (max-width: 768px) {
-  .container {
-    padding: 1rem;
-    margin-top: 1rem;
-    min-height: auto;
-  }
+/* Cards (mobile) */
+.card {
+  background-color: #f8f9fa;
+}
 
-  table {
-    font-size: 0.85rem;
-  }
-
-  thead th,
-  tbody td {
-    padding: 0.5rem;
-  }
-
-  button {
-    width: 100%;
-    font-size: 0.85rem;
-  }
-
-  h2 {
-    font-size: 1.4rem;
-  }
+.card h5 {
+  font-size: 1.1rem;
+  font-weight: bold;
 }
 </style>

@@ -1,53 +1,54 @@
 /* ========================= */
-/* Ajustes generales del layout */
+/* 🎯 Diseño Mobile-First */
 /* ========================= */
-html,
-body {
+
+/* Reset básico y evitar scroll horizontal */
+html, body {
   width: 100%;
-  height: 100%;
   margin: 0;
   padding: 0;
   overflow-x: hidden;
 }
 
+/* Base mínima para móviles */
 body {
-  margin: 0;
   display: flex;
   place-items: center;
+  flex-direction: column;
   min-width: 320px;
   min-height: 100vh;
 }
 
+/* Contenedor flexible para adaptarse a móviles primero */
 .container {
-  max-width: 1200px;
-  padding: 20px;
+  width: 100%;
+  padding: 15px;
+  margin: 0 auto;
 }
 
+/* Espaciado en secciones */
 section {
-  padding: 60px 0;
+  padding: 40px 10px;
 }
 
-@media (max-width: 1024px) {
-  section {
-    padding: 50px 15px;
-  }
-  .container {
-    max-width: 90%;
-  }
+/* Tipografía y enlaces */
+a {
+  font-weight: 500;
+  color: #646cff;
+  text-decoration: none;
 }
 
-@media (max-width: 768px) {
-  section {
-    padding: 40px 10px;
-  }
-  .container {
-    max-width: 100%;
-    padding: 10px;
-  }
+a:hover {
+  color: #535bf2;
+}
+
+h1 {
+  font-size: 2rem;
+  line-height: 1.3;
 }
 
 /* ========================= */
-/* Paleta de colores */
+/* 🎨 Paleta de colores */
 /* ========================= */
 :root {
   --primary-color: #007bff;
@@ -58,37 +59,19 @@ section {
 }
 
 /* ========================= */
-/* Enlaces y textos */
-/* ========================= */
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-
-a:hover {
-  color: #535bf2;
-}
-
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-}
-
-/* ========================= */
-/* Botones */
+/* 🔘 Botones */
 /* ========================= */
 .btn {
-  font-size: 1.1rem;
+  font-size: 1rem;
   padding: 12px 20px;
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
   border-radius: 8px;
-  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
   position: relative;
+  transition: all 0.3s ease-in-out;
   overflow: hidden;
-  justify-content: center;
 }
 
 .btn::after {
@@ -131,8 +114,15 @@ h1 {
   background-color: #b02a37;
 }
 
+/* Botones en móviles: ancho completo */
+@media (max-width: 768px) {
+  .btn {
+    width: 100%;
+  }
+}
+
 /* ========================= */
-/* Navbar */
+/* 🧭 Navbar */
 /* ========================= */
 .navbar {
   padding: 15px 20px;
@@ -177,7 +167,69 @@ h1 {
 }
 
 /* ========================= */
-/* Footer */
+/* 📦 Tabla Responsiva */
+/* ========================= */
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch; /* soporte para iOS */
+}
+
+table {
+  width: 100%;
+  min-width: 650px; /* fuerza el scroll en pantallas pequeñas */
+  border-collapse: collapse;
+  font-size: 0.95rem;
+  background-color: white;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+thead th {
+  background-color: #343a40;
+  color: white;
+  text-align: center;
+}
+
+tbody td {
+  white-space: nowrap;
+  text-align: left;
+  vertical-align: middle;
+}
+
+tr:hover {
+  background-color: #f1f1f1;
+}
+
+body.dark-mode table {
+  background-color: #1e1e1e;
+  color: #e0e0e0;
+}
+
+body.dark-mode thead th {
+  background-color: #333;
+}
+
+body.dark-mode tr:hover {
+  background-color: #2a2a2a;
+}
+
+/* ========================= */
+/* 📱 Ajustes responsivos adicionales */
+/* ========================= */
+@media (min-width: 769px) {
+  .container {
+    max-width: 1200px;
+    padding: 20px;
+  }
+
+  section {
+    padding: 60px 0;
+  }
+}
+
+/* ========================= */
+/* ⚫ Footer */
 /* ========================= */
 .footer {
   background-color: #343a40;
@@ -216,22 +268,4 @@ footer a {
 
 footer a:hover {
   color: white;
-}
-
-/* ========================= */
-/* Ajuste extra para tablas en móviles */
-/* ========================= */
-.table-responsive {
-  width: 100%;
-  overflow-x: auto;
-}
-
-table {
-  width: 100%;
-  min-width: 600px; /* Asegura que haya scroll en móviles */
-  border-collapse: collapse;
-}
-
-th, td {
-  white-space: nowrap;
 }
