@@ -1,11 +1,8 @@
 <template>
-  <!-- Contenedor principal: muestra tabla o formulario de acceso -->
   <div>
-    <!-- Sección protegida: visible si el usuario está autenticado -->
-    <div class="container mt-5" v-if="isAuthenticated">
+    <div class="container my-5" v-if="isAuthenticated">
       <h2 class="text-center mb-4">📥 Mensajes Recibidos</h2>
 
-      <!-- Si hay mensajes, mostramos la tabla -->
       <div v-if="messages.length">
         <div class="table-responsive">
           <table class="table table-hover table-bordered shadow-sm rounded-3">
@@ -15,7 +12,7 @@
                 <th>Correo</th>
                 <th>Asunto</th>
                 <th>Mensaje</th>
-                <th>Acciones</th>
+                <th>Acción</th>
               </tr>
             </thead>
             <tbody class="table-light">
@@ -25,10 +22,7 @@
                 <td>{{ msg.subject }}</td>
                 <td>{{ msg.message }}</td>
                 <td class="text-center">
-                  <button
-                    class="btn btn-danger btn-sm"
-                    @click="deleteMessage(msg._id)"
-                  >
+                  <button class="btn btn-danger btn-sm" @click="deleteMessage(msg._id)">
                     🗑️ Borrar
                   </button>
                 </td>
@@ -38,32 +32,17 @@
         </div>
       </div>
 
-      <!-- Si no hay mensajes, mostramos mensaje alternativo -->
       <div v-else>
         <p class="text-muted text-center">No hay mensajes aún.</p>
       </div>
     </div>
 
-    <!-- Formulario de acceso: se muestra si el usuario no está autenticado -->
-    <div class="container mt-5 text-center" v-else>
+    <div class="container my-5 text-center" v-else>
       <h3>🔐 Acceso Restringido</h3>
       <p>Escribe la contraseña para ver los mensajes:</p>
-
-      <input
-        type="password"
-        v-model="passwordInput"
-        class="form-control mb-3 mx-auto"
-        style="max-width: 300px;"
-        placeholder="Contraseña"
-      />
-
-      <button @click="checkPassword" class="btn btn-primary">
-        Entrar
-      </button>
-
-      <p v-if="error" class="text-danger mt-3">
-        Contraseña incorrecta
-      </p>
+      <input type="password" v-model="passwordInput" class="form-control mb-3 mx-auto" style="max-width:300px;" placeholder="Contraseña" />
+      <button @click="checkPassword" class="btn btn-primary">Entrar</button>
+      <p v-if="error" class="text-danger mt-3">Contraseña incorrecta</p>
     </div>
   </div>
 </template>
@@ -71,7 +50,6 @@
 <script>
 export default {
   name: "MessagesView",
-
   data() {
     return {
       messages: [],
@@ -80,7 +58,6 @@ export default {
       error: false,
     };
   },
-
   async mounted() {
     const authFlag = localStorage.getItem("isAuthenticatedMessages");
     if (authFlag === "true") {
@@ -88,11 +65,9 @@ export default {
       await this.fetchMessages();
     }
   },
-
   methods: {
     async checkPassword() {
-      const correctPassword = "Victor01121993aaa";
-      if (this.passwordInput === correctPassword) {
+      if (this.passwordInput === "Victor01121993aaa") {
         this.isAuthenticated = true;
         localStorage.setItem("isAuthenticatedMessages", "true");
         await this.fetchMessages();
@@ -100,7 +75,6 @@ export default {
         this.error = true;
       }
     },
-
     async fetchMessages() {
       try {
         const res = await fetch("https://portafolio-vue.onrender.com/messages");
@@ -110,19 +84,15 @@ export default {
         console.error("Error al cargar mensajes:", error);
       }
     },
-
     async deleteMessage(id) {
-      const confirmDelete = confirm("¿Estás seguro de que deseas borrar este mensaje?");
-      if (!confirmDelete) return;
-
+      if (!confirm("¿Seguro quieres borrar este mensaje?")) return;
       try {
         const response = await fetch(`https://portafolio-vue.onrender.com/messages/${id}`, {
           method: "DELETE",
         });
-
         if (response.ok) {
           this.messages = this.messages.filter(msg => msg._id !== id);
-          alert("Mensaje eliminado con éxito");
+          alert("Mensaje eliminado con éxito.");
         } else {
           alert("Error al borrar el mensaje.");
         }
@@ -138,31 +108,26 @@ export default {
 <style scoped>
 .container {
   max-width: 1000px;
-  min-height: 80vh;
+  min-height: 85vh;
   padding-bottom: 4rem;
-  padding-left: 1rem;
-  padding-right: 1rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
-}
-
-.table-responsive {
-  width: 100%;
-  overflow-x: auto;
 }
 
 table {
   background-color: white;
   border-radius: 10px;
   overflow: hidden;
-  font-size: 0.95rem;
-  width: 100%;
-  table-layout: auto;
+  font-size: 0.9rem;
 }
 
-thead th, tbody td {
-  white-space: nowrap;
+thead th {
+  background-color: #343a40;
+  color: white;
+}
+
+tbody td {
   vertical-align: middle;
   text-align: left;
 }
@@ -171,38 +136,25 @@ tr:hover {
   background-color: #f1f1f1;
 }
 
-body.dark-mode table {
-  background-color: #1e1e1e;
-  color: #e0e0e0;
-}
-
-body.dark-mode thead th {
-  background-color: #333;
-}
-
-body.dark-mode tr:hover {
-  background-color: #2a2a2a;
-}
-
 @media (max-width: 768px) {
   .container {
     padding: 1rem;
-    margin-top: 2rem;
+    margin-top: 1rem;
     min-height: auto;
   }
 
   table {
-    font-size: 0.9rem;
+    font-size: 0.8rem;
   }
 
-  h2 {
-    font-size: 1.5rem;
-    text-align: center;
+  thead th,
+  tbody td {
+    padding: 8px;
   }
 
   button {
     width: 100%;
-    font-size: 0.9rem;
+    font-size: 0.8rem;
   }
 }
 </style>
