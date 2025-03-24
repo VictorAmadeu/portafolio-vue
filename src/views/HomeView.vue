@@ -44,8 +44,6 @@
             >
               <i class="fab fa-github fa-lg"></i> GitHub
             </a>
-
-            <!-- 📌 CORREÇÃO AQUI: Caminho para o PDF inclui /portafolio-vue/ -->
             <a
               href="https://victoramadeu.github.io/portafolio-vue/curriculo.pdf"
               download
@@ -66,7 +64,6 @@
     >
       <h2 class="fw-bold" data-aos="flip-up">Mis Habilidades</h2>
       <div class="row mt-4">
-        <!-- Tarjeta de Habilidad: Desarrollo Web -->
         <div class="col-md-4" data-aos="flip-left">
           <div class="card shadow">
             <div class="card-body">
@@ -75,7 +72,6 @@
             </div>
           </div>
         </div>
-        <!-- Tarjeta de Habilidad: Back-end -->
         <div class="col-md-4" data-aos="flip-left" data-aos-delay="200">
           <div class="card shadow">
             <div class="card-body">
@@ -84,7 +80,6 @@
             </div>
           </div>
         </div>
-        <!-- Tarjeta de Habilidad: Diseño Responsivo -->
         <div class="col-md-4" data-aos="flip-left" data-aos-delay="400">
           <div class="card shadow">
             <div class="card-body">
@@ -113,7 +108,7 @@
 
 <script>
 export default {
-  name: "HomeView", // Nombre del componente Vue
+  name: "HomeView",
 };
 </script>
 
@@ -138,7 +133,7 @@ export default {
 .hero-content {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 30px;
   max-width: 1200px;
   padding: 30px;
@@ -166,11 +161,12 @@ export default {
 
 /* 📌 Contenedor del texto de bienvenida */
 .hero-text {
-  text-align: center;
+  text-align: left;
   max-width: 700px;
+  margin-left: auto; /* Desplaza el contenido hacia la derecha */
 }
 
-/* 📌 Ajuste del título */
+/* 📌 Título */
 .hero-title {
   font-size: 3rem;
   font-weight: bold;
@@ -183,15 +179,15 @@ export default {
   margin-bottom: 20px;
 }
 
-/* 📌 Botones de Redes Sociales */
+/* 📌 Botones sociales */
 .social-buttons {
   display: flex;
   flex-wrap: wrap;
   gap: 15px;
-  justify-content: center;
+  justify-content: flex-start;
 }
 
-/* 📌 Estilos para los botones de redes sociales */
+/* 📌 Estilos para los botones */
 .custom-btn {
   font-size: 1.1rem;
   padding: 12px 20px;
@@ -204,7 +200,6 @@ export default {
   overflow: hidden;
 }
 
-/* 📌 Efecto de animación en los botones */
 .custom-btn::after {
   content: "";
   position: absolute;
@@ -218,30 +213,34 @@ export default {
   border-radius: 50%;
 }
 
-/* 📌 Expansión del efecto hover */
 .custom-btn:hover::after {
   transform: translate(-50%, -50%) scale(1);
 }
 
-/* 📌 Efecto hover para los botones */
 .custom-btn:hover {
   transform: translateY(-5px);
   box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);
 }
 
-/* 📌 Sección de Contacto */
+/* 📌 Sección de contacto */
 .contact-section {
   background: #f8f9fa;
 }
 
-/* 📱 Ajustes Responsive */
+/* 📱 Responsive */
 @media (max-width: 1024px) {
   .hero-content {
     flex-direction: column;
+    text-align: center;
   }
 
-  .hero-title {
-    font-size: 2.5rem;
+  .hero-text {
+    margin-left: 0;
+    text-align: center;
+  }
+
+  .social-buttons {
+    justify-content: center;
   }
 }
 
