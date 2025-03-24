@@ -51,6 +51,7 @@
                 v-for="(msg, index) in messages"
                 :key="msg._id || index"
               >
+                <!-- Campos de la tabla -->
                 <td>{{ msg.name }}</td>
                 <td>{{ msg.email }}</td>
                 <td>{{ msg.subject }}</td>
@@ -113,7 +114,7 @@
 export default {
   name: "MessagesView",
 
-  /* 
+  /*
     data() devuelve un objeto con las propiedades reactivas:
     - messages: array de mensajes traídos del backend.
     - isAuthenticated: booleano para mostrar tabla o formulario de contraseña.
@@ -129,7 +130,7 @@ export default {
     };
   },
 
-  /* 
+  /*
     mounted() se ejecuta justo después de montar el componente en el DOM.
     Revisamos si el usuario ya se autenticó antes, usando localStorage.
     Si es así, no pedimos la contraseña de nuevo y cargamos mensajes al instante.
@@ -143,15 +144,13 @@ export default {
   },
 
   methods: {
-    /* 
+    /*
       checkPassword(): verifica si la contraseña digitada coincide con la correcta.
       - Si sí, guardamos "isAuthenticatedMessages" en localStorage para no pedir de nuevo.
       - Si no, mostramos error.
     */
     async checkPassword() {
-      // Contraseña definida
       const correctPassword = "Victor01121993aaa";
-
       if (this.passwordInput === correctPassword) {
         this.isAuthenticated = true;
         localStorage.setItem("isAuthenticatedMessages", "true");
@@ -161,7 +160,7 @@ export default {
       }
     },
 
-    /* 
+    /*
       fetchMessages(): hace una petición GET al endpoint de tus mensajes.
       Ajusta la URL si tu backend es distinto.
     */
@@ -175,12 +174,10 @@ export default {
       }
     },
 
-    /* 
-      deleteMessage(id): elimina un mensaje concreto
-      haciendo un DELETE al endpoint /messages/:id
+    /*
+      deleteMessage(id): elimina un mensaje concreto haciendo un DELETE a /messages/:id
     */
     async deleteMessage(id) {
-      // Pedimos confirmación antes de borrar
       const confirmDelete = confirm("Tem certeza que deseja apagar esta mensagem?");
       if (!confirmDelete) return;
 
@@ -190,7 +187,7 @@ export default {
         });
 
         if (response.ok) {
-          // Filtramos el array local para quitar el mensaje borrado
+          // Filtramos la lista local para quitar el mensaje borrado
           this.messages = this.messages.filter(msg => msg._id !== id);
           alert("Mensagem apagada com sucesso!");
         } else {
@@ -206,7 +203,7 @@ export default {
 </script>
 
 <style scoped>
-/* 
+/*
   "scoped" indica que estos estilos se aplican únicamente a este componente,
   evitando conflictos con otros estilos globales.
 */
