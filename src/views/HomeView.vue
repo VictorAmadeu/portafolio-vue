@@ -3,7 +3,7 @@
     <!-- Sección Hero con fondo degradado -->
     <section class="hero-section">
       <div class="hero-content">
-        <!-- Imagen de perfil (no alterada) -->
+        <!-- Contenedor de la imagen de perfil alineada a la izquierda -->
         <div class="profile-image-container">
           <img
             src="../assets/images/profile.jpg"
@@ -12,7 +12,7 @@
           />
         </div>
 
-        <!-- Contenido de bienvenida centrado correctamente -->
+        <!-- Contenido de bienvenida alineado a la derecha -->
         <div class="hero-text">
           <h1 class="display-4 fw-bold hero-title">
             Bienvenido a Mi Portafolio
@@ -21,7 +21,7 @@
             Explora mis proyectos, conoce mi experiencia y ponte en contacto.
           </p>
 
-          <!-- Botones centrados y flexibles -->
+          <!-- Botones de Redes Sociales y Descarga de Currículum -->
           <div class="social-buttons">
             <a
               href="https://www.linkedin.com/in/victor-amadeu-braga-heleno-583870266/"
@@ -45,6 +45,7 @@
               <i class="fab fa-github fa-lg"></i> GitHub
             </a>
 
+            <!-- 📌 CORREÇÃO AQUI: Caminho para o PDF inclui /portafolio-vue/ -->
             <a
               href="https://victoramadeu.github.io/portafolio-vue/curriculo.pdf"
               download
@@ -57,7 +58,7 @@
       </div>
     </section>
 
-    <!-- Sección de Habilidades (sem alterações) -->
+    <!-- Sección de Habilidades -->
     <section
       id="skills"
       class="skills-section text-center p-5 bg-dark text-white"
@@ -65,6 +66,7 @@
     >
       <h2 class="fw-bold" data-aos="flip-up">Mis Habilidades</h2>
       <div class="row mt-4">
+        <!-- Tarjeta de Habilidad: Desarrollo Web -->
         <div class="col-md-4" data-aos="flip-left">
           <div class="card shadow">
             <div class="card-body">
@@ -73,6 +75,7 @@
             </div>
           </div>
         </div>
+        <!-- Tarjeta de Habilidad: Back-end -->
         <div class="col-md-4" data-aos="flip-left" data-aos-delay="200">
           <div class="card shadow">
             <div class="card-body">
@@ -81,6 +84,7 @@
             </div>
           </div>
         </div>
+        <!-- Tarjeta de Habilidad: Diseño Responsivo -->
         <div class="col-md-4" data-aos="flip-left" data-aos-delay="400">
           <div class="card shadow">
             <div class="card-body">
@@ -92,7 +96,7 @@
       </div>
     </section>
 
-    <!-- Sección de Contacto (sem alterações) -->
+    <!-- Sección de Contacto -->
     <section class="contact-section text-center p-5" data-aos="fade-up">
       <h2 class="fw-bold">Contáctame</h2>
       <p>Si tienes alguna consulta, no dudes en enviarme un mensaje.</p>
@@ -109,17 +113,19 @@
 
 <script>
 export default {
-  name: "HomeView",
+  name: "HomeView", // Nombre del componente Vue
 };
 </script>
 
 <style scoped>
+/* 📌 Contenedor principal */
 .home-container {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
+/* 📌 Sección Hero con fondo degradado */
 .hero-section {
   background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
   color: white;
@@ -128,7 +134,7 @@ export default {
   width: 100%;
 }
 
-/* Modificação AQUI: ajustes para centralizar o texto corretamente */
+/* 📌 Contenedor flexible para la imagen y el texto */
 .hero-content {
   display: flex;
   align-items: center;
@@ -139,6 +145,7 @@ export default {
   flex-wrap: wrap;
 }
 
+/* 📌 Imagen de perfil alineada a la izquierda */
 .profile-image-container {
   width: 250px;
   height: 250px;
@@ -150,35 +157,41 @@ export default {
   align-items: center;
 }
 
-/* ✅ Ajuste necessário aqui (centralizando texto e botões) */
-.hero-text {
-  text-align: left;
-  max-width: 700px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start; /* alinhado à esquerda em desktop */
-  justify-content: center;
+.profile-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
 }
 
+/* 📌 Contenedor del texto de bienvenida */
+.hero-text {
+  text-align: center;
+  max-width: 700px;
+}
+
+/* 📌 Ajuste del título */
 .hero-title {
   font-size: 3rem;
   font-weight: bold;
   margin-bottom: 15px;
 }
 
+/* 📌 Subtítulo */
 .hero-subtitle {
   font-size: 1.3rem;
   margin-bottom: 20px;
 }
 
-/* ✅ centralizando os botões horizontalmente em telas menores */
+/* 📌 Botones de Redes Sociales */
 .social-buttons {
   display: flex;
   flex-wrap: wrap;
   gap: 15px;
-  justify-content: flex-start; /* à esquerda em desktop */
+  justify-content: center;
 }
 
+/* 📌 Estilos para los botones de redes sociales */
 .custom-btn {
   font-size: 1.1rem;
   padding: 12px 20px;
@@ -191,6 +204,7 @@ export default {
   overflow: hidden;
 }
 
+/* 📌 Efecto de animación en los botones */
 .custom-btn::after {
   content: "";
   position: absolute;
@@ -204,15 +218,18 @@ export default {
   border-radius: 50%;
 }
 
+/* 📌 Expansión del efecto hover */
 .custom-btn:hover::after {
   transform: translate(-50%, -50%) scale(1);
 }
 
+/* 📌 Efecto hover para los botones */
 .custom-btn:hover {
   transform: translateY(-5px);
   box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);
 }
 
+/* 📌 Sección de Contacto */
 .contact-section {
   background: #f8f9fa;
 }
@@ -225,15 +242,6 @@ export default {
 
   .hero-title {
     font-size: 2.5rem;
-  }
-
-  .hero-text {
-    text-align: center; /* centralizar texto em tablets e celulares */
-    align-items: center;
-  }
-
-  .social-buttons {
-    justify-content: center; /* centralizar botões em tablets e celulares */
   }
 }
 
