@@ -1,32 +1,4 @@
 {
-  "projects": [
-    {
-      "id": 1,
-      "title": "Mi Primer Proyecto",
-      "description": "Este es un proyecto de ejemplo.",
-      "url": "https://github.com/VictorAmadeu"
-    }
-  ],
-  "messages": [
-    {
-      "name": "Juan Pérez",
-      "email": "juanperez@example.com",
-      "message": "Hola, estoy interesado en tu trabajo!"
-    },
-    {
-      "name": "Victor",
-      "email": "victoremmadrid@outlook.com",
-      "message": "Fala comigo"
-    },
-    {
-      "name": "Jhulyana",
-      "email": "victoremmadrid@outlook.com",
-      "message": "Victor eu te amo!"
-    },
-    {
-      "name": "Victor",
-      "email": "victoremmadrid@outlook.com",
-      "message": "Testando o projeto!"
-    }
-  ]
+  "projects": [],
+  "messages": []
 }
