@@ -1,8 +1,6 @@
 /* ========================= */
 /* Ajustes generales del layout */
 /* ========================= */
-
-/* Evita la barra de desplazamiento horizontal */
 html,
 body {
   width: 100%;
@@ -12,18 +10,23 @@ body {
   overflow-x: hidden;
 }
 
-/* Ajuste del contenedor principal */
+body {
+  margin: 0;
+  display: flex;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
 .container {
   max-width: 1200px;
   padding: 20px;
 }
 
-/* Ajusta los espacios en las secciones */
 section {
   padding: 60px 0;
 }
 
-/* Responsive para tablets (hasta 1024px de ancho) */
 @media (max-width: 1024px) {
   section {
     padding: 50px 15px;
@@ -33,34 +36,30 @@ section {
   }
 }
 
-/* Responsive para móviles (hasta 768px de ancho) */
 @media (max-width: 768px) {
   section {
     padding: 40px 10px;
   }
   .container {
-    max-width: 95%;
-    padding: 15px;
+    max-width: 100%;
+    padding: 10px;
   }
 }
 
 /* ========================= */
-/* Paleta de colores actualizada */
+/* Paleta de colores */
 /* ========================= */
-
 :root {
-  --primary-color: #007bff; /* Azul principal */
-  --secondary-color: #ffffff; /* Blanco */
-  --dark-color: #000000; /* Negro */
-  --text-light: #f8f9fa; /* Texto claro */
-  --text-dark: #212529; /* Texto oscuro */
+  --primary-color: #007bff;
+  --secondary-color: #ffffff;
+  --dark-color: #000000;
+  --text-light: #f8f9fa;
+  --text-dark: #212529;
 }
 
 /* ========================= */
-/* Estilos generales del sitio */
+/* Enlaces y textos */
 /* ========================= */
-
-/* Estilos generales para enlaces */
 a {
   font-weight: 500;
   color: #646cff;
@@ -71,25 +70,14 @@ a:hover {
   color: #535bf2;
 }
 
-/* Configuración del cuerpo de la página */
-body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
-}
-
-/* Estilos generales para los títulos */
 h1 {
   font-size: 3.2em;
   line-height: 1.1;
 }
 
 /* ========================= */
-/* Estilos generales de los botones */
+/* Botones */
 /* ========================= */
-
 .btn {
   font-size: 1.1rem;
   padding: 12px 20px;
@@ -100,9 +88,9 @@ h1 {
   transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
   position: relative;
   overflow: hidden;
+  justify-content: center;
 }
 
-/* Efecto de animación en los botones al hacer hover */
 .btn::after {
   content: "";
   position: absolute;
@@ -120,15 +108,10 @@ h1 {
   transform: translate(-50%, -50%) scale(1);
 }
 
-/* Efecto de desplazamiento al pasar el mouse sobre el botón */
 .btn:hover {
   transform: translateY(-5px);
   box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);
 }
-
-/* ========================= */
-/* Estilos específicos por color */
-/* ========================= */
 
 .btn-primary {
   background-color: #007bff;
@@ -148,82 +131,42 @@ h1 {
   background-color: #b02a37;
 }
 
-.btn-dark {
-  background-color: #343a40;
-  border-color: #343a40;
-}
-
-.btn-dark:hover {
-  background-color: #23272b;
-}
-
-.btn-secondary {
-  background-color: #6c757d;
-  border-color: #6c757d;
-}
-
-.btn-secondary:hover {
-  background-color: #5a6268;
-}
-
 /* ========================= */
-/* 📱 Ajustes Responsive */
+/* Navbar */
 /* ========================= */
-
-/* Asegura que los botones ocupen el ancho completo en dispositivos pequeños */
-@media (max-width: 768px) {
-  .btn {
-    width: 100%;
-    justify-content: center;
-  }
+.navbar {
+  padding: 15px 20px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s ease-in-out;
 }
 
-/* ========================= */
-/* Íconos de la Navbar */
-/* ========================= */
+.navbar-nav .nav-link {
+  font-size: 1.1rem;
+  font-weight: 500;
+  transition: color 0.3s ease-in-out, border-bottom 0.3s ease-in-out;
+}
 
-/* Espaciado entre los íconos y el texto de los enlaces en la navbar */
+.navbar-nav .nav-link.active {
+  color: #ffc107 !important;
+  font-weight: bold;
+  border-bottom: 3px solid #ffc107;
+}
+
+.navbar-nav .nav-link:hover {
+  color: #ffdd57 !important;
+}
+
 .navbar-nav .nav-link i {
   margin-right: 5px;
 }
 
-/* ========================= */
-/* Navbar */
-/* ========================= */
-
-.navbar {
-  padding: 15px 20px; /* Espaciado interior para mejorar la visibilidad */
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); /* Sombra sutil para mejor diseño */
-  transition: background-color 0.3s ease-in-out; /* Transición suave al cambiar de color */
-}
-
-/* Estilos de los enlaces en la navbar */
-.navbar-nav .nav-link {
-  font-size: 1.1rem;
-  font-weight: 500;
-  transition: color 0.3s ease-in-out, border-bottom 0.3s ease-in-out; /* Efecto de transición en color y subrayado */
-}
-
-/* Estilo del enlace activo en la navbar */
-.navbar-nav .nav-link.active {
-  color: #ffc107 !important; /* Color amarillo para resaltar el activo */
-  font-weight: bold;
-  border-bottom: 3px solid #ffc107; /* Subrayado para destacar la sección activa */
-}
-
-/* Efecto hover en los enlaces de la navbar */
-.navbar-nav .nav-link:hover {
-  color: #ffdd57 !important; /* Cambio de color al pasar el mouse */
-}
-
-/* Ajustes de la navbar en dispositivos móviles */
 @media (max-width: 768px) {
   .navbar-nav {
-    text-align: center; /* Centra los enlaces en pantallas pequeñas */
+    text-align: center;
   }
 
   .navbar-nav .nav-item {
-    margin-bottom: 10px; /* Espaciado entre elementos de la navbar */
+    margin-bottom: 10px;
   }
 
   .navbar-nav .nav-link.active {
@@ -234,58 +177,61 @@ h1 {
 }
 
 /* ========================= */
-/* Estilos del footer */
+/* Footer */
 /* ========================= */
-
 .footer {
-  background-color: #343a40; /* Fondo oscuro */
-  color: white; /* Texto en blanco */
+  background-color: #343a40;
+  color: white;
   text-align: center;
   padding: 20px 0;
 }
 
-/* Estilos para el texto dentro del footer */
 .footer p {
   font-size: 1rem;
   margin-bottom: 10px;
 }
 
-/* ========================= */
-/* Íconos de Redes Sociales en el footer */
-/* ========================= */
-
-/* Alinear los íconos en fila y centrarlos */
 .footer-icons {
   display: flex;
   justify-content: center;
-  gap: 15px; /* Espaciado entre los íconos */
+  gap: 15px;
 }
 
-/* Estilos para los íconos del footer */
 .footer-icons a {
-  font-size: 1.8rem; /* Tamaño de los íconos */
-  color: white; /* Color inicial */
+  font-size: 1.8rem;
+  color: white;
   transition: transform 0.3s ease-in-out, color 0.3s ease-in-out;
 }
 
-/* Efecto hover en los íconos */
 .footer-icons a:hover {
-  transform: scale(1.2); /* Aumenta ligeramente el tamaño */
-  color: #ffc107; /* Cambia a color amarillo */
+  transform: scale(1.2);
+  color: #ffc107;
 }
 
-/* ========================= */
-/* Footer - Enlaces */
-/* ========================= */
-
-/* Estilos de los enlaces dentro del footer */
 footer a {
-  color: #ffc107; /* Color amarillo */
+  color: #ffc107;
   text-decoration: none;
   transition: color 0.3s ease-in-out;
 }
 
-/* Efecto hover en los enlaces del footer */
 footer a:hover {
-  color: white; /* Cambio de color a blanco */
+  color: white;
+}
+
+/* ========================= */
+/* Ajuste extra para tablas en móviles */
+/* ========================= */
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  min-width: 600px; /* Asegura que haya scroll en móviles */
+  border-collapse: collapse;
+}
+
+th, td {
+  white-space: nowrap;
 }
