@@ -133,14 +133,18 @@ export default {
 .hero-content {
   display: flex;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: center;
   gap: 30px;
   max-width: 1200px;
   padding: 30px;
   flex-wrap: wrap;
 }
 
-/* 📌 Imagen de perfil alineada a la izquierda */
+/* ================================ */
+/* 🔒 Estilos EXCLUSIVOS da IMAGEM */
+/* ================================ */
+
+/* 📸 Contenedor da imagem de perfil */
 .profile-image-container {
   width: 250px;
   height: 250px;
@@ -159,14 +163,20 @@ export default {
   object-position: center;
 }
 
+/* ================================ */
+/* 🧭 Conteúdo textual (TÍTULO + BOTÕES) */
+/* ================================ */
+
 /* 📌 Contenedor del texto de bienvenida */
 .hero-text {
-  text-align: left;
+  text-align: center;
   max-width: 700px;
-  margin-left: auto; /* Desplaza el contenido hacia la derecha */
+
+  /* ✅ Desplazamiento hacia la derecha */
+  margin-left: 50px;
 }
 
-/* 📌 Título */
+/* 📌 Ajuste del título */
 .hero-title {
   font-size: 3rem;
   font-weight: bold;
@@ -179,15 +189,15 @@ export default {
   margin-bottom: 20px;
 }
 
-/* 📌 Botones sociales */
+/* 📌 Botones de Redes Sociales */
 .social-buttons {
   display: flex;
   flex-wrap: wrap;
   gap: 15px;
-  justify-content: flex-start;
+  justify-content: center;
 }
 
-/* 📌 Estilos para los botones */
+/* 📌 Estilos para los botones de redes sociales */
 .custom-btn {
   font-size: 1.1rem;
   padding: 12px 20px;
@@ -200,6 +210,7 @@ export default {
   overflow: hidden;
 }
 
+/* 📌 Efecto de animación en los botones */
 .custom-btn::after {
   content: "";
   position: absolute;
@@ -213,34 +224,35 @@ export default {
   border-radius: 50%;
 }
 
+/* 📌 Expansión del efecto hover */
 .custom-btn:hover::after {
   transform: translate(-50%, -50%) scale(1);
 }
 
+/* 📌 Efecto hover para los botones */
 .custom-btn:hover {
   transform: translateY(-5px);
   box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);
 }
 
-/* 📌 Sección de contacto */
+/* 📌 Sección de Contacto */
 .contact-section {
   background: #f8f9fa;
 }
 
-/* 📱 Responsive */
+/* 📱 Ajustes Responsive */
 @media (max-width: 1024px) {
   .hero-content {
     flex-direction: column;
-    text-align: center;
   }
 
+  .hero-title {
+    font-size: 2.5rem;
+  }
+
+  /* 🔄 Eliminamos el margin-left en pantallas menores */
   .hero-text {
     margin-left: 0;
-    text-align: center;
-  }
-
-  .social-buttons {
-    justify-content: center;
   }
 }
 
@@ -256,6 +268,10 @@ export default {
   .custom-btn {
     width: 100%;
     justify-content: center;
+  }
+
+  .hero-text {
+    margin-left: 0;
   }
 }
 </style>
