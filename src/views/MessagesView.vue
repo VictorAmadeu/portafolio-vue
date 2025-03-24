@@ -1,22 +1,12 @@
-<!-- 
-  A continuación tienes el archivo "MessagesView.vue" ACTUALIZADO 
-  con mejoras de responsividad para pantallas pequeñas,
-  manteniendo la funcionalidad de eliminar mensajes, 
-  protección con contraseña y persistencia en localStorage.
--->
-
 <template>
-  <!-- Contenedor principal que muestra:
-       1) La tabla de mensajes con botón "Apagar" si el usuario está autenticado (isAuthenticated).
-       2) El formulario de contraseña si no está autenticado.
-  -->
+  <!-- Contenedor principal: muestra tabla o formulario de acceso -->
   <div>
-    <!-- Sección protegida (tabla) → visible si isAuthenticated es true -->
+    <!-- Sección protegida: visible si el usuario está autenticado -->
     <div class="container mt-5" v-if="isAuthenticated">
       <h2 class="text-center mb-4">📥 Mensajes Recibidos</h2>
 
+      <!-- Si hay mensajes, mostramos la tabla -->
       <div v-if="messages.length">
-        <!-- "table-responsive" ayuda a que la tabla tenga scroll horizontal en móviles -->
         <div class="table-responsive">
           <table class="table table-hover table-bordered shadow-sm rounded-3">
             <thead class="table-dark text-center">
@@ -29,10 +19,7 @@
               </tr>
             </thead>
             <tbody class="table-light">
-              <tr
-                v-for="(msg, index) in messages"
-                :key="msg._id || index"
-              >
+              <tr v-for="(msg, index) in messages" :key="msg._id || index">
                 <td>{{ msg.name }}</td>
                 <td>{{ msg.email }}</td>
                 <td>{{ msg.subject }}</td>
@@ -42,7 +29,7 @@
                     class="btn btn-danger btn-sm"
                     @click="deleteMessage(msg._id)"
                   >
-                    🗑️ Apagar
+                    🗑️ Borrar
                   </button>
                 </td>
               </tr>
@@ -51,16 +38,17 @@
         </div>
       </div>
 
+      <!-- Si no hay mensajes, mostramos mensaje alternativo -->
       <div v-else>
         <p class="text-muted text-center">No hay mensajes aún.</p>
       </div>
     </div>
 
-    <!-- Sección de autenticación (contraseña) → visible si isAuthenticated es false -->
+    <!-- Formulario de acceso: se muestra si el usuario no está autenticado -->
     <div class="container mt-5 text-center" v-else>
       <h3>🔐 Acceso Restringido</h3>
       <p>Escribe la contraseña para ver los mensajes:</p>
-      
+
       <input
         type="password"
         v-model="passwordInput"
@@ -69,17 +57,11 @@
         placeholder="Contraseña"
       />
 
-      <button
-        @click="checkPassword"
-        class="btn btn-primary"
-      >
+      <button @click="checkPassword" class="btn btn-primary">
         Entrar
       </button>
 
-      <p
-        v-if="error"
-        class="text-danger mt-3"
-      >
+      <p v-if="error" class="text-danger mt-3">
         Contraseña incorrecta
       </p>
     </div>
@@ -90,13 +72,6 @@
 export default {
   name: "MessagesView",
 
-  /*
-    data() devuelve un objeto con las propiedades reactivas:
-    - messages: array de mensajes traídos del backend.
-    - isAuthenticated: booleano para mostrar tabla o formulario de contraseña.
-    - passwordInput: almacena el texto digitado como contraseña.
-    - error: muestra si la contraseña está incorrecta.
-  */
   data() {
     return {
       messages: [],
@@ -106,11 +81,6 @@ export default {
     };
   },
 
-  /*
-    mounted() se ejecuta después de montar el componente en el DOM.
-    Revisamos si el usuario ya se autenticó antes (localStorage).
-    Si sí, no pedimos la contraseña de nuevo y cargamos mensajes.
-  */
   async mounted() {
     const authFlag = localStorage.getItem("isAuthenticatedMessages");
     if (authFlag === "true") {
@@ -120,12 +90,6 @@ export default {
   },
 
   methods: {
-    /* checkPassword():
-       - Verifica si la contraseña es la correcta.
-       - Si sí, guardamos "isAuthenticatedMessages" = true en localStorage
-         para no pedir de nuevo.
-       - Si no, mostramos error. 
-    */
     async checkPassword() {
       const correctPassword = "Victor01121993aaa";
       if (this.passwordInput === correctPassword) {
@@ -137,10 +101,6 @@ export default {
       }
     },
 
-    /* fetchMessages():
-       Hace una petición GET al endpoint de tus mensajes.
-       Ajusta la URL si tu backend es distinto.
-    */
     async fetchMessages() {
       try {
         const res = await fetch("https://portafolio-vue.onrender.com/messages");
@@ -151,11 +111,8 @@ export default {
       }
     },
 
-    /* deleteMessage(id):
-       Elimina un mensaje concreto haciendo DELETE a /messages/:id
-    */
     async deleteMessage(id) {
-      const confirmDelete = confirm("¿Estás seguro de querer borrar este mensaje?");
+      const confirmDelete = confirm("¿Estás seguro de que deseas borrar este mensaje?");
       if (!confirmDelete) return;
 
       try {
@@ -164,7 +121,6 @@ export default {
         });
 
         if (response.ok) {
-          // Filtramos la lista local para quitar el mensaje borrado
           this.messages = this.messages.filter(msg => msg._id !== id);
           alert("Mensaje eliminado con éxito");
         } else {
@@ -180,51 +136,41 @@ export default {
 </script>
 
 <style scoped>
-/* 
-  "scoped" indica que estos estilos se aplican únicamente a este componente,
-  evitando conflictos con otros estilos globales.
-*/
-
-/* Ajustamos el contenedor para que haya espacio vertical (al menos 80% de la altura de la ventana).
-   Y un padding-bottom para que el footer no quede pegado. */
 .container {
   max-width: 1000px;
   min-height: 80vh;
   padding-bottom: 4rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
 
-/* Tabla con fondo blanco, bordes redondeados y fuente algo reducida */
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+}
+
 table {
-  background-color: white; 
-  border-radius: 10px;     
-  overflow: hidden;        
-  font-size: 0.95rem;      
+  background-color: white;
+  border-radius: 10px;
+  overflow: hidden;
+  font-size: 0.95rem;
+  width: 100%;
+  table-layout: auto;
 }
 
-/* Encabezado oscuro */
-thead th {
-  background-color: #343a40; 
-  color: white;             
-}
-
-/* Celdas con alineación vertical al centro y texto a la izquierda */
-tbody td {
+thead th, tbody td {
+  white-space: nowrap;
   vertical-align: middle;
   text-align: left;
 }
 
-/* Efecto hover de color gris claro */
 tr:hover {
-  background-color: #f1f1f1; 
+  background-color: #f1f1f1;
 }
 
-/* 
-  Modo oscuro (dark-mode):
-  Si tu <body> tiene la clase "dark-mode", aplicamos estos estilos.
-*/
 body.dark-mode table {
   background-color: #1e1e1e;
   color: #e0e0e0;
@@ -238,10 +184,6 @@ body.dark-mode tr:hover {
   background-color: #2a2a2a;
 }
 
-/* 
-  MEDIA QUERIES para pantallas pequeñas
-  Ajustamos márgenes, fuente y overflow 
-*/
 @media (max-width: 768px) {
   .container {
     padding: 1rem;
@@ -249,26 +191,18 @@ body.dark-mode tr:hover {
     min-height: auto;
   }
 
-  /* Reducimos fuente de la tabla para que quepa en pantalla */
   table {
     font-size: 0.9rem;
   }
 
-  thead th,
-  tbody td {
-    white-space: nowrap; /* Evita que el texto se corte en varias líneas */
-  }
-
-  .table-responsive {
-    overflow-x: auto; /* Permite scroll horizontal en móviles */
-  }
-
   h2 {
     font-size: 1.5rem;
+    text-align: center;
   }
 
   button {
     width: 100%;
+    font-size: 0.9rem;
   }
 }
 </style>
