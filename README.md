@@ -46,13 +46,13 @@ Este es un **portafolio web profesional** desarrollado con **Vue.js** en el Fron
 Abre la terminal y clona el proyecto con:
 
 ```
- git clone https://github.com/VictorAmadeu/portofolio-vue.git
+ git clone https://github.com/VictorAmadeu/portafolio-vue.git
 ```
 
 Luego, accede al directorio:
 
 ```
- cd portofolio-vue
+ cd portafolio-vue
 ```
 
 ### **2️⃣ Instalar Dependencias del Front-end**
