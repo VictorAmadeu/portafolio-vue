@@ -1,0 +1,68 @@
+ (cd "$(git rev-parse --show-toplevel)" && git apply --3way <<'EOF' 
+diff --git a/README.md b/README.md
+index 24103b7a528089ecf0785ff8c0d33864cabe3bb5..99f765beed879c217716796999e83c3463c8aca3 100644
+--- a/README.md
++++ b/README.md
+@@ -24,57 +24,57 @@ Este es un **portafolio web profesional** desarrollado con **Vue.js** en el Fron
+ - CSS3 📐
+ - FontAwesome 🎭
+ 
+ ### **Back-end:**
+ 
+ - Node.js 🖥️
+ - Express.js 🚀
+ - CORS 🌍
+ - File System (FS) 📂
+ 
+ ### **Herramientas Adicionales:**
+ 
+ - **Postman** para probar la API ⚡
+ - **VS Code** como editor de código 📝
+ - **Git y GitHub** para control de versiones 🔄
+ 
+ ---
+ 
+ ## 📌 **Pasos para Instalar y Ejecutar el Proyecto**
+ 
+ ### **1️⃣ Clonar el Repositorio**
+ 
+ Abre la terminal y clona el proyecto con:
+ 
+ ```
+- git clone https://github.com/VictorAmadeu/portofolio-vue.git
++ git clone https://github.com/VictorAmadeu/portafolio-vue.git
+ ```
+ 
+ Luego, accede al directorio:
+ 
+ ```
+- cd portofolio-vue
++ cd portafolio-vue
+ ```
+ 
+ ### **2️⃣ Instalar Dependencias del Front-end**
+ 
+ Ejecuta el siguiente comando dentro de la carpeta del proyecto:
+ 
+ ```
+  npm install
+ ```
+ 
+ ### **3️⃣ Iniciar el Servidor de Desarrollo (Front-end)**
+ 
+ Ejecuta:
+ 
+ ```
+  npm run dev
+ ```
+ 
+ La aplicación estará disponible en `http://localhost:5173`
+ 
+ ---
+ 
+ ## 📌 **Configuración del Back-end**
+ 
+ ### **1️⃣ Crear la Carpeta del Back-end**
+ 
+EOF
+)

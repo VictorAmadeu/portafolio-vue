@@ -7,6 +7,9 @@ const cors = require("cors");
 // Importamos el módulo 'mysql2' para conectarnos con una base de datos MySQL
 const mysql = require("mysql2");
 
+// Carrega variáveis do .env
+require("dotenv").config();
+
 // Creamos una instancia de la aplicación Express para manejar rutas y middlewares
 const app = express();
 
