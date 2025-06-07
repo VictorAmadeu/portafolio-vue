@@ -30,5 +30,6 @@ rm
 .env
 
 # Ocultar chaves API e archivos sensibles
-*.env
+.env
+
 
