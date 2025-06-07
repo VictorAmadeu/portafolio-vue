@@ -10,17 +10,17 @@
         <div class="d-md-none">
           <div
             v-for="(msg, index) in messages"
-            :key="msg._id || index"
+            :key="msg.id || index"
             class="card mb-3 shadow-sm"
           >
             <div class="card-body">
-              <h5 class="card-title">{{ msg.name }}</h5>
+              <h5 class="card-title">{{ msg.nombre }}</h5>
               <h6 class="card-subtitle mb-2 text-muted">{{ msg.email }}</h6>
-              <p class="card-text"><strong>Asunto:</strong> {{ msg.subject }}</p>
-              <p class="card-text">{{ msg.message }}</p>
+              <p class="card-text"><strong>Asunto:</strong> {{ msg.asunto }}</p>
+              <p class="card-text">{{ msg.mensaje }}</p>
               <button
                 class="btn btn-danger btn-sm mt-2 w-100"
-                @click="deleteMessage(msg._id)"
+                @click="deleteMessage(msg.id)"
               >
                 🗑️ Eliminar
               </button>
@@ -43,16 +43,16 @@
             <tbody class="table-light">
               <tr
                 v-for="(msg, index) in messages"
-                :key="msg._id || index"
+                :key="msg.id || index"
               >
-                <td>{{ msg.name }}</td>
+                <td>{{ msg.nombre }}</td>
                 <td>{{ msg.email }}</td>
-                <td>{{ msg.subject }}</td>
-                <td>{{ msg.message }}</td>
+                <td>{{ msg.asunto }}</td>
+                <td>{{ msg.mensaje }}</td>
                 <td class="text-center">
                   <button
                     class="btn btn-danger btn-sm"
-                    @click="deleteMessage(msg._id)"
+                    @click="deleteMessage(msg.id)"
                   >
                     🗑️ Eliminar
                   </button>
@@ -92,6 +92,8 @@
 </template>
 
 <script>
+import { supabase } from '../services/supabase'
+
 export default {
   name: "MessagesView",
   data() {
@@ -122,11 +124,16 @@ export default {
     },
     async fetchMessages() {
       try {
-        const res = await fetch("https://portafolio-vue.onrender.com/messages");
-        const data = await res.json();
+        const { data, error } = await supabase
+          .from("mensajes")
+          .select("*")
+          .order("id", { ascending: false });
+
+        if (error) throw error;
+
         this.messages = data;
-      } catch (error) {
-        console.error("Error al cargar mensajes:", error);
+      } catch (err) {
+        console.error("Error al cargar mensajes desde Supabase:", err);
       }
     },
     async deleteMessage(id) {
@@ -134,18 +141,20 @@ export default {
       if (!confirmDelete) return;
 
       try {
-        const response = await fetch(`https://portafolio-vue.onrender.com/messages/${id}`, {
-          method: "DELETE",
-        });
+        const { error } = await supabase
+          .from("mensajes")
+          .delete()
+          .eq("id", id);
 
-        if (response.ok) {
-          this.messages = this.messages.filter(msg => msg._id !== id);
-          alert("Mensaje eliminado con éxito");
-        } else {
+        if (error) {
           alert("Error al borrar el mensaje.");
+          return;
         }
-      } catch (error) {
-        console.error("Error al borrar mensaje:", error);
+
+        this.messages = this.messages.filter(msg => msg.id !== id);
+        alert("Mensaje eliminado con éxito");
+      } catch (err) {
+        console.error("Error al borrar mensaje:", err);
         alert("Error al borrar el mensaje.");
       }
     },
@@ -154,7 +163,6 @@ export default {
 </script>
 
 <style scoped>
-/* Contenedor principal */
 .container {
   max-width: 1000px;
   min-height: 80vh;
@@ -164,7 +172,6 @@ export default {
   justify-content: center;
 }
 
-/* Tabla clásica */
 table {
   background-color: white;
   border-radius: 10px;
@@ -186,7 +193,6 @@ tr:hover {
   background-color: #f1f1f1;
 }
 
-/* Dark Mode */
 body.dark-mode table {
   background-color: #1e1e1e;
   color: #e0e0e0;
@@ -200,7 +206,6 @@ body.dark-mode tr:hover {
   background-color: #2a2a2a;
 }
 
-/* Cards (mobile) */
 .card {
   background-color: #f8f9fa;
 }

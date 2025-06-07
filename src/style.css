@@ -1,3 +1,13 @@
+html, body, #app {
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  min-height: 100vh;  /* ✅ Garante altura mínima, mas permite crescer se o conteúdo for maior */
+  overflow-x: hidden;
+  box-sizing: border-box;
+}
+
+
 /* ========================= */
 /* 🎯 Diseño Mobile-First */
 /* ========================= */
