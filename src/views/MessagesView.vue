@@ -1,217 +1,143 @@
 <template>
   <div>
-    <!-- Sección protegida (autenticado) -->
+    <!-- 1) Si está autenticado, mostramos mensajes -->
     <div class="container mt-4" v-if="isAuthenticated">
       <h2 class="text-center mb-4">📥 Mensajes Recibidos</h2>
-
-      <!-- Si hay mensajes -->
       <div v-if="messages.length">
-        <!-- MOBILE FIRST: Cards para pantallas pequeñas -->
-        <div class="d-md-none">
-          <div
-            v-for="(msg, index) in messages"
-            :key="msg.id || index"
-            class="card mb-3 shadow-sm"
-          >
-            <div class="card-body">
-              <h5 class="card-title">{{ msg.nombre }}</h5>
-              <h6 class="card-subtitle mb-2 text-muted">{{ msg.email }}</h6>
-              <p class="card-text"><strong>Asunto:</strong> {{ msg.asunto }}</p>
-              <p class="card-text">{{ msg.mensaje }}</p>
-              <button
-                class="btn btn-danger btn-sm mt-2 w-100"
-                @click="deleteMessage(msg.id)"
-              >
-                🗑️ Eliminar
-              </button>
-            </div>
+        <div
+          v-for="msg in messages"
+          :key="msg._id"
+          class="card mb-3"
+        >
+          <div class="card-body">
+            <h5 class="card-title">{{ msg.subject }}</h5>
+            <h6 class="card-subtitle text-muted mb-2">
+              De: {{ msg.name }} ({{ msg.email }})
+            </h6>
+            <p class="card-text">{{ msg.message }}</p>
+            <button
+              @click="deleteMessage(msg._id)"
+              class="btn btn-danger btn-sm"
+            >
+              Borrar
+            </button>
           </div>
         </div>
-
-        <!-- TABLA para pantallas medianas y grandes -->
-        <div class="table-responsive d-none d-md-block">
-          <table class="table table-hover table-bordered shadow-sm rounded-3">
-            <thead class="table-dark text-center">
-              <tr>
-                <th>Nombre</th>
-                <th>Correo</th>
-                <th>Asunto</th>
-                <th>Mensaje</th>
-                <th>Acciones</th>
-              </tr>
-            </thead>
-            <tbody class="table-light">
-              <tr
-                v-for="(msg, index) in messages"
-                :key="msg.id || index"
-              >
-                <td>{{ msg.nombre }}</td>
-                <td>{{ msg.email }}</td>
-                <td>{{ msg.asunto }}</td>
-                <td>{{ msg.mensaje }}</td>
-                <td class="text-center">
-                  <button
-                    class="btn btn-danger btn-sm"
-                    @click="deleteMessage(msg.id)"
-                  >
-                    🗑️ Eliminar
-                  </button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
       </div>
-
-      <!-- Si no hay mensajes -->
-      <div v-else>
-        <p class="text-muted text-center">No hay mensajes aún.</p>
-      </div>
+      <p v-else class="text-muted text-center">No hay mensajes aún.</p>
     </div>
 
-    <!-- Sección de autenticación -->
+    <!-- 2) Si NO está autenticado, mostramos el login -->
     <div class="container mt-5 text-center" v-else>
-      <h3>🔐 Acceso Restringido</h3>
-      <p>Escribe la contraseña para ver los mensajes:</p>
-
-      <input
-        type="password"
-        v-model="passwordInput"
-        class="form-control mb-3 mx-auto"
-        style="max-width: 300px;"
-        placeholder="Contraseña"
-      />
-      <button @click="checkPassword" class="btn btn-primary">
-        Entrar
-      </button>
-      <p v-if="error" class="text-danger mt-3">
-        Contraseña incorrecta
-      </p>
+      <h3>🔐 Iniciar Sesión</h3>
+      <form @submit.prevent="login">
+        <div class="mb-3">
+          <input
+            v-model="username"
+            type="text"
+            class="form-control"
+            placeholder="Usuario"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <input
+            v-model="password"
+            type="password"
+            class="form-control"
+            placeholder="Contraseña"
+            required
+          />
+        </div>
+        <button class="btn btn-primary" type="submit">Entrar</button>
+      </form>
+      <p v-if="error" class="text-danger mt-2">{{ error }}</p>
     </div>
   </div>
 </template>
 
 <script>
-import { supabase } from '../services/supabase'
-
 export default {
   name: "MessagesView",
   data() {
     return {
       messages: [],
       isAuthenticated: false,
-      passwordInput: "",
-      error: false,
+      username: "",
+      password: "",
+      error: ""
     };
   },
-  async mounted() {
-    const authFlag = localStorage.getItem("isAuthenticatedMessages");
-    if (authFlag === "true") {
+  async created() {
+    const token = localStorage.getItem("token");
+    if (token) {
       this.isAuthenticated = true;
       await this.fetchMessages();
     }
   },
   methods: {
-    async checkPassword() {
-      const correctPassword = "Victor01121993aaa";
-      if (this.passwordInput === correctPassword) {
-        this.isAuthenticated = true;
-        localStorage.setItem("isAuthenticatedMessages", "true");
-        await this.fetchMessages();
-      } else {
-        this.error = true;
-      }
-    },
-    async fetchMessages() {
+    // Login y obtención de token
+    async login() {
+      this.error = "";
       try {
-        const { data, error } = await supabase
-          .from("mensajes")
-          .select("*")
-          .order("id", { ascending: false });
-
-        if (error) throw error;
-
-        this.messages = data;
-      } catch (err) {
-        console.error("Error al cargar mensajes desde Supabase:", err);
-      }
-    },
-    async deleteMessage(id) {
-      const confirmDelete = confirm("¿Estás seguro de querer borrar este mensaje?");
-      if (!confirmDelete) return;
-
-      try {
-        const { error } = await supabase
-          .from("mensajes")
-          .delete()
-          .eq("id", id);
-
-        if (error) {
-          alert("Error al borrar el mensaje.");
+        const res = await fetch("http://localhost:3000/api/login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            username: this.username,
+            password: this.password
+          })
+        });
+        if (!res.ok) {
+          const err = await res.json();
+          this.error = err.error || "Error en login";
           return;
         }
-
-        this.messages = this.messages.filter(msg => msg.id !== id);
-        alert("Mensaje eliminado con éxito");
-      } catch (err) {
-        console.error("Error al borrar mensaje:", err);
-        alert("Error al borrar el mensaje.");
+        const { token } = await res.json();
+        localStorage.setItem("token", token);
+        this.isAuthenticated = true;
+        await this.fetchMessages();
+      } catch {
+        this.error = "No se pudo conectar al servidor";
       }
     },
-  },
+
+    // Obtención de mensajes protegida con token
+    async fetchMessages() {
+      try {
+        const token = localStorage.getItem("token");
+        const res = await fetch("http://localhost:3000/messages", {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+        if (!res.ok) throw new Error("No autorizado");
+        this.messages = await res.json();
+      } catch (err) {
+        console.error("Error al cargar mensajes:", err);
+        localStorage.removeItem("token");
+        this.isAuthenticated = false;
+      }
+    },
+
+    // Borrado de mensaje protegido
+    async deleteMessage(id) {
+      if (!confirm("¿Seguro que quieres borrar este mensaje?")) return;
+      try {
+        const token = localStorage.getItem("token");
+        const res = await fetch(`http://localhost:3000/messages/${id}`, {
+          method: "DELETE",
+          headers: { Authorization: `Bearer ${token}` }
+        });
+        if (!res.ok) throw new Error();
+        this.messages = this.messages.filter(msg => msg._id !== id);
+        alert("Mensaje borrado");
+      } catch {
+        alert("No se pudo borrar el mensaje");
+      }
+    }
+  }
 };
 </script>
 
 <style scoped>
-.container {
-  max-width: 1000px;
-  min-height: 80vh;
-  padding-bottom: 4rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-table {
-  background-color: white;
-  border-radius: 10px;
-  overflow: hidden;
-  font-size: 0.95rem;
-}
-
-thead th {
-  background-color: #343a40;
-  color: white;
-}
-
-tbody td {
-  vertical-align: middle;
-  text-align: left;
-}
-
-tr:hover {
-  background-color: #f1f1f1;
-}
-
-body.dark-mode table {
-  background-color: #1e1e1e;
-  color: #e0e0e0;
-}
-
-body.dark-mode thead th {
-  background-color: #333;
-}
-
-body.dark-mode tr:hover {
-  background-color: #2a2a2a;
-}
-
-.card {
-  background-color: #f8f9fa;
-}
-
-.card h5 {
-  font-size: 1.1rem;
-  font-weight: bold;
-}
+/* Tu CSS existente o ajustes adicionales */
 </style>
