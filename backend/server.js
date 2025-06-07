@@ -94,15 +94,7 @@ app.delete("/messages/:id", authMiddleware, (req, res) => {
 });
 
 // POST /mensajes — formulario de contacto (público)
-app.post("/mensajes", (req, res) => {
-  const { nombre, email, asunto, mensaje } = req.body;
-  const sql =
-    "INSERT INTO mensajes (nombre, email, asunto, mensaje) VALUES (?, ?, ?, ?)";
-  db.query(sql, [nombre, email, asunto, mensaje], (err) => {
-    if (err) return res.status(500).json({ error: "Error al guardar mensaje" });
-    res.status(201).json({ message: "Mensaje guardado con éxito" });
-  });
-});
+
 
 // Arrancar servidor
 app.listen(port, () => {
