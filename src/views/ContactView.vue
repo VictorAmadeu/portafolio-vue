@@ -1,25 +1,14 @@
 <template>
-  <div class="contact-container">
-    <h2>Contato</h2>
-    <form @submit.prevent="sendMessage">
-      <div class="mb-3">
-        <input v-model="form.name" type="text" placeholder="Nome" required />
-      </div>
-      <div class="mb-3">
-        <input v-model="form.email" type="email" placeholder="Email" required />
-      </div>
-      <div class="mb-3">
-        <input v-model="form.subject" type="text" placeholder="Assunto" required />
-      </div>
-      <div class="mb-3">
-        <textarea v-model="form.message" placeholder="Mensagem" required></textarea>
-      </div>
-      <button type="submit">Enviar</button>
+  <form @submit.prevent="sendMessage">
+    <input v-model="form.name"    placeholder="Nome"    required />
+    <input v-model="form.email"   type="email"          required />
+    <input v-model="form.subject" placeholder="Assunto" required />
+    <textarea v-model="form.message" placeholder="Mensagem" required></textarea>
+    <button type="submit">Enviar</button>
 
-      <p v-if="errorMessage" class="text-danger mt-2">{{ errorMessage }}</p>
-      <p v-if="successMessage" class="text-success mt-2">{{ successMessage }}</p>
-    </form>
-  </div>
+    <p v-if="errorMessage"   class="error">{{ errorMessage }}</p>
+    <p v-if="successMessage" class="success">{{ successMessage }}</p>
+  </form>
 </template>
 
 <script>
@@ -47,9 +36,9 @@ export default {
       const { data, error } = await supabase
         .from("mensajes")
         .insert([{
-          nombre: this.form.name,
-          email: this.form.email,
-          asunto: this.form.subject,
+          nombre:  this.form.name,
+          email:   this.form.email,
+          asunto:  this.form.subject,
           mensaje: this.form.message
         }]);
 
@@ -67,11 +56,6 @@ export default {
 </script>
 
 <style scoped>
-.contact-container {
-  max-width: 600px;
-  margin: 2rem auto;
-}
-.mb-3 {
-  margin-bottom: 1rem;
-}
+.error   { color: red; }
+.success { color: green; }
 </style>
