@@ -1,24 +1,30 @@
 <template>
-  <div class="container mt-4">
-    <h2>Mensagens Recebidas</h2>
-
-    <div v-if="messages.length">
-      <div
-        v-for="msg in messages"
-        :key="msg.id"
-        class="card mb-3"
-      >
-        <div class="card-body">
-          <h5 class="card-title">{{ msg.asunto }}</h5>
-          <h6 class="card-subtitle mb-2 text-muted">
-            {{ msg.nombre }} - {{ msg.email }}
-          </h6>
-          <p class="card-text">{{ msg.mensaje }}</p>
+  <div>
+    <!-- Container principal com título -->
+    <div class="container mt-4">
+      <h2 class="text-center mb-4">📥 Mensagens Recebidas</h2>
+      <div v-if="messages.length">
+        <div
+          v-for="msg in messages"
+          :key="msg.id"
+          class="card mb-3"
+        >
+          <div class="card-body">
+            <h5 class="card-title">{{ msg.asunto }}</h5>
+            <h6 class="card-subtitle text-muted mb-2">
+              De: {{ msg.nombre }} ({{ msg.email }})
+            </h6>
+            <p class="card-text">{{ msg.mensaje }}</p>
+            <!--
+              Se quiser adicionar um botão de apagar, remova o comentário e implemente a função:
+              <button @click="deleteMessage(msg.id)" class="btn btn-danger btn-sm">
+                Apagar
+              </button>
+            -->
+          </div>
         </div>
       </div>
-    </div>
-    <div v-else>
-      <p class="text-muted">Nenhuma mensagem encontrada.</p>
+      <p v-else class="text-muted text-center">Nenhuma mensagem encontrada.</p>
     </div>
   </div>
 </template>
@@ -50,6 +56,7 @@ export default {
 
       this.messages = data;
     }
+    // Se quiser implementar deleteMessage, basta adicionar aqui.
   }
 };
 </script>
