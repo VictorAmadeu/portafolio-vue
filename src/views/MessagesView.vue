@@ -1,6 +1,5 @@
 <template>
   <div>
-    <!-- Container principal com título -->
     <div class="container mt-4">
       <h2 class="text-center mb-4">📥 Mensagens Recebidas</h2>
       <div v-if="messages.length">
@@ -15,12 +14,8 @@
               De: {{ msg.nombre }} ({{ msg.email }})
             </h6>
             <p class="card-text">{{ msg.mensaje }}</p>
-            <!--
-              Se quiser adicionar um botão de apagar, remova o comentário e implemente a função:
-              <button @click="deleteMessage(msg.id)" class="btn btn-danger btn-sm">
-                Apagar
-              </button>
-            -->
+            <!-- Botão opcional de deletar -->
+            <!-- <button @click="deleteMessage(msg.id)" class="btn btn-danger btn-sm">Apagar</button> -->
           </div>
         </div>
       </div>
@@ -56,7 +51,8 @@ export default {
 
       this.messages = data;
     }
-    // Se quiser implementar deleteMessage, basta adicionar aqui.
+
+    // Para implementar deleteMessage, basta copiar do MessagesView1.
   }
 };
 </script>
