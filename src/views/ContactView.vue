@@ -1,14 +1,35 @@
-<template>
-  <form @submit.prevent="sendMessage">
-    <input v-model="form.name"    placeholder="Nome"    required />
-    <input v-model="form.email"   type="email"          required />
-    <input v-model="form.subject" placeholder="Assunto" required />
-    <textarea v-model="form.message" placeholder="Mensagem" required></textarea>
-    <button type="submit">Enviar</button>
+<template> 
+  <!-- Contenedor principal com layout bonito e centralizado -->
+  <div class="container my-5">
+    <h2 class="text-center mb-4">📩 Contato</h2>
+    <form @submit.prevent="sendMessage">
+      <!-- Nome -->
+      <div class="mb-3">
+        <label for="name" class="form-label">Nome</label>
+        <input v-model="form.name" type="text" class="form-control" id="name" required />
+      </div>
+      <!-- Email -->
+      <div class="mb-3">
+        <label for="email" class="form-label">Email</label>
+        <input v-model="form.email" type="email" class="form-control" id="email" required />
+      </div>
+      <!-- Assunto -->
+      <div class="mb-3">
+        <label for="subject" class="form-label">Assunto</label>
+        <input v-model="form.subject" type="text" class="form-control" id="subject" required />
+      </div>
+      <!-- Mensagem -->
+      <div class="mb-3">
+        <label for="message" class="form-label">Mensagem</label>
+        <textarea v-model="form.message" class="form-control" id="message" rows="5" required></textarea>
+      </div>
+      <!-- Botão -->
+      <button type="submit" class="btn btn-primary w-100">Enviar</button>
 
-    <p v-if="errorMessage"   class="error">{{ errorMessage }}</p>
-    <p v-if="successMessage" class="success">{{ successMessage }}</p>
-  </form>
+      <p v-if="errorMessage" class="error">{{ errorMessage }}</p>
+      <p v-if="successMessage" class="success">{{ successMessage }}</p>
+    </form>
+  </div>
 </template>
 
 <script>
@@ -36,9 +57,9 @@ export default {
       const { data, error } = await supabase
         .from("mensajes")
         .insert([{
-          nombre:  this.form.name,
-          email:   this.form.email,
-          asunto:  this.form.subject,
+          nombre: this.form.name,
+          email: this.form.email,
+          asunto: this.form.subject,
           mensaje: this.form.message
         }]);
 
@@ -56,6 +77,31 @@ export default {
 </script>
 
 <style scoped>
-.error   { color: red; }
-.success { color: green; }
+.container {
+  max-width: 900px;              
+  min-height: 85vh;              
+  display: flex;                 
+  flex-direction: column;        
+  justify-content: center;       
+  padding-bottom: 4rem;          
+}
+.btn-primary {
+  margin-top: 1rem;              
+}
+.error   { color: red; margin-top: 0.5rem; }
+.success { color: green; margin-top: 0.5rem; }
+
+/* Responsividade para telas pequenas */
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem;
+    min-height: auto;
+  }
+  h2 {
+    font-size: 1.5rem;
+  }
+  .btn-primary {
+    margin-top: 0.5rem;
+  }
+}
 </style>
