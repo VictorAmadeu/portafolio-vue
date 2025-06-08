@@ -98,21 +98,23 @@ export default {
       this.messages = data;
     },
     async deleteMessage(id) {
-      if (!confirm("Tem certeza de que deseja apagar esta mensagem?")) return;
+  if (!confirm("Tem certeza de que deseja apagar esta mensagem?")) return;
 
-      const { error } = await supabase
-        .from("mensajes")
-        .delete()
-        .eq("id", id);
+  const { error } = await supabase
+    .from("mensajes")
+    .delete()
+    .eq("id", id);
 
-      if (error) {
-        alert("Erro ao apagar mensagem.");
-        return;
-      }
+  if (error) {
+    console.error("Erro do Supabase:", error);
+    alert("Erro ao apagar mensagem: " + error.message);
+    return;
+  }
 
-      this.messages = this.messages.filter(msg => msg.id !== id);
-      alert("Mensagem apagada com sucesso!");
-    }
+  await this.fetchMessages(); // <-- Importante!
+  alert("Mensagem apagada com sucesso!");
+}
+
   }
 };
 </script>
