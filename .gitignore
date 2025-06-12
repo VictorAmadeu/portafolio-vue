@@ -22,14 +22,11 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
-git
-main
-rm
+
 
 # Ocultar chaves API e arquivos sensíveis
 .env
 
-# Ocultar chaves API e archivos sensibles
-.env
+
 
 
