@@ -1,11 +1,17 @@
 // Carga variables de entorno
-require("dotenv").config();
+require("dotenv").config({ path: "../.env" });
 
 const express = require("express");
 const cors = require("cors");
-const mysql = require("mysql2");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+
+// ---- INTEGRACIÓN SUPABASE ----
+const { createClient } = require("@supabase/supabase-js");
+const supabase = createClient(
+  process.env.SUPABASE_URL,
+  process.env.SUPABASE_ANON_KEY
+);
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -14,27 +20,9 @@ const SECRET = process.env.SECRET_KEY;
 app.use(cors());
 app.use(express.json());
 
-// Conexión a MySQL
-const db = mysql.createConnection({
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME,
-  port: process.env.DB_PORT,
-});
-
-db.connect((err) => {
-  if (err) {
-    console.error("❌ Error al conectar a MySQL:", err);
-  } else {
-    console.log("✅ Conectado a MySQL");
-  }
-});
-
-// Ruta POST /api/login — valida credenciales y devuelve JWT
+// ---- LOGIN (SIN CAMBIOS) ----
 app.post("/api/login", async (req, res) => {
   const { username, password } = req.body;
-
   // Ejemplo: obtén de tu BD real el usuario y su hash
   const usuarioBD = { username: "admin", hash: "$2b$10$KIX..." };
 
@@ -52,7 +40,7 @@ app.post("/api/login", async (req, res) => {
   res.json({ token });
 });
 
-// Middleware para proteger rutas
+// ---- Middleware de autenticación (SIN CAMBIOS) ----
 function authMiddleware(req, res, next) {
   const authHeader = req.headers.authorization || "";
   const token = authHeader.split(" ")[1];
@@ -67,36 +55,85 @@ function authMiddleware(req, res, next) {
   }
 }
 
-// GET /messages — recupera todos los mensajes (protegido)
-app.get("/messages", authMiddleware, (req, res) => {
-  const sql = "SELECT * FROM mensajes ORDER BY fecha DESC";
-  db.query(sql, (err, results) => {
-    if (err) return res.status(500).json({ error: "Error al buscar mensajes" });
-    const messages = results.map((row) => ({
+// ---- GET /messages — Recuperar mensajes (usando Supabase) ----
+app.get("/messages", authMiddleware, async (req, res) => {
+  try {
+    const { data, error } = await supabase
+      .from("mensajes")
+      .select("*")
+      .order("fecha", { ascending: false });
+
+    if (error) {
+      console.error("❌ Error al buscar mensajes en Supabase:", error);
+      return res.status(500).json({ error: "Error al buscar mensajes" });
+    }
+
+    // Mapeo para compatibilidad con el frontend
+    const messages = data.map((row) => ({
       _id: row.id,
       name: row.nombre,
       email: row.email,
-      subject: row.asunto,
+      subject: row.asunto, // Asegúrate que la columna 'asunto' exista si la necesitas
       message: row.mensaje,
       date: row.fecha,
     }));
+
     res.json(messages);
-  });
+  } catch (err) {
+    console.error("❌ Error inesperado:", err);
+    res.status(500).json({ error: "Error inesperado al buscar mensajes" });
+  }
 });
 
-// DELETE /messages/:id — borra un mensaje por su id (protegido)
-app.delete("/messages/:id", authMiddleware, (req, res) => {
-  const sql = "DELETE FROM mensajes WHERE id = ?";
-  db.query(sql, [req.params.id], (err) => {
-    if (err) return res.status(500).json({ error: "Error al borrar mensaje" });
+// ---- DELETE /messages/:id — Borrar mensaje por ID (usando Supabase) ----
+app.delete("/messages/:id", authMiddleware, async (req, res) => {
+  try {
+    const { error } = await supabase
+      .from("mensajes")
+      .delete()
+      .eq("id", req.params.id);
+
+    if (error) {
+      console.error("❌ Error al borrar mensaje en Supabase:", error);
+      return res.status(500).json({ error: "Error al borrar mensaje" });
+    }
+
     res.json({ success: true });
-  });
+  } catch (err) {
+    console.error("❌ Error inesperado:", err);
+    res.status(500).json({ error: "Error inesperado al borrar mensaje" });
+  }
 });
 
-// POST /mensajes — formulario de contacto (público)
+// ---- POST /mensajes — Guardar mensaje en Supabase (público) ----
+app.post("/mensajes", async (req, res) => {
+  const { nombre, email, mensaje } = req.body;
 
+  if (!nombre || !email || !mensaje) {
+    return res.status(400).json({ error: "Faltan campos obligatorios" });
+  }
 
-// Arrancar servidor
+  try {
+    const { data, error } = await supabase
+      .from("mensajes")
+      .insert([{ nombre, email, mensaje }])
+      .select();
+
+    if (error) {
+      console.error("❌ Error en Supabase:", error);
+      return res
+        .status(500)
+        .json({ error: "Error al guardar el mensaje en Supabase" });
+    }
+
+    res.status(201).json({ id: data[0]?.id, éxito: true });
+  } catch (err) {
+    console.error("❌ Error inesperado:", err);
+    res.status(500).json({ error: "Error inesperado al guardar el mensaje" });
+  }
+});
+
+// ---- Arrancar servidor ----
 app.listen(port, () => {
   console.log(`🚀 Servidor en http://localhost:${port}`);
 });
