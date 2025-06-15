@@ -182,7 +182,7 @@ El formulario de contacto público (`POST /mensajes`) no requiere autenticación
 pero **solo permite agregar nuevos mensajes**, nunca leerlos ni borrarlos.
 
 
-````
+
 ## 📌 Build de Producción y Despliegue (GitHub Pages)
 
 Para generar una versión de producción del proyecto (optimizada y lista para desplegar), sigue estos pasos:
@@ -232,7 +232,7 @@ GitHub Pages detectará la actualización y publicará la nueva versión del sit
 > En este proyecto, la aplicación Front-end interactúa directamente con **Supabase** (usando la clave anónima) para las operaciones de envío, lectura y eliminación de mensajes cuando está en producción.
 > Si necesitaras las funcionalidades completas del servidor en un entorno real (por ejemplo, mantener la autenticación JWT y lógica de negocio protegida), tendrías que desplegar el servidor Node en una plataforma separada (como Heroku, Vercel, u otro servicio) y ajustar las URLs en el Front-end para que apunten a ese servidor en lugar del local.
 
-```
+
 
 ## 📌 Conclusiones
 
