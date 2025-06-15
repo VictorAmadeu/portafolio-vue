@@ -52,9 +52,7 @@ Antes de comenzar, asegúrate de tener instalados o disponibles:
 
 > **Nota:** Puedes tomar como referencia el archivo `.env.example` incluido en el repositorio, copiándolo como `.env` y reemplazando los valores de ejemplo con los de tu proyecto.
 
-Aquí tienes la **cuarta parte** completa, formateada cuidadosamente en **Markdown**:
 
-````markdown
 ## 📌 Pasos para Instalar y Ejecutar el Proyecto
 
 Sigue estos pasos cuidadosamente para configurar y ejecutar el proyecto correctamente en tu máquina local.
