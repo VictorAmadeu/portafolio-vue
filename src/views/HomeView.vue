@@ -152,6 +152,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-left: 30px;
 }
 
 /* 📸 Imagem da foto de perfil */
@@ -160,6 +161,8 @@ export default {
   height: 100%;
   object-fit: cover;
   object-position: center;
+  margin-left: 30px;
+
 }
 /* [FIN] CSS EXCLUSIVO DE LA IMAGEN - NADA ALTERADO */
 
@@ -169,7 +172,7 @@ export default {
   max-width: 700px;
 
   /* 🔥 Aumentando el desplazamiento hacia la derecha */
-  margin-left: 150px;
+  margin-left: 200px;
 }
 
 /* Ajuste del título */
