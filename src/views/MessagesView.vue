@@ -3,9 +3,9 @@
     <div class="container mt-4">
       <h2 class="text-center mb-4">📥 Mensajes recibidos</h2>
 
-      <!-- Se houver mensagens -->
+      <!-- Si hay mensajes -->
       <div v-if="messages.length">
-        <!-- MOBILE FIRST: Cards para telas pequenas -->
+        <!-- MOBILE FIRST: Tarjetas para pantallas pequeñas -->
         <div class="d-md-none">
           <div
             v-for="(msg, index) in messages"
@@ -15,28 +15,28 @@
             <div class="card-body">
               <h5 class="card-title">{{ msg.nombre }}</h5>
               <h6 class="card-subtitle mb-2 text-muted">{{ msg.email }}</h6>
-              <p class="card-text"><strong>Assunto:</strong> {{ msg.asunto }}</p>
+              <p class="card-text"><strong>Asunto:</strong> {{ msg.asunto }}</p>
               <p class="card-text">{{ msg.mensaje }}</p>
               <button
                 class="btn btn-danger btn-sm mt-2 w-100"
                 @click="deleteMessage(msg.id)"
               >
-                🗑️ Apagar
+                🗑️ Borrar
               </button>
             </div>
           </div>
         </div>
 
-        <!-- TABELA para desktop -->
+        <!-- TABLA para escritorio -->
         <div class="table-responsive d-none d-md-block">
           <table class="table table-hover table-bordered shadow-sm rounded-3">
             <thead class="table-dark text-center">
               <tr>
-                <th>Nome</th>
+                <th>Nombre</th>
                 <th>Email</th>
-                <th>Assunto</th>
-                <th>Mensagem</th>
-                <th>Ações</th>
+                <th>Asunto</th>
+                <th>Mensaje</th>
+                <th>Acciones</th>
               </tr>
             </thead>
             <tbody class="table-light">
@@ -53,7 +53,7 @@
                     class="btn btn-danger btn-sm"
                     @click="deleteMessage(msg.id)"
                   >
-                    🗑️ Apagar
+                    🗑️ Borrar
                   </button>
                 </td>
               </tr>
@@ -62,9 +62,9 @@
         </div>
       </div>
 
-      <!-- Se não houver mensagens -->
+      <!-- Si no hay mensajes -->
       <div v-else>
-        <p class="text-muted text-center">Nenhuma mensagem encontrada.</p>
+        <p class="text-muted text-center">No se encontró ningún mensaje.</p>
       </div>
     </div>
   </div>
@@ -84,6 +84,7 @@ export default {
     await this.fetchMessages();
   },
   methods: {
+    // Obtiene los mensajes desde Supabase
     async fetchMessages() {
       const { data, error } = await supabase
         .from("mensajes")
@@ -91,30 +92,30 @@ export default {
         .order("id", { ascending: false });
 
       if (error) {
-        console.error("Erro ao carregar mensagens:", error);
+        console.error("Error al cargar los mensajes:", error);
         return;
       }
 
       this.messages = data;
     },
+    // Borra un mensaje por ID
     async deleteMessage(id) {
-  if (!confirm("Tem certeza de que deseja apagar esta mensagem?")) return;
+      if (!confirm("¿Estás seguro de que deseas borrar este mensaje?")) return;
 
-  const { error } = await supabase
-    .from("mensajes")
-    .delete()
-    .eq("id", id);
+      const { error } = await supabase
+        .from("mensajes")
+        .delete()
+        .eq("id", id);
 
-  if (error) {
-    console.error("Erro do Supabase:", error);
-    alert("Erro ao apagar mensagem: " + error.message);
-    return;
-  }
+      if (error) {
+        console.error("Error de Supabase:", error);
+        alert("Error al borrar el mensaje: " + error.message);
+        return;
+      }
 
-  await this.fetchMessages(); // <-- Importante!
-  alert("Mensagem apagada com sucesso!");
-}
-
+      await this.fetchMessages(); // <-- Importante!
+      alert("¡Mensaje borrado con éxito!");
+    }
   }
 };
 </script>
@@ -129,7 +130,7 @@ export default {
   justify-content: center;
 }
 
-/* Tabela responsiva e estilizada */
+/* Tabla responsiva y estilizada */
 table {
   background-color: white;
   border-radius: 10px;
@@ -165,7 +166,7 @@ body.dark-mode tr:hover {
   background-color: #2a2a2a;
 }
 
-/* Cards (mobile) */
+/* Tarjetas (mobile) */
 .card {
   background-color: #f8f9fa;
 }
@@ -175,3 +176,4 @@ body.dark-mode tr:hover {
   font-weight: bold;
 }
 </style>
+// Este es un componente Vue que muestra los mensajes recibidos desde Supabase.

@@ -1,4 +1,4 @@
-<template> 
+<template>
   <!-- Contenedor principal con layout bonito y centralizado -->
   <div class="container my-5">
     <h2 class="text-center mb-4">📩 Contacto</h2>
@@ -50,6 +50,7 @@ export default {
     };
   },
   methods: {
+    // Envía el mensaje al servidor (Supabase)
     async sendMessage() {
       this.errorMessage = "";
       this.successMessage = "";
@@ -69,7 +70,7 @@ export default {
         return;
       }
 
-      this.successMessage = "Su mensaje ha sido enviada con éxito!";
+      this.successMessage = "¡Su mensaje ha sido enviado con éxito!";
       this.form = { name: "", email: "", subject: "", message: "" };
     }
   }
@@ -78,20 +79,20 @@ export default {
 
 <style scoped>
 .container {
-  max-width: 900px;              
-  min-height: 85vh;              
-  display: flex;                 
-  flex-direction: column;        
-  justify-content: center;       
-  padding-bottom: 4rem;          
+  max-width: 900px;
+  min-height: 85vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-bottom: 4rem;
 }
 .btn-primary {
-  margin-top: 1rem;              
+  margin-top: 1rem;
 }
 .error   { color: red; margin-top: 0.5rem; }
 .success { color: green; margin-top: 0.5rem; }
 
-/* Responsividade para telas pequenas */
+/* Responsividad para pantallas pequeñas */
 @media (max-width: 768px) {
   .container {
     padding: 1rem;
