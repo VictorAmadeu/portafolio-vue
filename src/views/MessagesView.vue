@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="container mt-4">
-      <h2 class="text-center mb-4">📥 Mensagens Recebidas</h2>
+      <h2 class="text-center mb-4">📥 Mensajes recibidos</h2>
 
       <!-- Se houver mensagens -->
       <div v-if="messages.length">
