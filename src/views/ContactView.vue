@@ -64,7 +64,7 @@ export default {
         }]);
 
       if (error) {
-        console.error("Erro ao enviar:", error);
+        console.error("Error al enviar el mensaje:", error);
         this.errorMessage = "No ha sido posible enviar su mensaje.";
         return;
       }
