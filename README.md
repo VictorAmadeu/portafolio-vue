@@ -141,7 +141,6 @@ Ya podrás navegar por tu portafolio. El formulario de contacto estará operativ
 
 Si el servidor Back-end está corriendo correctamente, también podrás acceder —con las credenciales correctas— a la sección de administración para gestionar los mensajes recibidos (ver detalles en la sección siguiente sobre autenticación).
 
-```
 
 ## 📌 Autenticación y Seguridad
 
