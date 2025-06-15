@@ -5,12 +5,12 @@
     <form @submit.prevent="sendMessage">
       <!-- Nombre -->
       <div class="mb-3">
-        <label for="name" class="form-label">Nombree</label>
+        <label for="name" class="form-label">Nombre</label>
         <input v-model="form.name" type="text" class="form-control" id="name" required />
       </div>
       <!-- Correo electrónico -->
       <div class="mb-3">
-        <label for="email" class="form-label">Correo electrónic</label>
+        <label for="email" class="form-label">Correo electrónico</label>
         <input v-model="form.email" type="email" class="form-control" id="email" required />
       </div>
       <!-- Asunto -->
