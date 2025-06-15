@@ -176,4 +176,3 @@ body.dark-mode tr:hover {
   font-weight: bold;
 }
 </style>
-// Este es un componente Vue que muestra los mensajes recibidos desde Supabase.

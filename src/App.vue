@@ -115,7 +115,7 @@
             <i class="fab fa-github"></i>
           </a>
           <!-- Enlace al correo (mailto) -->
-          <a href="mailto:Victoremmadrid@outlook.com.com">
+          <a href="mailto:Victoremmadrid@outlook.com">
             <i class="fas fa-envelope"></i>
           </a>
         </div>
