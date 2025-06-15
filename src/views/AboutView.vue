@@ -7,7 +7,7 @@
     <img
       src="https://via.placeholder.com/200"
       class="rounded-circle shadow mt-3"
-      alt="Minha foto"
+      alt="Mi fotografía"
     />
   </div>
 </template>
