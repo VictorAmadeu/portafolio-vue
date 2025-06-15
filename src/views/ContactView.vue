@@ -1,29 +1,29 @@
 <template> 
-  <!-- Contenedor principal com layout bonito e centralizado -->
+  <!-- Contenedor principal con layout bonito y centralizado -->
   <div class="container my-5">
-    <h2 class="text-center mb-4">📩 Contato</h2>
+    <h2 class="text-center mb-4">📩 Contacto</h2>
     <form @submit.prevent="sendMessage">
-      <!-- Nome -->
+      <!-- Nombre -->
       <div class="mb-3">
-        <label for="name" class="form-label">Nome</label>
+        <label for="name" class="form-label">Nombree</label>
         <input v-model="form.name" type="text" class="form-control" id="name" required />
       </div>
-      <!-- Email -->
+      <!-- Correo electrónico -->
       <div class="mb-3">
-        <label for="email" class="form-label">Email</label>
+        <label for="email" class="form-label">Correo electrónic</label>
         <input v-model="form.email" type="email" class="form-control" id="email" required />
       </div>
-      <!-- Assunto -->
+      <!-- Asunto -->
       <div class="mb-3">
-        <label for="subject" class="form-label">Assunto</label>
+        <label for="subject" class="form-label">Asunto</label>
         <input v-model="form.subject" type="text" class="form-control" id="subject" required />
       </div>
-      <!-- Mensagem -->
+      <!-- Mensaje -->
       <div class="mb-3">
-        <label for="message" class="form-label">Mensagem</label>
+        <label for="message" class="form-label">Mensaje</label>
         <textarea v-model="form.message" class="form-control" id="message" rows="5" required></textarea>
       </div>
-      <!-- Botão -->
+      <!-- Botón -->
       <button type="submit" class="btn btn-primary w-100">Enviar</button>
 
       <p v-if="errorMessage" class="error">{{ errorMessage }}</p>
@@ -65,11 +65,11 @@ export default {
 
       if (error) {
         console.error("Erro ao enviar:", error);
-        this.errorMessage = "Não foi possível enviar a mensagem.";
+        this.errorMessage = "No ha sido posible enviar el mensaje.";
         return;
       }
 
-      this.successMessage = "Mensagem enviada com sucesso!";
+      this.successMessage = "Su mensaje ha sido enviada con éxito!";
       this.form = { name: "", email: "", subject: "", message: "" };
     }
   }
