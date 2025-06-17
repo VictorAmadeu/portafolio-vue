@@ -3,7 +3,7 @@
     <!-- Sección Hero con fondo degradado -->
     <section class="hero-section">
       <div class="hero-content">
-        <!-- [INICIO] IMAGEN DE PERFIL - NO SE HA TOCADO NADA AQUÍ -->
+        <!-- IMAGEN DE PERFIL -->
         <div class="profile-image-container">
           <img
             src="../assets/images/profile.jpg"
@@ -11,9 +11,7 @@
             class="profile-image"
           />
         </div>
-        <!-- [FIN] IMAGEN DE PERFIL - TODO IGUAL -->
-
-        <!-- Contenido de bienvenida, ahora realmente a la derecha -->
+        <!-- CONTENIDO DE BIENVENIDA -->
         <div class="hero-text">
           <h1 class="display-4 fw-bold hero-title">
             Bienvenido a Mi Portafolio
@@ -142,7 +140,7 @@ export default {
   width: 100%;
 }
 
-/* [INICIO] CSS EXCLUSIVO DE LA IMAGEN - SIN CAMBIOS */
+/* IMAGEN */
 .profile-image-container {
   width: 250px;
   height: 250px;
@@ -152,57 +150,43 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  /* Elimina cualquier margen innecesario */
-  /* Si quieres más compatibilidad, puedes añadir aspect-ratio */
   aspect-ratio: 1/1;
 }
-
 .profile-image {
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: center;
-  /* Elimina el margin-left */
   margin-left: 30px;
-  border-radius: 40%; /* Esto asegura que la propia img también sea circular, aunque normalmente basta con el contenedor */
+  border-radius: 40%;
   display: block;
 }
 
-/* [FIN] CSS EXCLUSIVO DE LA IMAGEN - NADA ALTERADO */
-
-/* Contenedor del texto de bienvenida */
+/* TEXTO */
 .hero-text {
   text-align: left;
   max-width: 700px;
-  margin-left: 215px;   /* Ajusta esto para más o menos separación */
+  margin-left: 215px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
 }
-
-/* Ajuste del título */
 .hero-title {
   font-size: 3rem;
   font-weight: bold;
   margin-bottom: 15px;
 }
-
-/* Subtítulo */
 .hero-subtitle {
   font-size: 1.3rem;
   margin-bottom: 20px;
 }
-
-/* Botones de Redes Sociales */
 .social-buttons {
   display: flex;
   flex-wrap: wrap;
   gap: 15px;
   justify-content: flex-start;
 }
-
-/* Estilos para los botones */
 .custom-btn {
   font-size: 1.1rem;
   padding: 12px 20px;
@@ -214,7 +198,6 @@ export default {
   position: relative;
   overflow: hidden;
 }
-
 .custom-btn::after {
   content: "";
   position: absolute;
@@ -227,11 +210,9 @@ export default {
   transform: translate(-50%, -50%) scale(0);
   border-radius: 50%;
 }
-
 .custom-btn:hover::after {
   transform: translate(-50%, -50%) scale(1);
 }
-
 .custom-btn:hover {
   transform: translateY(-5px);
   box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);
@@ -242,50 +223,112 @@ export default {
   background: #f8f9fa;
 }
 
-/* Responsivo */
+/* =================== RESPONSIVIDAD =================== */
+
+/* Para pantallas medianas */
 @media (max-width: 1200px) {
   .hero-content {
-    flex-wrap: wrap;
-    gap: 30px;
+    margin: 0 50px;
+    gap: 20px;
   }
   .hero-text {
-    margin-left: 60px;
+    margin-left: 30px;
+    max-width: 600px;
+  }
+  .profile-image-container {
+    width: 200px;
+    height: 200px;
   }
 }
 
+/* Para tablets: columna, todo centrado */
 @media (max-width: 1024px) {
   .hero-content {
     flex-direction: column;
     align-items: center;
+    margin: 0 10px;
+    gap: 15px;
+    padding: 15px;
+  }
+  .profile-image-container {
+    margin-bottom: 15px;
+    margin-left: 0;
+    width: 170px;
+    height: 170px;
+  }
+  .profile-image {
+    margin-left: 0;
   }
   .hero-text {
     margin-left: 0;
     align-items: center;
     text-align: center;
+    max-width: 100%;
   }
   .social-buttons {
     justify-content: center;
+    width: 100%;
+  }
+  .hero-title {
+    font-size: 2.2rem;
+  }
+  .hero-section {
+    padding: 60px 0 30px 0;
   }
 }
 
+/* Para móviles grandes */
 @media (max-width: 768px) {
+  .hero-section {
+    padding: 40px 0 15px 0;
+  }
   .hero-title {
-    font-size: 2rem;
+    font-size: 1.5rem;
   }
   .hero-subtitle {
     font-size: 1.1rem;
   }
+  .profile-image-container {
+    width: 120px;
+    height: 120px;
+  }
+  .social-buttons {
+    flex-direction: column;
+    gap: 10px;
+  }
   .custom-btn {
     width: 100%;
     justify-content: center;
+    font-size: 1rem;
+    padding: 10px 8px;
   }
-  .hero-text {
-    margin-left: 0;
+}
+
+/* Para móviles pequeños */
+@media (max-width: 480px) {
+  .hero-content {
+    padding: 8px 0;
+  }
+  .hero-title {
+    font-size: 1.1rem;
+  }
+  .profile-image-container {
+    width: 80px;
+    height: 80px;
+  }
+}
+
+/* Habilidades en columna en móvil */
+@media (max-width: 767px) {
+  .skills-section .row {
+    display: flex;
+    flex-direction: column;
     align-items: center;
-    text-align: center;
+    gap: 20px;
   }
-  .social-buttons {
-    justify-content: center;
+  .skills-section .col-md-4 {
+    width: 100%;
+    max-width: 350px;
   }
 }
 </style>
