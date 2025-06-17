@@ -3,7 +3,6 @@
     <!-- Sección Hero con fondo degradado -->
     <section class="hero-section">
       <div class="hero-content">
-
         <!-- [INICIO] IMAGEN DE PERFIL - NO SE HA TOCADO NADA AQUÍ -->
         <div class="profile-image-container">
           <img
@@ -14,7 +13,7 @@
         </div>
         <!-- [FIN] IMAGEN DE PERFIL - TODO IGUAL -->
 
-        <!-- Contenido de bienvenida, desplazado a la derecha -->
+        <!-- Contenido de bienvenida, ahora realmente a la derecha -->
         <div class="hero-text">
           <h1 class="display-4 fw-bold hero-title">
             Bienvenido a Mi Portafolio
@@ -23,7 +22,6 @@
             Explora mis proyectos, conoce mi experiencia y ponte en contacto.
           </p>
 
-          <!-- Botones de Redes Sociales y Descarga de Currículum -->
           <div class="social-buttons">
             <a
               href="https://www.linkedin.com/in/victor-amadeu-braga-heleno-583870266/"
@@ -139,7 +137,9 @@ export default {
   gap: 30px;
   max-width: 1200px;
   padding: 30px;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
+  margin: 0 230px;
+  width: 100%;
 }
 
 /* [INICIO] CSS EXCLUSIVO DE LA IMAGEN - SIN CAMBIOS */
@@ -147,32 +147,38 @@ export default {
   width: 250px;
   height: 250px;
   overflow: hidden;
-  border-radius: 50%;
+  border-radius: 40%;
   flex-shrink: 0;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-left: 30px;
+  /* Elimina cualquier margen innecesario */
+  /* Si quieres más compatibilidad, puedes añadir aspect-ratio */
+  aspect-ratio: 1/1;
 }
 
-/* 📸 Imagem da foto de perfil */
 .profile-image {
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: center;
+  /* Elimina el margin-left */
   margin-left: 30px;
-
+  border-radius: 40%; /* Esto asegura que la propia img también sea circular, aunque normalmente basta con el contenedor */
+  display: block;
 }
+
 /* [FIN] CSS EXCLUSIVO DE LA IMAGEN - NADA ALTERADO */
 
 /* Contenedor del texto de bienvenida */
 .hero-text {
-  text-align: center;
+  text-align: left;
   max-width: 700px;
-
-  /* 🔥 Aumentando el desplazamiento hacia la derecha */
-  margin-left: 200px;
+  margin-left: 215px;   /* Ajusta esto para más o menos separación */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
 }
 
 /* Ajuste del título */
@@ -193,7 +199,7 @@ export default {
   display: flex;
   flex-wrap: wrap;
   gap: 15px;
-  justify-content: center;
+  justify-content: flex-start;
 }
 
 /* Estilos para los botones */
@@ -237,18 +243,28 @@ export default {
 }
 
 /* Responsivo */
+@media (max-width: 1200px) {
+  .hero-content {
+    flex-wrap: wrap;
+    gap: 30px;
+  }
+  .hero-text {
+    margin-left: 60px;
+  }
+}
+
 @media (max-width: 1024px) {
   .hero-content {
     flex-direction: column;
+    align-items: center;
   }
-
-  .hero-title {
-    font-size: 2.5rem;
-  }
-
-  /* Eliminamos la margen-left en pantallas medianas/pequeñas */
   .hero-text {
     margin-left: 0;
+    align-items: center;
+    text-align: center;
+  }
+  .social-buttons {
+    justify-content: center;
   }
 }
 
@@ -256,18 +272,20 @@ export default {
   .hero-title {
     font-size: 2rem;
   }
-
   .hero-subtitle {
     font-size: 1.1rem;
   }
-
   .custom-btn {
     width: 100%;
     justify-content: center;
   }
-  
   .hero-text {
     margin-left: 0;
+    align-items: center;
+    text-align: center;
+  }
+  .social-buttons {
+    justify-content: center;
   }
 }
 </style>

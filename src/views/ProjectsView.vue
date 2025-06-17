@@ -1,8 +1,8 @@
 <template>
   <div class="container mt-5">
-    <h1 class="text-center mb-4">Meus Projetos</h1>
+    <h1 class="text-center mb-4">Mis Proyectos</h1>
 
-    <!-- Carrossel de Projetos -->
+    <!-- Carrusel de proyectos -->
     <div id="carouselProjects" class="carousel slide" data-bs-ride="carousel">
       <div class="carousel-inner">
         <div v-for="(project, index) in projects" :key="project.id" 
@@ -13,7 +13,7 @@
               <h5 class="card-title">{{ project.title }}</h5>
               <p class="card-text">{{ project.description }}</p>
               <a :href="project.github" target="_blank" class="btn btn-primary">
-                <i class="fab fa-github"></i> Ver no GitHub
+                <i class="fab fa-github"></i> Ver en el GitHub
               </a>
             </div>
           </div>
@@ -27,7 +27,7 @@
       </button>
       <button class="carousel-control-next" type="button" data-bs-target="#carouselProjects" data-bs-slide="next">
         <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Próximo</span>
+        <span class="visually-hidden">Siguiente</span>
       </button>
     </div>
   </div>
@@ -41,22 +41,22 @@ export default {
       projects: [
         {
           id: 1,
-          title: "Projeto 1",
-          description: "Descrição detalhada do projeto 1.",
+          title: "Proyecto 1",
+          description: "Descripción detalhada del proyecto 1.",
           image: "https://via.placeholder.com/800x400",
           github: "https://github.com/seuusuario/projeto1",
         },
         {
           id: 2,
-          title: "Projeto 2",
-          description: "Descrição detalhada do projeto 2.",
+          title: "Proyecto 2",
+          description: "Descripción detalhada del proyecto 2.",
           image: "https://via.placeholder.com/800x400",
           github: "https://github.com/seuusuario/projeto2",
         },
         {
           id: 3,
-          title: "Projeto 3",
-          description: "Descrição detalhada do projeto 3.",
+          title: "Proyecto 3",
+          description: "Descripción detalhada del proyecto 3.",
           image: "https://via.placeholder.com/800x400",
           github: "https://github.com/seuusuario/projeto3",
         },

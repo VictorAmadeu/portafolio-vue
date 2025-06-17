@@ -24,7 +24,7 @@ dist-ssr
 *.sw?
 
 
-# Ocultar chaves API e arquivos sensíveis
+# Ocultar llaves API y archivos sensibles
 .env
 
 

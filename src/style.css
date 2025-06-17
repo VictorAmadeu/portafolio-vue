@@ -2,7 +2,7 @@ html, body, #app {
   margin: 0;
   padding: 0;
   width: 100vw;
-  min-height: 100vh;  /* ✅ Garante altura mínima, mas permite crescer se o conteúdo for maior */
+  min-height: 100vh;  /* ✅ Garantiza una altura mínima, pero permite crecer si el contenido es mayor */
   overflow-x: hidden;
   box-sizing: border-box;
 }
@@ -12,7 +12,7 @@ html, body, #app {
 /* 🎯 Diseño Mobile-First */
 /* ========================= */
 
-/* Reset básico y evitar scroll horizontal */
+/* Restablecimiento básico y evitar el desplazamiento horizontal */
 html, body {
   width: 100%;
   margin: 0;

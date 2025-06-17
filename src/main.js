@@ -9,17 +9,17 @@ import App from "./App.vue";
 // Roteador
 import router from "./router";
 
-// AOS - animações ao rolar
+// AOS - animaciones al desplazarse
 import AOS from "aos";
 import "aos/dist/aos.css";
 
-// Criação do app Vue
+// Criación del app Vue
 const app = createApp(App);
 
-// Uso do roteador
+// Uso del roteador
 app.use(router);
 
-// Inicialização do AOS
+// Inicialización del AOS
 app.mixin({
   mounted() {
     AOS.init({
@@ -31,7 +31,7 @@ app.mixin({
   },
 });
 
-// Scroll suave após troca de rota
+// Scroll suave desupués del cambio de ruta
 router.afterEach(() => {
   setTimeout(() => {
     window.scrollTo({
@@ -41,5 +41,5 @@ router.afterEach(() => {
   }, 100);
 });
 
-// Montagem da aplicação
+// Montaje de la aplicación Vue
 app.mount("#app");
