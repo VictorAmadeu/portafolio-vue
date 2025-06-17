@@ -55,7 +55,7 @@ export default {
       this.errorMessage = "";
       this.successMessage = "";
 
-      const { data, error } = await supabase
+      const { error } = await supabase
         .from("mensajes")
         .insert([{
           nombre: this.form.name,
