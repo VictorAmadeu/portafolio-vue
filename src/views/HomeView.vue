@@ -176,10 +176,14 @@ export default {
   font-size: 3rem;
   font-weight: bold;
   margin-bottom: 15px;
+  word-break: break-word;
 }
 .hero-subtitle {
   font-size: 1.3rem;
   margin-bottom: 20px;
+  word-break: break-word;
+  white-space: normal;
+  width: 100%;
 }
 .social-buttons {
   display: flex;
@@ -225,7 +229,7 @@ export default {
 
 /* =================== RESPONSIVIDAD =================== */
 
-/* Para pantallas medianas */
+/* Pantallas medianas */
 @media (max-width: 1200px) {
   .hero-content {
     margin: 0 50px;
@@ -241,14 +245,14 @@ export default {
   }
 }
 
-/* Para tablets: columna, todo centrado */
+/* Tablets: columna, todo centrado */
 @media (max-width: 1024px) {
   .hero-content {
     flex-direction: column;
     align-items: center;
     margin: 0 10px;
-    gap: 15px;
-    padding: 15px;
+    gap: 20px;
+    padding: 15px 8px;
   }
   .profile-image-container {
     margin-bottom: 15px;
@@ -277,24 +281,31 @@ export default {
   }
 }
 
-/* Para móviles grandes */
+/* Móviles grandes */
 @media (max-width: 768px) {
   .hero-section {
     padding: 40px 0 15px 0;
   }
   .hero-title {
-    font-size: 1.5rem;
+    font-size: 1.6rem;
+    margin-bottom: 10px;
   }
   .hero-subtitle {
-    font-size: 1.1rem;
+    font-size: 1.09rem;
+    margin-bottom: 15px;
+    padding: 0 3vw;
+    text-align: center;
+    width: 100%;
+    word-break: break-word;
   }
   .profile-image-container {
-    width: 120px;
-    height: 120px;
+    width: 130px;
+    height: 130px;
   }
   .social-buttons {
     flex-direction: column;
     gap: 10px;
+    width: 100%;
   }
   .custom-btn {
     width: 100%;
@@ -302,19 +313,45 @@ export default {
     font-size: 1rem;
     padding: 10px 8px;
   }
-}
-
-/* Para móviles pequeños */
-@media (max-width: 480px) {
   .hero-content {
+    gap: 8px;
     padding: 8px 0;
   }
+}
+
+/* Móviles pequeños */
+@media (max-width: 480px) {
+  .hero-content {
+    padding: 5px 0;
+    gap: 6px;
+    margin: 0 1vw;
+  }
   .hero-title {
-    font-size: 1.1rem;
+    font-size: 1.13rem;
+    margin-bottom: 7px;
+    padding: 0 1vw;
+    text-align: center;
+    width: 100%;
+  }
+  .hero-subtitle {
+    font-size: 0.98rem;
+    margin-bottom: 11px;
+    padding: 0 1vw;
+    text-align: center;
+    width: 100%;
+    word-break: break-word;
   }
   .profile-image-container {
-    width: 80px;
-    height: 80px;
+    width: 92px;
+    height: 92px;
+  }
+  .social-buttons {
+    gap: 6px;
+    width: 100%;
+  }
+  .custom-btn {
+    font-size: 0.98rem;
+    padding: 8px 3px;
   }
 }
 
