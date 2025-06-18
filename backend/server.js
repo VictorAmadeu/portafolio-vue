@@ -1,5 +1,5 @@
-// Carga variables de entorno
-require("dotenv").config({ path: "../.env" });
+// Carga variables de entorno (.env en la misma carpeta)
+require("dotenv").config();
 
 const express = require("express");
 const cors = require("cors");
@@ -8,9 +8,10 @@ const jwt = require("jsonwebtoken");
 
 // ---- INTEGRACIÓN SUPABASE ----
 const { createClient } = require("@supabase/supabase-js");
+// ATENCIÓN: Usar SERVICE ROLE KEY, no ANON KEY
 const supabase = createClient(
   process.env.SUPABASE_URL,
-  process.env.SUPABASE_ANON_KEY
+  process.env.SUPABASE_SERVICE_ROLE_KEY
 );
 
 const app = express();
@@ -24,7 +25,10 @@ app.use(express.json());
 app.post("/api/login", async (req, res) => {
   const { username, password } = req.body;
   // Ejemplo: obtén de tu BD real el usuario y su hash
-  const usuarioBD = { username: "admin", hash: "$2b$10$KIX..." };
+  const usuarioBD = {
+    username: "admin",
+    hash: "$2b$10$MJq41D1uRXRg5ZZznCfJ/O8tBIxuO8/g8twT5tNs5h61.FocSLMn.",
+  };
 
   if (username !== usuarioBD.username) {
     return res.status(401).json({ error: "Credenciales incorrectas" });
@@ -61,7 +65,8 @@ app.get("/messages", authMiddleware, async (req, res) => {
     const { data, error } = await supabase
       .from("mensajes")
       .select("*")
-      .order("fecha", { ascending: false });
+      .order("id", { ascending: false });
+      
 
     if (error) {
       console.error("❌ Error al buscar mensajes en Supabase:", error);
