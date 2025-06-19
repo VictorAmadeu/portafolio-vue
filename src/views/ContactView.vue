@@ -33,7 +33,7 @@
 </template>
 
 <script>
-import { postMessage } from "@/services/api";
+import { supabase } from "@/services/supabase";
 
 export default {
   name: "ContactView",
@@ -50,28 +50,26 @@ export default {
     };
   },
   methods: {
-    // Envía el mensaje al servidor (Supabase)
     async sendMessage() {
-  this.errorMessage = "";
-  this.successMessage = "";
+      this.errorMessage = "";
+      this.successMessage = "";
 
-  const body = {
-    nombre: this.form.name,
-    email: this.form.email,
-    asunto: this.form.subject,
-    mensaje: this.form.message
-  };
+      const { error } = await supabase
+        .from("mensajes")
+        .insert([{
+          nombre: this.form.name,
+          email: this.form.email,
+          asunto: this.form.subject,
+          mensaje: this.form.message
+        }]);
 
-  const res = await postMessage(body);
-
-  if (!res.éxito) {
-    this.errorMessage = "No ha sido posible enviar su mensaje.";
-    return;
-  }
-
-  this.successMessage = "¡Su mensaje ha sido enviado con éxito!";
-  this.form = { name: "", email: "", subject: "", message: "" };
-}
+      if (error) {
+        this.errorMessage = "No ha sido posible enviar su mensaje.";
+        return;
+      }
+      this.successMessage = "¡Su mensaje ha sido enviado con éxito!";
+      this.form = { name: "", email: "", subject: "", message: "" };
+    }
   }
 };
 </script>
