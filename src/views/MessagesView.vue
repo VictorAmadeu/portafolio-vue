@@ -71,7 +71,7 @@
 </template>
 
 <script>
-import { supabase } from "@/services/supabase";
+import { getMessages, deleteMessage } from "@/services/api";
 
 export default {
   name: "MessagesView",
@@ -86,36 +86,27 @@ export default {
   methods: {
     // Obtiene los mensajes desde Supabase
     async fetchMessages() {
-      const { data, error } = await supabase
-        .from("mensajes")
-        .select("*")
-        .order("id", { ascending: false });
+  try {
+    const data = await getMessages();
+    this.messages = data;
+  } catch (error) {
+    console.error("Error al cargar los mensajes:", error);
+  }
+},
 
-      if (error) {
-        console.error("Error al cargar los mensajes:", error);
-        return;
-      }
+async deleteMessage(id) {
+  if (!confirm("¿Estás seguro de que deseas borrar este mensaje?")) return;
 
-      this.messages = data;
-    },
-    // Borra un mensaje por ID
-    async deleteMessage(id) {
-      if (!confirm("¿Estás seguro de que deseas borrar este mensaje?")) return;
+  const res = await deleteMessage(id);
 
-      const { error } = await supabase
-        .from("mensajes")
-        .delete()
-        .eq("id", id);
+  if (!res.success) {
+    alert("Error al borrar el mensaje");
+    return;
+  }
 
-      if (error) {
-        console.error("Error de Supabase:", error);
-        alert("Error al borrar el mensaje: " + error.message);
-        return;
-      }
-
-      await this.fetchMessages(); // <-- Importante!
-      alert("¡Mensaje borrado con éxito!");
-    }
+  await this.fetchMessages();
+  alert("¡Mensaje borrado con éxito!");
+}
   }
 };
 </script>
