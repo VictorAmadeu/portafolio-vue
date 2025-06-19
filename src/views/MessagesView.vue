@@ -64,7 +64,7 @@
 
       <!-- Si no hay mensajes -->
       <div v-else>
-        <p class="text-muted text-center">No se encontró ningún mensaje.</p>
+        <p class="text-muted text-center">Solo el administrador (Victor Amadeu) tiene acceso a los mensajes recibidos.</p>
       </div>
     </div>
   </div>
