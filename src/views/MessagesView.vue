@@ -2,115 +2,218 @@
   <div>
     <div class="container mt-4">
       <h2 class="text-center mb-4">📥 Mensajes recibidos</h2>
+      
+      <!-- LOGIN FORM -->
+      <div v-if="!isLogged">
+        <form @submit.prevent="login" class="mb-4" style="max-width: 350px; margin:auto;">
+          <div class="mb-3">
+            <label class="form-label">Usuario</label>
+            <input v-model="username" class="form-control" required autocomplete="username" />
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Contraseña</label>
+            <input v-model="password" class="form-control" type="password" required autocomplete="current-password" />
+          </div>
+          <button class="btn btn-primary w-100" :disabled="loading">
+            {{ loading ? "Entrando..." : "Entrar como admin" }}
+          </button>
+          <div v-if="error" class="alert alert-danger mt-3 text-center">{{ error }}</div>
+        </form>
+        <p class="text-muted text-center">
+          Solo el administrador (Victor Amadeu) tiene acceso a los mensajes recibidos.
+        </p>
+      </div>
 
-      <!-- Si hay mensajes -->
-      <div v-if="messages.length">
-        <!-- MOBILE FIRST: Tarjetas para pantallas pequeñas -->
-        <div class="d-md-none">
-          <div
-            v-for="(msg, index) in messages"
-            :key="msg.id || index"
-            class="card mb-3 shadow-sm"
-          >
-            <div class="card-body">
-              <h5 class="card-title">{{ msg.nombre }}</h5>
-              <h6 class="card-subtitle mb-2 text-muted">{{ msg.email }}</h6>
-              <p class="card-text"><strong>Asunto:</strong> {{ msg.asunto }}</p>
-              <p class="card-text">{{ msg.mensaje }}</p>
-              <button
-                class="btn btn-danger btn-sm mt-2 w-100"
-                @click="deleteMessage(msg.id)"
-              >
-                🗑️ Borrar
-              </button>
+      <!-- LOGGED IN VIEW -->
+      <div v-else>
+        <!-- Botón de logout arriba a la derecha -->
+        <div class="text-end mb-3">
+          <button class="btn btn-outline-danger btn-sm" @click="logout">
+            Cerrar sesión
+          </button>
+        </div>
+
+        <!-- Si hay mensajes -->
+        <div v-if="messages.length">
+          <!-- MOBILE FIRST: Tarjetas para pantallas pequeñas -->
+          <div class="d-md-none">
+            <div
+              v-for="(msg, index) in messages"
+              :key="msg.id || msg._id || index"
+              class="card mb-3 shadow-sm"
+            >
+              <div class="card-body">
+                <h5 class="card-title">{{ msg.nombre }}</h5>
+                <h6 class="card-subtitle mb-2 text-muted">{{ msg.email }}</h6>
+                <p class="card-text"><strong>Asunto:</strong> {{ msg.asunto }}</p>
+                <p class="card-text">{{ msg.mensaje }}</p>
+                <button
+                  class="btn btn-danger btn-sm mt-2 w-100"
+                  @click="deleteMessage(msg.id || msg._id)"
+                >
+                  🗑️ Borrar
+                </button>
+              </div>
             </div>
+          </div>
+
+          <!-- TABLA para escritorio -->
+          <div class="table-responsive d-none d-md-block">
+            <table class="table table-hover table-bordered shadow-sm rounded-3">
+              <thead class="table-dark text-center">
+                <tr>
+                  <th>Nombre</th>
+                  <th>Email</th>
+                  <th>Asunto</th>
+                  <th>Mensaje</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody class="table-light">
+                <tr
+                  v-for="(msg, index) in messages"
+                  :key="msg.id || msg._id || index"
+                >
+                  <td>{{ msg.nombre }}</td>
+                  <td>{{ msg.email }}</td>
+                  <td>{{ msg.asunto }}</td>
+                  <td>{{ msg.mensaje }}</td>
+                  <td class="text-center">
+                    <button
+                      class="btn btn-danger btn-sm"
+                      @click="deleteMessage(msg.id || msg._id)"
+                    >
+                      🗑️ Borrar
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
 
-        <!-- TABLA para escritorio -->
-        <div class="table-responsive d-none d-md-block">
-          <table class="table table-hover table-bordered shadow-sm rounded-3">
-            <thead class="table-dark text-center">
-              <tr>
-                <th>Nombre</th>
-                <th>Email</th>
-                <th>Asunto</th>
-                <th>Mensaje</th>
-                <th>Acciones</th>
-              </tr>
-            </thead>
-            <tbody class="table-light">
-              <tr
-                v-for="(msg, index) in messages"
-                :key="msg.id || index"
-              >
-                <td>{{ msg.nombre }}</td>
-                <td>{{ msg.email }}</td>
-                <td>{{ msg.asunto }}</td>
-                <td>{{ msg.mensaje }}</td>
-                <td class="text-center">
-                  <button
-                    class="btn btn-danger btn-sm"
-                    @click="deleteMessage(msg.id)"
-                  >
-                    🗑️ Borrar
-                  </button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+        <!-- Si no hay mensajes -->
+        <div v-else>
+          <p class="text-muted text-center">
+            No hay mensajes para mostrar.
+          </p>
         </div>
-      </div>
-
-      <!-- Si no hay mensajes -->
-      <div v-else>
-        <p class="text-muted text-center">Solo el administrador (Victor Amadeu) tiene acceso a los mensajes recibidos.</p>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { supabase } from "@/services/supabase";
-
 export default {
   name: "MessagesView",
   data() {
     return {
-      messages: []
+      messages: [],
+      isLogged: !!localStorage.getItem("jwt_token"),
+      username: "",
+      password: "",
+      loading: false,
+      error: ""
     };
   },
-  async created() {
-    await this.fetchMessages();
+  mounted() {
+    // Si ya estás logueado, carga mensajes automáticamente
+    if (this.isLogged) {
+      this.fetchMessages();
+    }
   },
   methods: {
-    // Obtiene los mensajes directamente desde Supabase
-    async fetchMessages() {
-      const { data, error } = await supabase
-        .from("mensajes")
-        .select("*")
-        .order("id", { ascending: false });
-
-      if (error) {
-        console.error("Error al cargar los mensajes:", error);
-        return;
+    // LOGIN
+    async login() {
+      this.loading = true;
+      this.error = "";
+      try {
+        const res = await fetch("https://portafolio-vue.onrender.com/api/login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            username: this.username,
+            password: this.password
+          })
+        });
+        const data = await res.json();
+        if (res.ok && data.token) {
+          localStorage.setItem("jwt_token", data.token);
+          this.isLogged = true;
+          this.username = "";
+          this.password = "";
+          await this.fetchMessages();
+        } else {
+          this.error = data.error || "Login incorrecto";
+        }
+      } catch {
+        this.error = "Error al conectar con el backend";
       }
-      this.messages = data || [];
+      this.loading = false;
     },
 
-    // Borra un mensaje por ID
+    // LOGOUT
+    logout() {
+      localStorage.removeItem("jwt_token");
+      this.isLogged = false;
+      this.messages = [];
+      this.error = "";
+    },
+
+    // OBTENER MENSAJES
+    async fetchMessages() {
+      try {
+        const res = await fetch("https://portafolio-vue.onrender.com/api/messages", {
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("jwt_token")
+          }
+        });
+
+        if (!res.ok) {
+          if (res.status === 401) {
+            this.logout();
+            this.error = "Sesión expirada o no autorizada. Inicia sesión de nuevo.";
+          } else {
+            throw new Error("Error al cargar los mensajes");
+          }
+          return;
+        }
+
+        const data = await res.json();
+        this.messages = data;
+      } catch (e) {
+        this.messages = [];
+        this.logout();
+        this.error = "No autorizado o error al cargar los mensajes";
+      }
+    },
+
+    // BORRAR MENSAJE
     async deleteMessage(id) {
       if (!confirm("¿Estás seguro de que deseas borrar este mensaje?")) return;
-      const { error } = await supabase
-        .from("mensajes")
-        .delete()
-        .eq("id", id);
-      if (error) {
-        alert("Error al borrar el mensaje: " + error.message);
-        return;
+      try {
+        const res = await fetch(`https://portafolio-vue.onrender.com/api/messages/${id}`, {
+          method: "DELETE",
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("jwt_token")
+          }
+        });
+
+        if (!res.ok) {
+          if (res.status === 401) {
+            this.logout();
+            alert("No autorizado. Debes iniciar sesión nuevamente.");
+          } else {
+            throw new Error("Error al borrar el mensaje");
+          }
+          return;
+        }
+
+        await this.fetchMessages();
+        alert("¡Mensaje borrado con éxito!");
+      } catch (e) {
+        alert("Error al borrar el mensaje");
       }
-      await this.fetchMessages();
-      alert("¡Mensaje borrado con éxito!");
     }
   }
 };
