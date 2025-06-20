@@ -55,10 +55,12 @@ Antes de comenzar, asegúrate de tener instalados o disponibles:
 - **npm** (Node Package Manager) o **Yarn** para instalar dependencias.
 - **Cuenta de Supabase** y un **proyecto de Supabase** creado, para obtener la URL y la clave anónima de la API.
 - Un archivo `.env` en la raíz del proyecto con las siguientes variables de entorno configuradas:
-  - `SUPABASE_URL` – URL de tu instancia de Supabase.
-  - `SUPABASE_ANON_KEY` – Clave anónima pública de la API de Supabase.
-  - `SUPABASE_SERVICE_ROLE_KEY` – Clave de servicio de Supabase (solo para el backend).
-  - `SECRET_KEY` – Clave secreta para firmar y verificar los JWT (elige una cadena aleatoria y segura).
+  - `VITE_SUPABASE_URL` – URL pública de tu instancia de Supabase (usada en el Front-end).
+  - `VITE_SUPABASE_ANON_KEY` – Clave anónima pública de Supabase (para el Front-end).
+  - `VITE_API_URL` – URL base del servidor Node/Express.
+  - `SUPABASE_URL` – URL de Supabase utilizada por el Back-end.
+  - `SUPABASE_SERVICE_ROLE_KEY` – Clave de servicio de Supabase (solo para el Back-end).
+  - `SECRET_KEY` – Clave secreta para firmar y verificar los JWT en el Back-end.
   - `PORT` – Puerto en el que correrá el servidor Node (opcional, por defecto 3000).
 
 > **Nota:** Puedes tomar como referencia el archivo `.env.example` incluido en el repositorio, copiándolo como `.env` y reemplazando los valores de ejemplo con los de tu proyecto.
@@ -85,10 +87,12 @@ Sigue estos pasos cuidadosamente para configurar y ejecutar el proyecto correcta
 
    Luego, abre el archivo `.env` recién creado y completa las variables con los valores reales obtenidos de tu proyecto Supabase:
 
-   - `SUPABASE_URL`
-   - `SUPABASE_ANON_KEY`
-   - `SUPABASE_SERVICE_ROLE_KEY`
-   - `SECRET_KEY` (para JWT)
+   - `VITE_SUPABASE_URL`
+   - `VITE_SUPABASE_ANON_KEY`
+   - `VITE_API_URL`
+   - `SUPABASE_URL` (usada por el Back-end)
+   - `SUPABASE_SERVICE_ROLE_KEY` (Back-end)
+   - `SECRET_KEY` (Back-end, para JWT)
    - Cualquier otro ajuste necesario (por ejemplo, `PORT` si deseas especificarlo)
 
 4. **Instalar las dependencias del Front-end**  
