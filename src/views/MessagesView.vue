@@ -181,7 +181,7 @@ export default {
 
         const data = await res.json();
         this.messages = data;
-      } catch (e) {
+      } catch {
         this.messages = [];
         this.logout();
         this.error = "No autorizado o error al cargar los mensajes";
@@ -211,7 +211,7 @@ export default {
 
         await this.fetchMessages();
         alert("¡Mensaje borrado con éxito!");
-      } catch (e) {
+      } catch {
         alert("Error al borrar el mensaje");
       }
     }
