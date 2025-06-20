@@ -104,7 +104,6 @@
 </template>
 
 <script>
-const API_URL = import.meta.env.VITE_API_URL;
 export default {
   name: "MessagesView",
   data() {
@@ -129,7 +128,7 @@ export default {
       this.loading = true;
       this.error = "";
       try {
-        const res = await fetch(`${API_URL}/api/login`, {
+        const res = await fetch("https://portafolio-vue.onrender.com/api/login", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
@@ -164,7 +163,7 @@ export default {
     // OBTENER MENSAJES
     async fetchMessages() {
       try {
-        const res = await fetch(`${API_URL}/api/messages`, {
+        const res = await fetch("https://portafolio-vue.onrender.com/api/messages", {
           headers: {
             Authorization: "Bearer " + localStorage.getItem("jwt_token")
           }
@@ -193,7 +192,7 @@ export default {
     async deleteMessage(id) {
       if (!confirm("¿Estás seguro de que deseas borrar este mensaje?")) return;
       try {
-        const res = await fetch(`${API_URL}/api/messages/${id}`, {
+        const res = await fetch(`https://portafolio-vue.onrender.com/api/messages/${id}`, {
           method: "DELETE",
           headers: {
             Authorization: "Bearer " + localStorage.getItem("jwt_token")
