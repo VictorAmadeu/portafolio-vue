@@ -5,29 +5,44 @@ const express = require("express");
 const cors = require("cors");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-
-// ---- INTEGRACIÓN SUPABASE ----
 const { createClient } = require("@supabase/supabase-js");
-// ATENCIÓN: Usar SERVICE ROLE KEY, no ANON KEY
-const supabase = createClient(
-  process.env.SUPABASE_URL,
-  process.env.SUPABASE_SERVICE_ROLE_KEY
-);
 
 const app = express();
 const port = process.env.PORT || 3000;
 const SECRET = process.env.SECRET_KEY;
 
+// ---- INTEGRACIÓN SUPABASE ----
+// Usa SERVICE_ROLE_KEY solo en el backend para máxima seguridad
+const supabase = createClient(
+  process.env.SUPABASE_URL,
+  process.env.SUPABASE_SERVICE_ROLE_KEY
+);
+
 app.use(cors());
 app.use(express.json());
 
-// ---- LOGIN (SIN CAMBIOS) ----
+// ---- Middleware de autenticación JWT ----
+function authMiddleware(req, res, next) {
+  const authHeader = req.headers.authorization || "";
+  const token = authHeader.split(" ")[1];
+  if (!token) {
+    return res.status(401).json({ error: "Token requerido" });
+  }
+  try {
+    req.user = jwt.verify(token, SECRET);
+    next();
+  } catch {
+    return res.status(401).json({ error: "Token inválido" });
+  }
+}
+
+// ---- LOGIN de administrador ----
 app.post("/api/login", async (req, res) => {
   const { username, password } = req.body;
-  // Ejemplo: obtén de tu BD real el usuario y su hash
+  // Aquí deberías consultar una BD real, este es solo un ejemplo fijo:
   const usuarioBD = {
     username: "admin",
-    hash: "$2b$10$MJq41D1uRXRg5ZZznCfJ/O8tBIxuO8/g8twT5tNs5h61.FocSLMn.",
+    hash: "$2b$10$MJq41D1uRXRg5ZZznCfJ/O8tBIxuO8/g8twT5tNs5h61.FocSLMn.", // cambia por tu hash real si cambias la clave
   };
 
   if (username !== usuarioBD.username) {
@@ -44,54 +59,32 @@ app.post("/api/login", async (req, res) => {
   res.json({ token });
 });
 
-// ---- Middleware de autenticación (SIN CAMBIOS) ----
-function authMiddleware(req, res, next) {
-  const authHeader = req.headers.authorization || "";
-  const token = authHeader.split(" ")[1];
-  if (!token) {
-    return res.status(401).json({ error: "Token requerido" });
-  }
-  try {
-    req.user = jwt.verify(token, SECRET);
-    next();
-  } catch {
-    return res.status(401).json({ error: "Token inválido" });
-  }
-}
+// ---- RUTAS PROTEGIDAS: Mensajes (ver/borrar) ----
 
-// ---- GET /messages — Recuperar mensajes (usando Supabase) ----
-app.get("/messages", authMiddleware, async (req, res) => {
+// GET /api/messages — Recuperar mensajes SOLO si tienes token válido
+app.get("/api/messages", authMiddleware, async (req, res) => {
   try {
     const { data, error } = await supabase
       .from("mensajes")
       .select("*")
       .order("id", { ascending: false });
-      
 
     if (error) {
       console.error("❌ Error al buscar mensajes en Supabase:", error);
       return res.status(500).json({ error: "Error al buscar mensajes" });
     }
 
-    // Mapeo para compatibilidad con el frontend
-    const messages = data.map((row) => ({
-      _id: row.id,
-      name: row.nombre,
-      email: row.email,
-      subject: row.asunto, // Asegúrate que la columna 'asunto' exista si la necesitas
-      message: row.mensaje,
-      date: row.fecha,
-    }));
-
-    res.json(messages);
+    // Puedes mapear los datos aquí si quieres compatibilidad especial:
+    // (En este ejemplo, se envía el array tal cual)
+    res.json(data);
   } catch (err) {
     console.error("❌ Error inesperado:", err);
     res.status(500).json({ error: "Error inesperado al buscar mensajes" });
   }
 });
 
-// ---- DELETE /messages/:id — Borrar mensaje por ID (usando Supabase) ----
-app.delete("/messages/:id", authMiddleware, async (req, res) => {
+// DELETE /api/messages/:id — Borrar mensaje SOLO si tienes token válido
+app.delete("/api/messages/:id", authMiddleware, async (req, res) => {
   try {
     const { error } = await supabase
       .from("mensajes")
@@ -110,9 +103,9 @@ app.delete("/messages/:id", authMiddleware, async (req, res) => {
   }
 });
 
-// ---- POST /mensajes — Guardar mensaje en Supabase (público) ----
+// ---- RUTA PÚBLICA: Guardar mensaje ----
 app.post("/mensajes", async (req, res) => {
-  const { nombre, email, mensaje } = req.body;
+  const { nombre, email, mensaje, asunto } = req.body;
 
   if (!nombre || !email || !mensaje) {
     return res.status(400).json({ error: "Faltan campos obligatorios" });
@@ -121,7 +114,7 @@ app.post("/mensajes", async (req, res) => {
   try {
     const { data, error } = await supabase
       .from("mensajes")
-      .insert([{ nombre, email, mensaje }])
+      .insert([{ nombre, email, mensaje, asunto }])
       .select();
 
     if (error) {
