@@ -92,6 +92,7 @@ export default {
         return;
       }
       this.isMenuOpen = true;
+      document.body.classList.add('menu-open');
       this.lastToggle = Date.now();
       if (this.closeTimeout) clearTimeout(this.closeTimeout);
       this.closeTimeout = setTimeout(() => {
@@ -102,6 +103,7 @@ export default {
     },
     closeMenu() {
       this.isMenuOpen = false;
+      document.body.classList.remove('menu-open');
       if (this.closeTimeout) clearTimeout(this.closeTimeout);
     },
     handleResize() {
