@@ -57,6 +57,7 @@ Antes de comenzar, asegúrate de tener instalados o disponibles:
 - Un archivo `.env` en la raíz del proyecto con las siguientes variables de entorno configuradas:
   - `SUPABASE_URL` – URL de tu instancia de Supabase.
   - `SUPABASE_ANON_KEY` – Clave anónima pública de la API de Supabase.
+  - `SUPABASE_SERVICE_ROLE_KEY` – Clave de servicio de Supabase (solo para el backend).
   - `SECRET_KEY` – Clave secreta para firmar y verificar los JWT (elige una cadena aleatoria y segura).
   - `PORT` – Puerto en el que correrá el servidor Node (opcional, por defecto 3000).
 
@@ -86,6 +87,7 @@ Sigue estos pasos cuidadosamente para configurar y ejecutar el proyecto correcta
 
    - `SUPABASE_URL`
    - `SUPABASE_ANON_KEY`
+   - `SUPABASE_SERVICE_ROLE_KEY`
    - `SECRET_KEY` (para JWT)
    - Cualquier otro ajuste necesario (por ejemplo, `PORT` si deseas especificarlo)
 
