@@ -140,8 +140,8 @@ export default {
 
 /* IMAGEN */
 .profile-image-container {
-  width: 250px;
-  height: 250px;
+  width: 100%;
+  max-width: 250px;
   overflow: hidden;
   border-radius: 40%;
   flex-shrink: 0;
@@ -241,8 +241,7 @@ export default {
     max-width: 600px;
   }
   .profile-image-container {
-    width: 200px;
-    height: 200px;
+    max-width: 200px;
   }
 }
 
@@ -259,8 +258,8 @@ export default {
   .profile-image-container {
     margin-bottom: 10px;
     margin-left: 0;
-    width: 200px;
-    height: 200px;
+    width: 100%;
+    max-width: 200px;
   }
   .profile-image {
     margin-left: 0;
@@ -297,8 +296,7 @@ export default {
     max-width: 100vw;
   }
   .profile-image-container {
-    width: 160px;
-    height: 160px;
+    max-width: 160px;
   }
   .social-buttons {
     flex-direction: column;
@@ -327,8 +325,6 @@ export default {
   .profile-image-container {
     width: 95vw;
     max-width: 240px;
-    height: 95vw;
-    max-height: 240px;
     margin: 0 auto 10px auto;
   }
   .profile-image {
