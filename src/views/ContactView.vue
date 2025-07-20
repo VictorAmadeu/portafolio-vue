@@ -33,7 +33,7 @@
 </template>
 
 <script>
-import { supabase } from "@/services/supabase";
+import { supabase } from "@/services/supabase.js";
 
 export default {
   name: "ContactView",
