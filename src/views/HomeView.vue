@@ -143,21 +143,22 @@ export default {
   width: 100%;
   max-width: 250px;
   overflow: hidden;
-  border-radius: 40%;
+  border-radius: 50%;      /* círculo perfecto */
   flex-shrink: 0;
   display: flex;
   justify-content: center;
   align-items: center;
   aspect-ratio: 1/1;
 }
+
 .profile-image {
   width: 100%;
   height: 100%;
-  object-fit: contain;  /* <-- Cambia "cover" por "contain" */
+  object-fit: cover;      /* rellena el círculo */
   object-position: center;
-  margin-left: 30px;
-  border-radius: 40%;
+  border-radius: 50%;     /* círculo perfecto */
   display: block;
+  /* margin-left: 30px;   <-- Elimina esta línea */
 }
 
 
