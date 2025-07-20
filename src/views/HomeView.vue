@@ -153,12 +153,13 @@ export default {
 .profile-image {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;  /* <-- Cambia "cover" por "contain" */
   object-position: center;
   margin-left: 30px;
   border-radius: 40%;
   display: block;
 }
+
 
 /* TEXTO */
 .hero-text {
