@@ -142,14 +142,16 @@ export default {
 .profile-image-container {
   width: 100%;
   max-width: 250px;
+  max-height: 250px; /* ← Añade esta línea */
   overflow: hidden;
-  border-radius: 50%;      /* círculo perfecto */
+  border-radius: 50%;
   flex-shrink: 0;
   display: flex;
   justify-content: center;
   align-items: center;
   aspect-ratio: 1/1;
 }
+
 
 .profile-image {
   width: 100%;
