@@ -154,7 +154,7 @@ export default {
 .profile-image {
   width: 100%;
   height: 100%;
-  object-fit: cover;      /* rellena el círculo */
+  object-fit: contain;      /* rellena el círculo */
   object-position: center;
   border-radius: 50%;     /* círculo perfecto */
   display: block;
