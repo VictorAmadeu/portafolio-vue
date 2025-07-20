@@ -5,12 +5,13 @@
       <div class="hero-content">
         <!-- IMAGEN DE PERFIL -->
         <div class="profile-image-container">
-          <img
-            src="../assets/images/profile.jpg"
-            alt="Foto de perfil"
-            class="profile-image"
-          />
-        </div>
+  <img
+    src="../assets/images/profile.jpg"
+    alt="Foto de perfil"
+    class="profile-image"
+  />
+</div>
+
         <!-- CONTENIDO DE BIENVENIDA -->
         <div class="hero-text">
           <h1 class="display-4 fw-bold hero-title">
@@ -144,20 +145,17 @@ export default {
   height: 250px;
   border-radius: 50%;
   overflow: hidden;
+  background: #fff;
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #fff; /* Opcional: color de fondo */
 }
 
 .profile-image {
-  width: 100%;
   height: 100%;
-  object-fit: contain;      /* 👈 Así la imagen cabe entera */
-  object-position: center;
-  border-radius: 50%;
+  width: auto;
   display: block;
-  background: #fff;         /* 👈 Asegura fondo blanco si sobra espacio */
+  border-radius: 0;
 }
 
 
