@@ -154,13 +154,11 @@ export default {
 .profile-image {
   width: 100%;
   height: 100%;
-  object-fit: contain;      /* rellena el círculo */
+  object-fit: contain;      /* Cambia de "cover" a "contain" */
   object-position: center;
-  border-radius: 50%;     /* círculo perfecto */
+  border-radius: 50%;
   display: block;
-  /* margin-left: 30px;   ELIMINA o comenta esta línea */
 }
-
 
 
 /* TEXTO */
