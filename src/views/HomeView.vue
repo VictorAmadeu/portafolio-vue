@@ -142,25 +142,27 @@ export default {
 .profile-image-container {
   width: 100%;
   max-width: 250px;
-  max-height: 250px; /* ← Añade esta línea */
-  overflow: hidden;
+  aspect-ratio: 1/1;
+  background: #fff; /* Fondo blanco para el círculo, opcional */
   border-radius: 50%;
+  overflow: hidden;
   flex-shrink: 0;
   display: flex;
   justify-content: center;
   align-items: center;
-  aspect-ratio: 1/1;
 }
-
 
 .profile-image {
   width: 100%;
   height: 100%;
-  object-fit: contain;      /* Cambia de "cover" a "contain" */
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;      /* Para que nunca se corte */
   object-position: center;
   border-radius: 50%;
   display: block;
 }
+
 
 
 /* TEXTO */
