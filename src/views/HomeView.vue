@@ -140,24 +140,20 @@ export default {
 
 /* IMAGEN */
 .profile-image-container {
-  width: 100%;
-  max-width: 250px;
-  aspect-ratio: 1/1;
-  background: #fff; /* Fondo blanco para el círculo, opcional */
+  width: 250px;
+  height: 250px;
   border-radius: 50%;
   overflow: hidden;
-  flex-shrink: 0;
   display: flex;
   justify-content: center;
   align-items: center;
+  background: #fff; /* Opcional: color de fondo */
 }
 
 .profile-image {
   width: 100%;
   height: 100%;
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: contain;      /* Para que nunca se corte */
+  object-fit: cover;    /* Que la imagen llene el círculo, pero... */
   object-position: center;
   border-radius: 50%;
   display: block;
