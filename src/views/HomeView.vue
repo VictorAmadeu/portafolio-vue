@@ -158,8 +158,9 @@ export default {
   object-position: center;
   border-radius: 50%;     /* círculo perfecto */
   display: block;
-  /* margin-left: 30px;   <-- Elimina esta línea */
+  /* margin-left: 30px;   ELIMINA o comenta esta línea */
 }
+
 
 
 /* TEXTO */
