@@ -153,10 +153,11 @@ export default {
 .profile-image {
   width: 100%;
   height: 100%;
-  object-fit: cover;    /* Que la imagen llene el círculo, pero... */
+  object-fit: contain;      /* 👈 Así la imagen cabe entera */
   object-position: center;
   border-radius: 50%;
   display: block;
+  background: #fff;         /* 👈 Asegura fondo blanco si sobra espacio */
 }
 
 
