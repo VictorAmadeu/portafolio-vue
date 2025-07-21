@@ -152,8 +152,9 @@ export default {
 }
 
 .profile-image {
+  width: 100%;
   height: 100%;
-  width: auto;
+  object-fit: cover; /* ← ESTA LÍNEA ES LA CLAVE */
   display: block;
   border-radius: 0;
 }
