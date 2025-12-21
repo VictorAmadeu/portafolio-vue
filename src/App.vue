@@ -35,12 +35,8 @@
                 Contacto
               </router-link>
             </li>
-            <li class="nav-item">
-              <router-link to="/messages" class="nav-link" @click="closeMenu">
-                <i class="fas fa-inbox"></i>
-                Mensajes
-              </router-link>
-            </li>
+
+            <!-- ✅ Paso 2: Enlace "Mensajes" eliminado del navbar (ruta /messages) -->
           </ul>
         </div>
       </div>
@@ -66,7 +62,7 @@
           <a href="https://github.com/VictorAmadeu" target="_blank">
             <i class="fab fa-github"></i>
           </a>
-          <a href="mailto:victoremmadrid@outlook.com">
+          <a href="mailto:Victoremmadrid@outlook.com">
             <i class="fas fa-envelope"></i>
           </a>
         </div>

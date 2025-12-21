@@ -8,9 +8,6 @@ import HomeView from "../views/HomeView.vue";
 // Importamos el componente que representa la vista de la página de contacto.
 import ContactView from "../views/ContactView.vue";
 
-// Importamos el componente que representa la vista de los mensajes recibidos.
-import MessagesView from "../views/MessagesView.vue"; // Nueva vista para mostrar mensajes
-
 // Creamos una constante "router" donde configuramos el enrutador de Vue.
 const router = createRouter({
   // Definimos el modo de historial: en este caso, "createWebHashHistory",
@@ -25,10 +22,6 @@ const router = createRouter({
 
     // Segunda ruta: "/contact" mostrará el componente "ContactView".
     { path: "/contact", component: ContactView },
-
-    // Tercera ruta: "/messages" mostrará el componente "MessagesView",
-    // donde se listarán los mensajes guardados.
-    { path: "/messages", component: MessagesView }, // Nueva ruta agregada
   ],
 });
 
