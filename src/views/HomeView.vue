@@ -6,8 +6,8 @@
         <!-- IMAGEN DE PERFIL -->
         <div class="profile-image-container">
   <img
-    src="../assets/images/profile.jpg"
-    alt="Foto de perfil"
+    src="../assets/images/victor-nueva.jpg"
+    alt="Foto de Victor Amadeu"
     class="profile-image"
   />
 </div>
