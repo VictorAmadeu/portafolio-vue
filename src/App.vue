@@ -1,4 +1,3 @@
-<!-- ******************** INICIO DE App.vue ******************** -->
 <template>
   <div class="main-wrapper">
     <!-- NAVBAR -->
@@ -13,7 +12,7 @@
           type="button"
           @click="toggleMenu"
           :aria-expanded="isMenuOpen ? 'true' : 'false'"
-          aria-label="Alternar navegação"
+          aria-label="Alternar navegación"
         >
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -30,13 +29,17 @@
               </router-link>
             </li>
             <li class="nav-item">
+              <router-link to="/projects" class="nav-link" @click="closeMenu">
+                <i class="fas fa-code"></i>
+                Proyectos
+              </router-link>
+            </li>
+            <li class="nav-item">
               <router-link to="/contact" class="nav-link" @click="closeMenu">
                 <i class="fas fa-envelope"></i>
                 Contacto
               </router-link>
             </li>
-
-            <!-- ✅ Paso 2: Enlace "Mensajes" eliminado del navbar (ruta /messages) -->
           </ul>
         </div>
       </div>
@@ -51,18 +54,30 @@
     <!-- FOOTER -->
     <footer class="footer bg-dark text-white text-center py-4">
       <div class="container">
-        <p class="mb-3">© 2025 Mi Portafolio. Todos los derechos reservados.</p>
+        <p class="mb-3">© 2026 Mi Portafolio. Todos los derechos reservados.</p>
         <div class="footer-icons">
-          <a href="https://www.linkedin.com/in/victor-amadeu-braga-heleno-583870266/" target="_blank">
+          <a
+            href="https://www.linkedin.com/in/victor-amadeu-braga-heleno-583870266/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             <i class="fab fa-linkedin"></i>
           </a>
-          <a href="https://www.instagram.com/victoramadeu_?igsh=MXQxeTllNDl5MHp4dA==" target="_blank">
+          <a
+            href="https://www.instagram.com/victoramadeu_/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             <i class="fab fa-instagram"></i>
           </a>
-          <a href="https://github.com/VictorAmadeu" target="_blank">
+          <a
+            href="https://github.com/VictorAmadeu"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             <i class="fab fa-github"></i>
           </a>
-          <a href="mailto:Victoremmadrid@outlook.com">
+          <a href="mailto:victoremmadrid@outlook.com">
             <i class="fas fa-envelope"></i>
           </a>
         </div>
@@ -88,7 +103,7 @@ export default {
         return;
       }
       this.isMenuOpen = true;
-      document.body.classList.add('menu-open');
+      document.body.classList.add("menu-open");
       this.lastToggle = Date.now();
       if (this.closeTimeout) clearTimeout(this.closeTimeout);
       this.closeTimeout = setTimeout(() => {
@@ -99,14 +114,14 @@ export default {
     },
     closeMenu() {
       this.isMenuOpen = false;
-      document.body.classList.remove('menu-open');
+      document.body.classList.remove("menu-open");
       if (this.closeTimeout) clearTimeout(this.closeTimeout);
     },
     handleResize() {
       if (window.innerWidth >= 992) {
         this.isMenuOpen = false;
       }
-    }
+    },
   },
   mounted() {
     window.addEventListener("resize", this.handleResize);
@@ -114,7 +129,7 @@ export default {
   beforeUnmount() {
     window.removeEventListener("resize", this.handleResize);
     if (this.closeTimeout) clearTimeout(this.closeTimeout);
-  }
+  },
 };
 </script>
 
@@ -236,7 +251,7 @@ export default {
   }
   .footer {
     padding: 10px 0;
-    font-size: 0.90rem;
+    font-size: 0.9rem;
   }
 }
 
@@ -245,4 +260,3 @@ body.menu-open {
   overflow: hidden;
 }
 </style>
-<!-- ******************** FIN DE App.vue ******************** -->
