@@ -1,30 +1,22 @@
-// Importamos desde "vue-router" las funciones necesarias para crear el enrutador
-// y para configurar un historial basado en hash (en lugar de HTML5 history).
 import { createRouter, createWebHashHistory } from "vue-router";
 
-// Importamos el componente que representa la vista principal (Home).
 import HomeView from "../views/HomeView.vue";
-
-// Importamos el componente que representa la vista de la página de contacto.
+import ProjectsView from "../views/ProjectsView.vue";
 import ContactView from "../views/ContactView.vue";
 
-// Creamos una constante "router" donde configuramos el enrutador de Vue.
 const router = createRouter({
-  // Definimos el modo de historial: en este caso, "createWebHashHistory",
-  // ideal para entornos como GitHub Pages, evitando errores 404.
+  // El historial hash evita errores 404 en despliegues estáticos como GitHub Pages.
   history: createWebHashHistory(),
-
-  // Declaramos un array "routes" que contiene los objetos de configuración
-  // para cada ruta de la aplicación.
   routes: [
-    // Primera ruta: la raíz ("/") mostrará el componente "HomeView".
+    // Ruta principal.
     { path: "/", component: HomeView },
 
-    // Segunda ruta: "/contact" mostrará el componente "ContactView".
+    // Ruta de proyectos.
+    { path: "/projects", component: ProjectsView },
+
+    // Ruta de contacto.
     { path: "/contact", component: ContactView },
   ],
 });
 
-// Exportamos por defecto el enrutador para que pueda ser utilizado
-// en el archivo principal "main.js" u otros lugares donde se necesite.
 export default router;
