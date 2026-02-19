@@ -5,17 +5,17 @@
       <div class="hero-content">
         <!-- IMAGEN DE PERFIL -->
         <div class="profile-image-container">
-  <img
-    src="../assets/images/victor-nueva.jpg"
-    alt="Foto de Victor Amadeu"
-    class="profile-image"
-  />
-</div>
+          <img
+            src="../assets/images/victor-nueva.jpg"
+            alt="Foto de Victor Amadeu"
+            class="profile-image"
+          />
+        </div>
 
         <!-- CONTENIDO DE BIENVENIDA -->
         <div class="hero-text">
           <h1 class="display-4 fw-bold hero-title">
-            Bienvenido a Mi Portafolio
+            Bienvenido(a) a Mi Portafolio
           </h1>
           <p class="lead hero-subtitle">
             Explora mis proyectos, conoce mi experiencia y ponte en contacto.
@@ -24,13 +24,15 @@
             <a
               href="https://www.linkedin.com/in/victor-amadeu-braga-heleno-583870266/"
               target="_blank"
+              rel="noopener noreferrer"
               class="btn btn-primary custom-btn"
             >
               <i class="fab fa-linkedin fa-lg"></i> LinkedIn
             </a>
             <a
-              href="https://www.instagram.com/victoramadeu_?igsh=MXQxeTllNDl5MHp4dA=="
+              href="https://www.instagram.com/victoramadeu_/"
               target="_blank"
+              rel="noopener noreferrer"
               class="btn btn-danger custom-btn"
             >
               <i class="fab fa-instagram fa-lg"></i> Instagram
@@ -38,12 +40,13 @@
             <a
               href="https://github.com/VictorAmadeu"
               target="_blank"
+              rel="noopener noreferrer"
               class="btn btn-dark custom-btn"
             >
               <i class="fab fa-github fa-lg"></i> GitHub
             </a>
             <a
-              href="https://victoramadeu.github.io/portafolio-vue/curriculo.pdf"
+              :href="cvUrl"
               download
               class="btn btn-secondary custom-btn"
             >
@@ -93,20 +96,27 @@
     <section class="contact-section text-center p-5" data-aos="fade-up">
       <h2 class="fw-bold">Contáctame</h2>
       <p>Si tienes alguna consulta, no dudes en enviarme un mensaje.</p>
-      <a
-        href="/portafolio-vue/#/contact"
+      <router-link
+        to="/contact"
         class="btn btn-outline-dark btn-lg mt-3 custom-btn"
         data-aos="zoom-in"
       >
         Enviar Mensaje
-      </a>
+      </router-link>
     </section>
   </div>
 </template>
 
 <script>
+const CV_URL = `${import.meta.env.BASE_URL}curriculo.pdf`;
+
 export default {
   name: "HomeView",
+  data() {
+    return {
+      cvUrl: CV_URL,
+    };
+  },
 };
 </script>
 
@@ -154,12 +164,10 @@ export default {
 .profile-image {
   width: 100%;
   height: 100%;
-  object-fit: cover; /* ← ESTA LÍNEA ES LA CLAVE */
+  object-fit: cover;
   display: block;
   border-radius: 0;
 }
-
-
 
 /* TEXTO */
 .hero-text {
@@ -179,7 +187,6 @@ export default {
 .hero-subtitle {
   font-size: 1.3rem;
   margin-bottom: 20px;
-  /* Para evitar que se corte, haz que salte de línea */
   word-break: break-word;
   white-space: normal;
   max-width: 100%;
