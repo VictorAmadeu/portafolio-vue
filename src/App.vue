@@ -1,12 +1,13 @@
 <template>
   <div class="main-wrapper">
-    <!-- NAVBAR -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <!-- Navbar principal -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
       <div class="container">
         <router-link to="/" class="navbar-brand fw-bold">
           <i class="fas fa-laptop-code"></i>
           Mi Portafolio
         </router-link>
+
         <button
           class="navbar-toggler"
           type="button"
@@ -16,6 +17,7 @@
         >
           <span class="navbar-toggler-icon"></span>
         </button>
+
         <div
           class="collapse navbar-collapse"
           :class="{ show: isMenuOpen }"
@@ -44,15 +46,14 @@
         </div>
       </div>
     </nav>
-    <!-- FIN NAVBAR -->
 
-    <!-- CONTENIDO PRINCIPAL -->
+    <!-- Contenido principal -->
     <div class="main-content">
       <router-view></router-view>
     </div>
 
-    <!-- FOOTER -->
-    <footer class="footer bg-dark text-white text-center py-4">
+    <!-- Footer -->
+    <footer class="footer text-center py-4">
       <div class="container">
         <p class="mb-3">© 2026 Mi Portafolio. Todos los derechos reservados.</p>
         <div class="footer-icons">
@@ -134,129 +135,151 @@ export default {
 </script>
 
 <style scoped>
-/* ====== Main Wrapper & Content ====== */
+/* Estructura base */
 .main-wrapper {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
 }
+
 .main-content {
   flex: 1 0 auto;
-  margin-top: 80px;
+  margin-top: 82px;
   padding-bottom: 2rem;
+  color: var(--color-text-100);
 }
 
-/* ====== Navbar y Menú ====== */
+/* Navbar */
 .navbar {
   padding: 15px 20px;
-  transition: background-color 0.3s ease-in-out;
-}
-.navbar-nav .nav-link {
-  font-size: 1.1rem;
-  font-weight: 500;
-  transition: color 0.3s ease-in-out, border-bottom 0.3s ease-in-out;
-}
-.navbar-nav .nav-link:hover {
-  color: #ffdd57 !important;
+  background: rgba(4, 9, 20, 0.88);
+  border-bottom: 1px solid var(--color-border-soft);
+  backdrop-filter: blur(10px);
 }
 
-/* ====== Footer ====== */
-.footer {
-  background-color: #343a40;
-  color: white;
-  text-align: center;
-  padding: 20px 0;
+.navbar-brand {
+  color: var(--color-text-100) !important;
 }
+
+.navbar-toggler {
+  border-color: var(--color-border-soft);
+}
+
+.navbar-toggler:focus {
+  box-shadow: none;
+}
+
+.navbar-nav .nav-link {
+  color: var(--color-text-300) !important;
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin-left: 8px;
+  padding: 10px 16px;
+  border-radius: 16px;
+  border: 1px solid transparent;
+  transition: all 0.25s ease-in-out;
+}
+
+.navbar-nav .nav-link:hover {
+  color: var(--color-text-100) !important;
+  background: rgba(27, 32, 45, 0.65);
+  border-color: var(--color-border-soft);
+}
+
+.navbar-nav .router-link-exact-active {
+  color: var(--color-text-100) !important;
+  background: var(--color-btn-dark);
+  border-color: var(--color-border-soft);
+}
+
+/* Footer */
+.footer {
+  background: rgba(4, 9, 20, 0.94);
+  border-top: 1px solid var(--color-border-soft);
+  color: var(--color-text-300);
+}
+
 .footer-icons {
   display: flex;
   justify-content: center;
-  gap: 15px;
+  gap: 12px;
 }
+
 .footer-icons a {
-  font-size: 1.8rem;
-  color: white;
-  transition: transform 0.3s ease-in-out, color 0.3s ease-in-out;
+  width: 46px;
+  height: 46px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 14px;
+  font-size: 1.35rem;
+  color: var(--color-text-100);
+  background: rgba(27, 32, 45, 0.58);
+  border: 1px solid var(--color-border-soft);
+  transition: transform 0.25s ease, border-color 0.25s ease, color 0.25s ease;
 }
+
 .footer-icons a:hover {
-  transform: scale(1.2);
-  color: #ffc107;
+  transform: translateY(-2px);
+  border-color: var(--color-accent-cyan);
+  color: var(--color-accent-cyan);
 }
 
-/* ============================= */
-/* ====== RESPONSIVIDAD ======== */
-/* ============================= */
-
-/* ---- Tablets (≤991.98px) ---- */
+/* Responsive navbar */
 @media (max-width: 991.98px) {
   .navbar-collapse {
     position: absolute;
-    top: 56px;
+    top: 62px;
     left: 0;
     width: 100vw;
-    background: #222;
     z-index: 1000;
     padding: 1rem 0;
-    transition: all 0.2s;
-    border-bottom-left-radius: 15px;
-    border-bottom-right-radius: 15px;
+    background: rgba(6, 12, 24, 0.96);
+    border: 1px solid var(--color-border-soft);
+    border-top: none;
+    border-bottom-left-radius: 14px;
+    border-bottom-right-radius: 14px;
   }
+
   .navbar-collapse ul {
     flex-direction: column;
     align-items: flex-start;
-    padding-left: 2rem;
-    gap: 0.7rem;
+    padding-left: 1rem;
+    gap: 0.5rem;
   }
+
   .navbar-nav .nav-link {
-    font-size: 1rem;
-    padding: 10px 0;
+    margin-left: 0;
     width: 100%;
   }
 }
 
-/* ---- Móviles (≤767.98px) ---- */
 @media (max-width: 767.98px) {
   .container {
     max-width: 100vw !important;
     padding-left: 8px !important;
     padding-right: 8px !important;
   }
+
   .navbar-brand {
-    font-size: 1.15rem;
+    font-size: 1.05rem;
   }
-  .footer-icons {
-    gap: 10px;
-  }
-  .footer-icons a {
-    font-size: 1.4rem;
-  }
-  .footer {
-    font-size: 0.97rem;
-    padding: 15px 0;
-  }
+
   .main-content {
-    margin-top: 64px;
+    margin-top: 72px;
     padding-left: 6px;
     padding-right: 6px;
   }
-}
 
-/* ---- Pantallas muy pequeñas (≤480px) ---- */
-@media (max-width: 480px) {
-  .navbar-brand {
-    font-size: 1rem;
-    gap: 5px;
-  }
   .footer-icons a {
+    width: 40px;
+    height: 40px;
     font-size: 1.1rem;
   }
-  .footer {
-    padding: 10px 0;
-    font-size: 0.9rem;
-  }
 }
 
-/* Evita doble scroll en móvil cuando el menú está abierto */
-body.menu-open {
+/* Evita doble scroll al abrir menú móvil */
+:global(body.menu-open) {
   overflow: hidden;
 }
 </style>

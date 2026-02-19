@@ -1,0 +1,60 @@
+:root {
+    /* Fondo y superficies principales */
+    --color-bg-900: #020611;
+    --color-bg-850: #060b18;
+    --color-surface-800: #111522;
+    --color-surface-760: #161b2a;
+    --color-surface-700: #1c2233;
+  
+    /* Bordes y sombras */
+    --color-border-soft: rgba(142, 165, 198, 0.28);
+    --color-border-strong: rgba(110, 143, 183, 0.45);
+    --shadow-soft: 0 14px 36px rgba(2, 8, 20, 0.42);
+  
+    /* Texto */
+    --color-text-100: #edf1f7;
+    --color-text-300: #b2bbca;
+    --color-text-400: #96a1b3;
+  
+    /* Acentos */
+    --color-accent-teal: #3be5d7;
+    --color-accent-cyan: #4ec4ff;
+    --color-accent-blue: #7fa9ff;
+    --color-accent-emerald: #00d7a3;
+  
+    /* Botones */
+    --color-btn-dark: #1b202d;
+    --color-btn-light: #f2f4f8;
+    --color-btn-light-text: #101826;
+  
+    /* Inputs */
+    --color-input-bg: rgba(10, 17, 30, 0.74);
+  }
+  
+  html,
+  body,
+  #app {
+    min-height: 100%;
+  }
+  
+  /* Fondo global tipo “aurora” como en tus capturas */
+  body {
+    margin: 0;
+    color: var(--color-text-100);
+    background:
+      radial-gradient(circle at 10% 18%, rgba(0, 184, 153, 0.26) 0%, rgba(0, 184, 153, 0) 36%),
+      radial-gradient(circle at 47% 52%, rgba(83, 89, 255, 0.24) 0%, rgba(83, 89, 255, 0) 44%),
+      radial-gradient(circle at 88% 74%, rgba(0, 144, 199, 0.22) 0%, rgba(0, 144, 199, 0) 36%),
+      linear-gradient(180deg, #020611 0%, #040919 46%, #030814 100%);
+    font-family: "Inter", "Segoe UI", sans-serif;
+  }
+  
+  a {
+    color: inherit;
+  }
+  
+  ::selection {
+    background: rgba(78, 196, 255, 0.28);
+    color: var(--color-text-100);
+  }
+  

@@ -2,21 +2,24 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 
+// Paleta global del proyecto
+import "./assets/theme-palette.css";
+
 // Vue core
 import { createApp } from "vue";
 import App from "./App.vue";
 
-// Roteador
+// Router
 import router from "./router";
 
 // AOS - animaciones al desplazarse
 import AOS from "aos";
 import "aos/dist/aos.css";
 
-// Criación del app Vue
+// Creación del app Vue
 const app = createApp(App);
 
-// Uso del roteador
+// Uso del router
 app.use(router);
 
 // Inicialización del AOS
@@ -31,7 +34,7 @@ app.mixin({
   },
 });
 
-// Scroll suave desupués del cambio de ruta
+// Scroll suave después del cambio de ruta
 router.afterEach(() => {
   setTimeout(() => {
     window.scrollTo({

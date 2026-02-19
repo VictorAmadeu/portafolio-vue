@@ -14,6 +14,9 @@ Esto permite una gestión más robusta y escalable de los datos.
 - 🔧 **Back-end implementado con Node.js y Express**, encargado de manejar la autenticación y servir como intermediario seguro entre el Front-end y la base de datos Supabase cuando es necesario.
 - 🔐 **Autenticación de administrador** mediante usuario `"admin"` y JSON Web Tokens (JWT), para proteger las rutas de administración (ver detalles abajo).
 - 🛠️ **API segura** para recuperar y eliminar mensajes almacenados, accesible solo para el administrador autenticado.
+- 💼 **Sección de proyectos reales** con tarjetas que enlazan a repositorios y demos públicas, actualmente:
+  - `Media Kit Jhulyana` → [GitHub](https://github.com/VictorAmadeu/media-kit-jhulyana) · [Demo](https://victoramadeu.github.io/media-kit-jhulyana/)
+  - `VictorAI Blog` → [GitHub](https://github.com/VictorAmadeu/victorai-blog) · [Demo](https://victorai-blog.vercel.app/)
 
 
 ## 📌 Tecnologías Utilizadas

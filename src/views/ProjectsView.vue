@@ -1,8 +1,8 @@
 <template>
-  <div class="container mt-5">
+  <div class="container mt-5 projects-view">
     <h1 class="text-center mb-4">Mis Proyectos</h1>
 
-    <!-- Grid de tarjetas: 2 columnas en escritorio, 1 en móvil -->
+    <!-- Grid de tarjetas -->
     <div class="row g-4 justify-content-center">
       <div v-for="project in projects" :key="project.id" class="col-12 col-lg-6">
         <div class="card shadow-lg project-card h-100">
@@ -11,11 +11,12 @@
             class="card-img-top project-image"
             :alt="`Captura de ${project.title}`"
           />
+
           <div class="card-body d-flex flex-column text-center">
             <h5 class="card-title">{{ project.title }}</h5>
             <p class="card-text flex-grow-1">{{ project.description }}</p>
 
-            <!-- Acciones del proyecto -->
+            <!-- Acciones -->
             <div class="project-actions">
               <a
                 :href="project.github"
@@ -78,15 +79,31 @@ export default {
 </script>
 
 <style scoped>
+.projects-view {
+  color: var(--color-text-100);
+}
+
 .project-card {
-  border-radius: 12px;
+  border-radius: 16px;
   overflow: hidden;
+  border: 1px solid var(--color-border-soft);
+  background: linear-gradient(135deg, rgba(22, 27, 42, 0.88), rgba(19, 35, 55, 0.72));
+  box-shadow: var(--shadow-soft);
 }
 
 .project-image {
   width: 100%;
   height: 300px;
   object-fit: cover;
+  border-bottom: 1px solid var(--color-border-soft);
+}
+
+.card-title {
+  color: var(--color-text-100);
+}
+
+.card-text {
+  color: var(--color-text-300);
 }
 
 .project-actions {
@@ -95,6 +112,33 @@ export default {
   gap: 10px;
   flex-wrap: wrap;
   margin-top: 12px;
+}
+
+.project-actions .btn {
+  border-radius: 14px;
+  border: 1px solid var(--color-border-soft);
+  padding: 10px 16px;
+  color: var(--color-text-100);
+}
+
+.project-actions .btn-primary {
+  background: rgba(27, 32, 45, 0.88);
+}
+
+.project-actions .btn-primary:hover {
+  border-color: var(--color-accent-cyan);
+  background: rgba(34, 42, 60, 0.95);
+  color: var(--color-text-100);
+}
+
+.project-actions .btn-secondary {
+  background: rgba(27, 32, 45, 0.72);
+}
+
+.project-actions .btn-secondary:hover {
+  border-color: var(--color-accent-teal);
+  background: rgba(34, 42, 60, 0.95);
+  color: var(--color-text-100);
 }
 
 @media (max-width: 768px) {

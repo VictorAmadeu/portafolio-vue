@@ -1,9 +1,9 @@
 <template>
   <div class="home-container">
-    <!-- Sección Hero con fondo degradado -->
+    <!-- Hero principal -->
     <section class="hero-section">
       <div class="hero-content">
-        <!-- IMAGEN DE PERFIL -->
+        <!-- Imagen de perfil -->
         <div class="profile-image-container">
           <img
             src="../assets/images/victor-nueva.jpg"
@@ -12,7 +12,7 @@
           />
         </div>
 
-        <!-- CONTENIDO DE BIENVENIDA -->
+        <!-- Texto de presentación -->
         <div class="hero-text">
           <h1 class="display-4 fw-bold hero-title">
             Bienvenido(a) a Mi Portafolio
@@ -20,6 +20,7 @@
           <p class="lead hero-subtitle">
             Explora mis proyectos, conoce mi experiencia y ponte en contacto.
           </p>
+
           <div class="social-buttons">
             <a
               href="https://www.linkedin.com/in/victor-amadeu-braga-heleno-583870266/"
@@ -57,10 +58,10 @@
       </div>
     </section>
 
-    <!-- Sección de Habilidades -->
+    <!-- Habilidades -->
     <section
       id="skills"
-      class="skills-section text-center p-5 bg-dark text-white"
+      class="skills-section text-center p-5"
       data-aos="fade-up"
     >
       <h2 class="fw-bold" data-aos="flip-up">Mis Habilidades</h2>
@@ -73,6 +74,7 @@
             </div>
           </div>
         </div>
+
         <div class="col-md-4" data-aos="flip-left" data-aos-delay="200">
           <div class="card shadow">
             <div class="card-body">
@@ -81,6 +83,7 @@
             </div>
           </div>
         </div>
+
         <div class="col-md-4" data-aos="flip-left" data-aos-delay="400">
           <div class="card shadow">
             <div class="card-body">
@@ -92,13 +95,13 @@
       </div>
     </section>
 
-    <!-- Sección de Contacto -->
+    <!-- Contacto -->
     <section class="contact-section text-center p-5" data-aos="fade-up">
       <h2 class="fw-bold">Contáctame</h2>
       <p>Si tienes alguna consulta, no dudes en enviarme un mensaje.</p>
       <router-link
         to="/contact"
-        class="btn btn-outline-dark btn-lg mt-3 custom-btn"
+        class="btn btn-outline-dark btn-lg mt-3 custom-btn contact-cta-btn"
         data-aos="zoom-in"
       >
         Enviar Mensaje
@@ -125,18 +128,22 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
+  color: var(--color-text-100);
 }
 
-/* Hero con fondo degradado */
+/* Hero */
 .hero-section {
-  background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
-  color: white;
+  background:
+    radial-gradient(circle at 10% 20%, rgba(0, 184, 153, 0.16) 0%, rgba(0, 184, 153, 0) 32%),
+    radial-gradient(circle at 45% 48%, rgba(83, 89, 255, 0.18) 0%, rgba(83, 89, 255, 0) 40%),
+    linear-gradient(130deg, rgba(6, 12, 24, 0.85), rgba(5, 9, 20, 0.9), rgba(8, 14, 30, 0.88));
+  border-bottom: 1px solid var(--color-border-soft);
+  color: var(--color-text-100);
   padding: 100px 0;
   text-align: center;
   width: 100%;
 }
 
-/* Contenedor flexible para la imagen y el texto */
 .hero-content {
   display: flex;
   align-items: center;
@@ -149,13 +156,15 @@ export default {
   width: 100%;
 }
 
-/* IMAGEN */
+/* Imagen */
 .profile-image-container {
   width: 250px;
   height: 250px;
   border-radius: 50%;
   overflow: hidden;
-  background: #fff;
+  background: var(--color-surface-800);
+  border: 1px solid var(--color-border-soft);
+  box-shadow: var(--shadow-soft);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -166,10 +175,9 @@ export default {
   height: 100%;
   object-fit: cover;
   display: block;
-  border-radius: 0;
 }
 
-/* TEXTO */
+/* Texto */
 .hero-text {
   text-align: left;
   max-width: 700px;
@@ -179,81 +187,133 @@ export default {
   align-items: flex-start;
   justify-content: center;
 }
+
 .hero-title {
   font-size: 3rem;
-  font-weight: bold;
   margin-bottom: 15px;
 }
+
 .hero-subtitle {
   font-size: 1.3rem;
   margin-bottom: 20px;
+  color: var(--color-text-300);
   word-break: break-word;
   white-space: normal;
   max-width: 100%;
   line-height: 1.4;
 }
+
 .social-buttons {
   display: flex;
   flex-wrap: wrap;
   gap: 15px;
   justify-content: flex-start;
 }
+
+/* Botones comunes */
 .custom-btn {
-  font-size: 1.1rem;
+  font-size: 1.05rem;
   padding: 12px 20px;
-  display: flex;
+  border-radius: 14px;
+  border: 1px solid var(--color-border-soft);
+  color: var(--color-text-100);
+  background: rgba(27, 32, 45, 0.75);
+  display: inline-flex;
   align-items: center;
   gap: 8px;
-  border-radius: 8px;
-  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-  position: relative;
-  overflow: hidden;
-  min-width: 120px;
+  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+  min-width: 130px;
 }
-.custom-btn::after {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 300%;
-  height: 300%;
-  background: rgba(255, 255, 255, 0.1);
-  transition: all 0.4s ease-in-out;
-  transform: translate(-50%, -50%) scale(0);
-  border-radius: 50%;
-}
-.custom-btn:hover::after {
-  transform: translate(-50%, -50%) scale(1);
-}
+
 .custom-btn:hover {
-  transform: translateY(-5px);
-  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);
+  transform: translateY(-2px);
+  border-color: var(--color-accent-cyan);
+  box-shadow: 0 8px 20px rgba(8, 16, 34, 0.45);
+  color: var(--color-text-100);
 }
 
-/* Sección de Contacto */
+/* Variantes para que mantengan la paleta del diseño */
+.custom-btn.btn-primary,
+.custom-btn.btn-danger,
+.custom-btn.btn-dark {
+  background: rgba(27, 32, 45, 0.82);
+}
+
+.custom-btn.btn-secondary {
+  background: var(--color-btn-light);
+  color: var(--color-btn-light-text);
+  border-color: transparent;
+}
+
+/* Sección de habilidades */
+.skills-section {
+  width: 100%;
+  background: transparent !important;
+  color: var(--color-text-100) !important;
+  border-top: 1px solid var(--color-border-soft);
+  border-bottom: 1px solid var(--color-border-soft);
+}
+
+.skills-section .card {
+  border-radius: 20px;
+  border: 1px solid var(--color-border-soft);
+  background: linear-gradient(135deg, rgba(22, 27, 42, 0.85), rgba(19, 35, 55, 0.7));
+  color: var(--color-text-100);
+  box-shadow: var(--shadow-soft);
+}
+
+.skills-section .card p {
+  color: var(--color-text-300);
+}
+
+/* Sección de contacto */
 .contact-section {
-  background: #f8f9fa;
+  width: 100%;
+  background: transparent;
+  color: var(--color-text-100);
 }
 
-/* =================== RESPONSIVIDAD =================== */
+.contact-section p {
+  color: var(--color-text-300);
+}
 
-/* Para pantallas medianas */
+.contact-section .btn-outline-dark {
+  background: rgba(27, 32, 45, 0.72);
+  color: var(--color-text-100);
+  border: 1px solid var(--color-border-strong);
+}
+
+.contact-section .btn-outline-dark:hover {
+  background: rgba(33, 40, 58, 0.88);
+  color: var(--color-text-100);
+  border-color: var(--color-accent-cyan);
+}
+
+/* Botón de CTA de contacto con ancho ajustado */
+.contact-section .contact-cta-btn {
+  width: auto;
+  min-width: 220px;
+  justify-content: center;
+}
+
+/* Responsive */
 @media (max-width: 1200px) {
   .hero-content {
     margin: 0 30px;
     gap: 18px;
     padding: 18px;
   }
+
   .hero-text {
     margin-left: 20px;
     max-width: 600px;
   }
+
   .profile-image-container {
     max-width: 200px;
   }
 }
 
-/* Para tablets: columna, todo centrado */
 @media (max-width: 1024px) {
   .hero-content {
     flex-direction: column;
@@ -263,81 +323,91 @@ export default {
     padding: 15px 4vw;
     width: 100%;
   }
+
   .profile-image-container {
     margin-bottom: 10px;
     margin-left: 0;
     width: 100%;
     max-width: 200px;
   }
-  .profile-image {
-    margin-left: 0;
-  }
+
   .hero-text {
     margin-left: 0;
     align-items: center;
     text-align: center;
     max-width: 100%;
   }
+
   .social-buttons {
     justify-content: center;
     width: 100%;
   }
+
   .hero-title {
     font-size: 2rem;
   }
+
   .hero-section {
     padding: 60px 0 30px 0;
   }
 }
 
-/* Para móviles grandes */
 @media (max-width: 768px) {
   .hero-section {
     padding: 30px 0 12px 0;
   }
+
   .hero-title {
     font-size: 1.28rem;
   }
+
   .hero-subtitle {
     font-size: 1.07rem;
     padding: 0 10px;
     max-width: 100vw;
   }
+
   .profile-image-container {
     max-width: 160px;
   }
+
   .social-buttons {
     flex-direction: column;
     gap: 8px;
     width: 100%;
   }
+
   .custom-btn {
     width: 100%;
     justify-content: center;
     font-size: 1rem;
     padding: 10px 4px;
   }
+
+  .contact-section .contact-cta-btn {
+    width: auto;
+    padding: 10px 20px;
+  }
 }
 
-/* Para móviles pequeños */
 @media (max-width: 480px) {
   .hero-section {
     padding: 12vw 0 2vw 0;
   }
+
   .hero-content {
     padding: 2vw 0;
-    margin: 0 0;
+    margin: 0;
     gap: 12px;
     width: 100vw;
   }
+
   .profile-image-container {
     width: 95vw;
     max-width: 240px;
     margin: 0 auto 10px auto;
   }
-  .profile-image {
-    margin-left: 0;
-  }
+
   .hero-text {
     padding: 0 6vw;
     margin: 0;
@@ -345,9 +415,11 @@ export default {
     align-items: center;
     text-align: center;
   }
+
   .hero-title {
     font-size: 1.03rem;
   }
+
   .hero-subtitle {
     font-size: 0.98rem;
     padding: 0;
@@ -357,7 +429,6 @@ export default {
   }
 }
 
-/* Habilidades en columna en móvil */
 @media (max-width: 767px) {
   .skills-section .row {
     display: flex;
@@ -365,6 +436,7 @@ export default {
     align-items: center;
     gap: 20px;
   }
+
   .skills-section .col-md-4 {
     width: 100%;
     max-width: 350px;

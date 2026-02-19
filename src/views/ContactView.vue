@@ -1,29 +1,57 @@
 <template>
-  <!-- Contenedor principal con layout bonito y centralizado -->
-  <div class="container my-5">
-    <h2 class="text-center mb-4">📩 Contacto</h2>
+  <!-- Contenedor principal de contacto -->
+  <div class="container my-5 contact-view">
+    <h2 class="text-center mb-4">Contacto</h2>
+
     <form @submit.prevent="sendMessage">
-      <!-- Nombre -->
       <div class="mb-3">
         <label for="name" class="form-label">Nombre</label>
-        <input v-model="form.name" type="text" class="form-control" id="name" required />
+        <input
+          v-model="form.name"
+          type="text"
+          class="form-control"
+          id="name"
+          placeholder="Tu nombre"
+          required
+        />
       </div>
-      <!-- Correo electrónico -->
+
       <div class="mb-3">
         <label for="email" class="form-label">Correo electrónico</label>
-        <input v-model="form.email" type="email" class="form-control" id="email" required />
+        <input
+          v-model="form.email"
+          type="email"
+          class="form-control"
+          id="email"
+          placeholder="tuemail@dominio.com"
+          required
+        />
       </div>
-      <!-- Asunto -->
+
       <div class="mb-3">
         <label for="subject" class="form-label">Asunto</label>
-        <input v-model="form.subject" type="text" class="form-control" id="subject" required />
+        <input
+          v-model="form.subject"
+          type="text"
+          class="form-control"
+          id="subject"
+          placeholder="Asunto"
+          required
+        />
       </div>
-      <!-- Mensaje -->
+
       <div class="mb-3">
         <label for="message" class="form-label">Mensaje</label>
-        <textarea v-model="form.message" class="form-control" id="message" rows="5" required></textarea>
+        <textarea
+          v-model="form.message"
+          class="form-control"
+          id="message"
+          rows="5"
+          placeholder="Cuéntame en qué puedo ayudarte..."
+          required
+        ></textarea>
       </div>
-      <!-- Botón -->
+
       <button type="submit" class="btn btn-primary w-100">Enviar</button>
 
       <p v-if="errorMessage" class="error">{{ errorMessage }}</p>
@@ -43,10 +71,10 @@ export default {
         name: "",
         email: "",
         subject: "",
-        message: ""
+        message: "",
       },
       successMessage: "",
-      errorMessage: ""
+      errorMessage: "",
     };
   },
   methods: {
@@ -54,50 +82,110 @@ export default {
       this.errorMessage = "";
       this.successMessage = "";
 
-      const { error } = await supabase
-        .from("mensajes")
-        .insert([{
+      const { error } = await supabase.from("mensajes").insert([
+        {
           nombre: this.form.name,
           email: this.form.email,
           asunto: this.form.subject,
-          mensaje: this.form.message
-        }]);
+          mensaje: this.form.message,
+        },
+      ]);
 
       if (error) {
         this.errorMessage = "No ha sido posible enviar su mensaje.";
         return;
       }
-      this.successMessage = "¡Su mensaje ha sido enviado con éxito!";
+
+      this.successMessage = "Su mensaje ha sido enviado con éxito.";
       this.form = { name: "", email: "", subject: "", message: "" };
-    }
-  }
+    },
+  },
 };
 </script>
 
 <style scoped>
-.container {
+.contact-view {
   max-width: 900px;
   min-height: 85vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   padding-bottom: 4rem;
+  color: var(--color-text-100);
 }
+
+h2 {
+  color: var(--color-text-100);
+}
+
+form {
+  background: linear-gradient(135deg, rgba(22, 27, 42, 0.88), rgba(19, 35, 55, 0.72));
+  border: 1px solid var(--color-border-soft);
+  border-radius: 22px;
+  box-shadow: var(--shadow-soft);
+  padding: 1.5rem;
+}
+
+.form-label {
+  color: var(--color-text-300);
+}
+
+.form-control {
+  background: var(--color-input-bg);
+  border: 1px solid var(--color-border-soft);
+  color: var(--color-text-100);
+  border-radius: 14px;
+}
+
+.form-control::placeholder {
+  color: var(--color-text-400);
+}
+
+.form-control:focus {
+  color: var(--color-text-100);
+  background: var(--color-input-bg);
+  border-color: var(--color-accent-cyan);
+  box-shadow: 0 0 0 0.2rem rgba(78, 196, 255, 0.2);
+}
+
 .btn-primary {
   margin-top: 1rem;
+  border-radius: 14px;
+  border: 1px solid var(--color-border-soft);
+  background: rgba(27, 32, 45, 0.88);
+  color: var(--color-text-100);
 }
-.error   { color: red; margin-top: 0.5rem; }
-.success { color: green; margin-top: 0.5rem; }
 
-/* Responsividad para pantallas pequeñas */
+.btn-primary:hover {
+  border-color: var(--color-accent-teal);
+  background: rgba(34, 42, 60, 0.95);
+  color: var(--color-text-100);
+}
+
+.error {
+  color: #ff6f7d;
+  margin-top: 0.6rem;
+}
+
+.success {
+  color: var(--color-accent-emerald);
+  margin-top: 0.6rem;
+}
+
 @media (max-width: 768px) {
-  .container {
+  .contact-view {
     padding: 1rem;
     min-height: auto;
   }
+
   h2 {
     font-size: 1.5rem;
   }
+
+  form {
+    padding: 1rem;
+  }
+
   .btn-primary {
     margin-top: 0.5rem;
   }
