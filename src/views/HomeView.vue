@@ -89,7 +89,7 @@
     <section class="contact-section text-center p-5" data-aos="fade-up">
       <h2 class="fw-bold">¿Quieres que revisemos una oportunidad?</h2>
       <p>
-        Estoy disponible para colaborar en proyectos Full Stack, con foco en calidad tecnica y
+        Estoy disponible para colaborar en proyectos Full Stack, con foco en calidad técnica y
         aprendizaje continuo.
       </p>
       <router-link
@@ -115,7 +115,7 @@ export default {
           id: 1,
           center: "Cesur",
           degree:
-            "Formación Profesional de Grado Superior, Gestión web/multimedia y webmaster",
+            "Técnico Superior en Desarrollo de Aplicaciones Web",
           city: "Madrid",
         },
       ],
@@ -196,7 +196,7 @@ export default {
         },
         {
           id: 12,
-          title: "Conceptos de la Programacion",
+          title: "Conceptos de la Programación",
           issuer: "OpenBootcamp",
           duration: "20 horas",
         },
@@ -208,7 +208,7 @@ export default {
         },
         {
           id: 14,
-          title: "Algoritmo informatico",
+          title: "Algoritmo informático",
           issuer: "Curso em Video",
           duration: "40 horas",
         },
