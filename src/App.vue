@@ -31,6 +31,12 @@
               </router-link>
             </li>
             <li class="nav-item">
+              <router-link to="/about" class="nav-link" @click="closeMenu">
+                <i class="fas fa-user"></i>
+                Sobre mí
+              </router-link>
+            </li>
+            <li class="nav-item">
               <router-link to="/projects" class="nav-link" @click="closeMenu">
                 <i class="fas fa-code"></i>
                 Proyectos
@@ -103,24 +109,33 @@ export default {
         this.closeMenu();
         return;
       }
+
       this.isMenuOpen = true;
       document.body.classList.add("menu-open");
       this.lastToggle = Date.now();
-      if (this.closeTimeout) clearTimeout(this.closeTimeout);
+
+      if (this.closeTimeout) {
+        clearTimeout(this.closeTimeout);
+      }
+
+      // Cierre de seguridad para evitar que el menú se quede abierto en móvil.
       this.closeTimeout = setTimeout(() => {
         if (Date.now() - this.lastToggle >= 2900) {
-          this.isMenuOpen = false;
+          this.closeMenu();
         }
       }, 3000);
     },
     closeMenu() {
       this.isMenuOpen = false;
       document.body.classList.remove("menu-open");
-      if (this.closeTimeout) clearTimeout(this.closeTimeout);
+
+      if (this.closeTimeout) {
+        clearTimeout(this.closeTimeout);
+      }
     },
     handleResize() {
       if (window.innerWidth >= 992) {
-        this.isMenuOpen = false;
+        this.closeMenu();
       }
     },
   },
@@ -129,7 +144,7 @@ export default {
   },
   beforeUnmount() {
     window.removeEventListener("resize", this.handleResize);
-    if (this.closeTimeout) clearTimeout(this.closeTimeout);
+    this.closeMenu();
   },
 };
 </script>

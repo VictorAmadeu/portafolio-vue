@@ -1,20 +1,17 @@
 import { createRouter, createWebHashHistory } from "vue-router";
 
 import HomeView from "../views/HomeView.vue";
+import AboutView from "../views/AboutView.vue";
 import ProjectsView from "../views/ProjectsView.vue";
 import ContactView from "../views/ContactView.vue";
 
 const router = createRouter({
-  // El historial hash evita errores 404 en despliegues estáticos como GitHub Pages.
+  // Historial hash para evitar errores 404 en GitHub Pages.
   history: createWebHashHistory(),
   routes: [
-    // Ruta principal.
     { path: "/", component: HomeView },
-
-    // Ruta de proyectos.
+    { path: "/about", component: AboutView },
     { path: "/projects", component: ProjectsView },
-
-    // Ruta de contacto.
     { path: "/contact", component: ContactView },
   ],
 });
