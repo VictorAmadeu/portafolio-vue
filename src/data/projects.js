@@ -21,9 +21,9 @@ const projects = [
     subtitle: "Media kit web interactivo para colaboraciones con marcas",
     coverImage: mediaKitCover,
     context:
-      "Este fue mi Proyecto final en Cesur (FP Grado Superior) para ayudar a una creadora de contenidos a presentarse ante marcas con una experiencia web actualizable.",
+      "Este fue mi Proyecto final en Cesur (FP Grado Superior). He desarrollado este proyecto para una creadora de contenidos presentarse ante marcas con una experiencia web actualizable.",
     problem:
-      "Jhulyana tiene una audiencia muy grande y toda la información de su trabajo estaba dispersa en redes: un poco en Instagram, otro poco en TikTok, otras cosas por correo y etc… Eso hacía más difícil que las marcas entendieran rápido quién es Jhulyana y qué alcance real tiene..",
+      "Jhulyana tiene una audiencia muy grande y toda la información de su trabajo estaba dispersa en redes: un poco en Instagram, otro poco en TikTok, otras cosas por correo y etc. Eso hacía más difícil que las marcas entendieran rápido quién es Jhulyana y qué alcance real tiene.",
     goals: [
       "Presentar historia personal, misión y valores de la creadora con narrativa clara.",
       "Mostrar audiencia y plataformas con datos fáciles de leer para marcas.",
