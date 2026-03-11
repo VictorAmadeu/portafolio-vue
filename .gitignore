@@ -23,6 +23,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
-
+.cursor/
 # Ocultar llaves API y archivos sensibles
 .env
