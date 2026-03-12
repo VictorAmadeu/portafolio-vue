@@ -1,6 +1,6 @@
-import { defineConfig } from "vite";
+import { defineConfig } from "vitest/config";
 import vue from "@vitejs/plugin-vue";
-import path from "path"; // 👈 necesario para configurar el alias
+import path from "path";
 
 export default defineConfig({
   base: "/portafolio-vue/",
@@ -11,7 +11,12 @@ export default defineConfig({
   plugins: [vue()],
   resolve: {
     alias: {
-      "@": path.resolve(__dirname, "src"), // 👈 define que @ apunta a /src
+      "@": path.resolve(__dirname, "src"),
     },
+  },
+  test: {
+    environment: "jsdom",
+    globals: true,
+    setupFiles: "./tests/setup.js",
   },
 });
