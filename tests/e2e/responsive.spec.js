@@ -1,8 +1,8 @@
 import { devices, expect, test } from "@playwright/test";
 
-test.use({
-  ...devices["iPhone 12"],
-});
+const { defaultBrowserType, ...iPhone12 } = devices["iPhone 12"];
+
+test.use(iPhone12);
 
 test("abre el menu movil y navega a contacto", async ({ page }) => {
   await page.goto("/portafolio-vue/");
