@@ -4,6 +4,7 @@ import App from "@/App.vue";
 import AboutView from "@/views/AboutView.vue";
 import ContactView from "@/views/ContactView.vue";
 import HomeView from "@/views/HomeView.vue";
+import ProjectDetail from "@/views/ProjectDetail.vue";
 import ProjectsView from "@/views/ProjectsView.vue";
 
 function createTestRouter() {
@@ -13,6 +14,11 @@ function createTestRouter() {
       { path: "/", name: "Home", component: HomeView },
       { path: "/about", name: "About", component: AboutView },
       { path: "/projects", name: "Projects", component: ProjectsView },
+      {
+        path: "/projects/:slug",
+        name: "ProjectDetail",
+        component: ProjectDetail,
+      },
       { path: "/contact", name: "Contact", component: ContactView },
     ],
   });
