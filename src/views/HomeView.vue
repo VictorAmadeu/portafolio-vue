@@ -36,9 +36,6 @@
             <router-link to="/projects" class="btn btn-outline-light custom-btn">
               Ver proyectos
             </router-link>
-            <a href="#certificaciones" class="btn btn-outline-light custom-btn">
-              Ver certificaciones
-            </a>
             <a :href="cvUrl" download class="btn btn-secondary custom-btn">
               Descargar CV
             </a>
