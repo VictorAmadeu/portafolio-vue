@@ -31,3 +31,4 @@ test-results
 # Ocultar llaves API y archivos sensibles
 .env
 .env.local 
+.env.*.local
