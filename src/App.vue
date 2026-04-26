@@ -58,6 +58,9 @@
       <router-view></router-view>
     </div>
 
+    <!-- Chatbot global -->
+    <ChatbotWidget />
+
     <!-- Footer -->
     <footer class="footer text-center py-4">
       <div class="container">
@@ -94,8 +97,13 @@
 </template>
 
 <script>
+import ChatbotWidget from "@/chatbot/ChatbotWidget.vue";
+
 export default {
   name: "App",
+  components: {
+    ChatbotWidget,
+  },
   data() {
     return {
       isMenuOpen: false,
