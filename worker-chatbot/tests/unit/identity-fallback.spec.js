@@ -223,7 +223,7 @@ describe("portfolio chatbot worker", () => {
         title: "Caso de estudio: VictorAI Blog",
         url: "/#/projects/victorai-blog",
         snippet:
-          "VictorAI Blog es un blog tecnico enfocado en aprendizaje y documentacion didactica sobre Inteligencia Artificial y Python. Un reto tecnico importante fue renderizar Markdown sin abrir vectores XSS, usando marked y DOMPurify. Otro reto",
+          "VictorAI Blog es un blog tecnico enfocado en aprendizaje y documentacion didactica sobre Inteligencia Artificial y Python. Un reto tecnico importante fue renderizar Markdown sin abrir vectores XSS, usando marked y DOMPur",
       },
     ]);
     expect(env.AI.run).not.toHaveBeenCalled();
