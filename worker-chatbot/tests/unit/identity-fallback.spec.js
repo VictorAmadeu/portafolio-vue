@@ -4,6 +4,9 @@ import worker from "../../src/index.js";
 const expectedIdentityAnswer =
   "Victor Amadeu Braga Heleno aparece en estas fuentes como Desarrollador Full Stack Junior y disponible para contratar.";
 
+const expectedVictorAiBlogChallengesAnswer =
+  "En VictorAI Blog, un reto tecnico importante fue renderizar Markdown sin abrir vectores XSS, usando marked y DOMPurify. Otro reto fue integrar Supabase con Angular standalone mediante un servicio centralizado.";
+
 const contextChunks = [
   {
     title: "Perfil y propuesta (Home)",
@@ -31,6 +34,15 @@ const richContextChunks = [
     url: "/#/contact",
     content:
       "La via recomendada para contactar profesionalmente con Victor es el formulario de contacto del portafolio. Victor esta disponible para contratar y abierto a oportunidades profesionales.",
+  },
+];
+
+const victorAiBlogContextChunks = [
+  {
+    title: "Caso de estudio: VictorAI Blog",
+    url: "/#/projects/victorai-blog",
+    content:
+      "VictorAI Blog es un blog tecnico enfocado en aprendizaje y documentacion didactica sobre Inteligencia Artificial y Python. Un reto tecnico importante fue renderizar Markdown sin abrir vectores XSS, usando marked y DOMPurify. Otro reto fue integrar Supabase con Angular standalone mediante un servicio centralizado.",
   },
 ];
 
@@ -197,6 +209,26 @@ describe("portfolio chatbot worker", () => {
     expect(env.AI.run).not.toHaveBeenCalled();
   });
 
+  it("responde retos de VictorAI Blog desde contexto recuperado sin llamar al modelo", async () => {
+    const response = await worker.fetch(
+      makeRequest("¿Qué retos técnicos resolviste en VictorAI Blog?", victorAiBlogContextChunks),
+      env
+    );
+    const body = await response.json();
+
+    expect(response.status).toBe(200);
+    expect(body.answer).toBe(expectedVictorAiBlogChallengesAnswer);
+    expect(body.sources).toEqual([
+      {
+        title: "Caso de estudio: VictorAI Blog",
+        url: "/#/projects/victorai-blog",
+        snippet:
+          "VictorAI Blog es un blog tecnico enfocado en aprendizaje y documentacion didactica sobre Inteligencia Artificial y Python. Un reto tecnico importante fue renderizar Markdown sin abrir vectores XSS, usando marked y DOMPurify. Otro reto",
+      },
+    ]);
+    expect(env.AI.run).not.toHaveBeenCalled();
+  });
+
   it("responde disponibilidad desde contexto recuperado sin llamar al modelo", async () => {
     const response = await worker.fetch(
       makeRequest("¿Victor está disponible para trabajar?", richContextChunks),
@@ -258,7 +290,7 @@ describe("portfolio chatbot worker", () => {
     });
 
     const response = await worker.fetch(
-      makeRequest("¿Qué retos técnicos resolviste en VictorAI Blog?", richContextChunks),
+      makeRequest("¿Qué aprendiste creando VictorAI Blog?", victorAiBlogContextChunks),
       env
     );
 
