@@ -96,6 +96,17 @@ function asksAboutProjects(message) {
   );
 }
 
+function asksAboutVictorAiBlogChallenges(message) {
+  const normalizedMessage = normalizeText(message);
+
+  const asksChallenges =
+    /\b(reto|retos|desafio|desafios|challenge|challenges|dificultad|dificultades|problema|problemas)\b/.test(
+      normalizedMessage
+    );
+
+  return asksChallenges && normalizedMessage.includes("victorai blog");
+}
+
 function asksAboutContact(message) {
   const normalizedMessage = normalizeText(message);
 
@@ -228,6 +239,33 @@ function tryStackFallback(message, contextChunks = []) {
   return "Victor trabaja con frontend, backend, bases de datos, arquitectura de apps y herramientas de desarrollo. Sus fuentes mencionan Ionic, Angular, TypeScript, Vue 3, React, JavaScript, Symfony, PHP, Node, Express, PostgreSQL, Supabase, MySQL, Git, GitHub e Inteligencia Artificial.";
 }
 
+function tryVictorAiBlogChallengesFallback(message, contextChunks = []) {
+  if (!asksAboutVictorAiBlogChallenges(message)) return null;
+
+  const text = combinedContextText(contextChunks);
+
+  const hasMarkdownChallenge =
+    text.includes("renderizar markdown sin abrir vectores xss") &&
+    text.includes("marked") &&
+    text.includes("dompurify");
+
+  const hasSupabaseChallenge =
+    text.includes("integrar supabase con angular standalone") &&
+    text.includes("servicio centralizado");
+
+  if (!hasMarkdownChallenge && !hasSupabaseChallenge) return null;
+
+  if (hasMarkdownChallenge && hasSupabaseChallenge) {
+    return "En VictorAI Blog, un reto tecnico importante fue renderizar Markdown sin abrir vectores XSS, usando marked y DOMPurify. Otro reto fue integrar Supabase con Angular standalone mediante un servicio centralizado.";
+  }
+
+  if (hasMarkdownChallenge) {
+    return "En VictorAI Blog, un reto tecnico importante fue renderizar Markdown sin abrir vectores XSS, usando marked y DOMPurify.";
+  }
+
+  return "En VictorAI Blog, un reto tecnico importante fue integrar Supabase con Angular standalone mediante un servicio centralizado.";
+}
+
 function tryProjectsFallback(message, contextChunks = []) {
   if (!asksAboutProjects(message)) return null;
 
@@ -269,6 +307,7 @@ function tryPortfolioFallback(message, contextChunks = []) {
     tryIdentityFallback(message, contextChunks) ||
     tryAvailabilityFallback(message, contextChunks) ||
     tryStackFallback(message, contextChunks) ||
+    tryVictorAiBlogChallengesFallback(message, contextChunks) ||
     tryProjectsFallback(message, contextChunks) ||
     tryContactFallback(message, contextChunks)
   );
